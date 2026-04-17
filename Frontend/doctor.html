@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HMS — Doctors</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🏥</div>
+      <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
+      <div class="nav-section-label">Management</div>
+      <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
+      <a class="nav-link active" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
+      <a class="nav-link" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span class="nav-badge">3</span></a>
+      <a class="nav-link" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
+      <div class="nav-section-label">System</div>
+      <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
+      <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">A</div>
+        <div class="user-info"><div class="uname">Admin User</div><div class="urole">Super Admin</div></div>
+        <span style="color:var(--text-3); font-size:14px;">⋯</span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="page-title">Doctors</div>
+          <div class="page-breadcrumb">Dashboard / Doctors</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search doctors…" />
+        </div>
+        <button class="icon-btn">🔔<span class="notif-dot"></span></button>
+        <button class="btn btn-primary" onclick="openModal('add-doctor-modal')">＋ Add Doctor</button>
+      </div>
+    </header>
+
+    <div class="page-body">
+
+      <!-- Stats -->
+      <div class="stats-grid" style="grid-template-columns: repeat(5,1fr); margin-bottom:24px;">
+        <div class="stat-card blue">
+          <div class="stat-icon">🩺</div>
+          <div class="stat-value" data-count="86">0</div>
+          <div class="stat-label">Total Doctors</div>
+        </div>
+        <div class="stat-card teal">
+          <div class="stat-icon">❤️</div>
+          <div class="stat-value" data-count="18">0</div>
+          <div class="stat-label">Cardiology</div>
+        </div>
+        <div class="stat-card amber">
+          <div class="stat-icon">🧠</div>
+          <div class="stat-value" data-count="14">0</div>
+          <div class="stat-label">Neurology</div>
+        </div>
+        <div class="stat-card rose">
+          <div class="stat-icon">🌸</div>
+          <div class="stat-value" data-count="12">0</div>
+          <div class="stat-label">Gynaecology</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon">💰</div>
+          <div class="stat-value" data-count="70000">0</div>
+          <div class="stat-label">Avg. Salary (₹)</div>
+        </div>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <div class="filter-search">
+          <span style="color:var(--text-3)">🔍</span>
+          <input type="text" placeholder="Search by name or specialization…" />
+        </div>
+        <button class="filter-btn active" data-filter="all">All Departments</button>
+        <button class="filter-btn" data-filter="cardiology">❤️ Cardiology</button>
+        <button class="filter-btn" data-filter="neurology">🧠 Neurology</button>
+        <button class="filter-btn" data-filter="orthopaedics">🦴 Orthopaedics</button>
+        <button class="filter-btn" data-filter="gynaecology">🌸 Gynaecology</button>
+        <button class="filter-btn" data-filter="general">💊 General</button>
+        <button class="btn btn-primary btn-sm" style="margin-left:auto" onclick="openModal('add-doctor-modal')">＋ Add Doctor</button>
+      </div>
+
+      <!-- Doctor Cards Grid -->
+      <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:16px; margin-bottom:24px;">
+
+        <!-- Doc 1 -->
+        <div class="doctor-card" data-category="cardiology" style="animation-delay:0.05s">
+          <div class="doctor-card-top">
+            <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#00D2BE,#0095FF); font-size:20px;">R</div>
+            <div class="doctor-info">
+              <div class="doctor-name">Dr. Ramesh Kumar</div>
+              <div class="doctor-spec">Cardiology</div>
+              <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block A</span></div>
+            </div>
+            <button class="btn btn-ghost btn-sm btn-icon" title="More options">⋯</button>
+          </div>
+          <div class="doctor-meta">
+            <div class="doctor-meta-item"><span>📞</span> 9876543210</div>
+            <div class="doctor-meta-item"><span>📧</span> ramesh@hms.com</div>
+            <div class="doctor-meta-item"><span>💰</span> ₹85,000 / month</div>
+            <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-101</span></div>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('edit-doctor-modal')">✏️ Edit</button>
+            <button class="btn btn-primary btn-sm" style="flex:1" onclick="showToast('Viewing schedule for Dr. Ramesh','info')">📅 Schedule</button>
+          </div>
+        </div>
+
+        <!-- Doc 2 -->
+        <div class="doctor-card" data-category="neurology" style="animation-delay:0.1s">
+          <div class="doctor-card-top">
+            <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#A78BFA,#7C3AED); font-size:20px;">P</div>
+            <div class="doctor-info">
+              <div class="doctor-name">Dr. Priya Sharma</div>
+              <div class="doctor-spec">Neurology</div>
+              <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block B</span></div>
+            </div>
+            <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
+          </div>
+          <div class="doctor-meta">
+            <div class="doctor-meta-item"><span>📞</span> 9876543211</div>
+            <div class="doctor-meta-item"><span>📧</span> priya@hms.com</div>
+            <div class="doctor-meta-item"><span>💰</span> ₹75,000 / month</div>
+            <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-102</span></div>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('edit-doctor-modal')">✏️ Edit</button>
+            <button class="btn btn-primary btn-sm" style="flex:1">📅 Schedule</button>
+          </div>
+        </div>
+
+        <!-- Doc 3 -->
+        <div class="doctor-card" data-category="orthopaedics" style="animation-delay:0.15s">
+          <div class="doctor-card-top">
+            <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#F59E0B,#D97706); font-size:20px;">A</div>
+            <div class="doctor-info">
+              <div class="doctor-name">Dr. Anand Rajan</div>
+              <div class="doctor-spec">Orthopaedics</div>
+              <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block C</span></div>
+            </div>
+            <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
+          </div>
+          <div class="doctor-meta">
+            <div class="doctor-meta-item"><span>📞</span> 9876543212</div>
+            <div class="doctor-meta-item"><span>📧</span> anand@hms.com</div>
+            <div class="doctor-meta-item"><span>💰</span> ₹70,000 / month</div>
+            <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-103</span></div>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('edit-doctor-modal')">✏️ Edit</button>
+            <button class="btn btn-primary btn-sm" style="flex:1">📅 Schedule</button>
+          </div>
+        </div>
+
+        <!-- Doc 4 -->
+        <div class="doctor-card" data-category="gynaecology" style="animation-delay:0.2s">
+          <div class="doctor-card-top">
+            <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#F43F5E,#DC2626); font-size:20px;">K</div>
+            <div class="doctor-info">
+              <div class="doctor-name">Dr. Kavitha Menon</div>
+              <div class="doctor-spec">Gynaecology</div>
+              <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block E</span></div>
+            </div>
+            <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
+          </div>
+          <div class="doctor-meta">
+            <div class="doctor-meta-item"><span>📞</span> 9876543213</div>
+            <div class="doctor-meta-item"><span>📧</span> kavitha@hms.com</div>
+            <div class="doctor-meta-item"><span>💰</span> ₹65,000 / month</div>
+            <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-104</span></div>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('edit-doctor-modal')">✏️ Edit</button>
+            <button class="btn btn-primary btn-sm" style="flex:1">📅 Schedule</button>
+          </div>
+        </div>
+
+        <!-- Doc 5 -->
+        <div class="doctor-card" data-category="general" style="animation-delay:0.25s">
+          <div class="doctor-card-top">
+            <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#22C55E,#16A34A); font-size:20px;">S</div>
+            <div class="doctor-info">
+              <div class="doctor-name">Dr. Suresh Pillai</div>
+              <div class="doctor-spec">General Medicine</div>
+              <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block D</span></div>
+            </div>
+            <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
+          </div>
+          <div class="doctor-meta">
+            <div class="doctor-meta-item"><span>📞</span> 9876543214</div>
+            <div class="doctor-meta-item"><span>📧</span> suresh@hms.com</div>
+            <div class="doctor-meta-item"><span>💰</span> ₹60,000 / month</div>
+            <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-105</span></div>
+          </div>
+          <div class="doctor-actions">
+            <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('edit-doctor-modal')">✏️ Edit</button>
+            <button class="btn btn-primary btn-sm" style="flex:1">📅 Schedule</button>
+          </div>
+        </div>
+
+        <!-- Add card placeholder -->
+        <div class="doctor-card" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:220px; cursor:pointer; border-style:dashed;" onclick="openModal('add-doctor-modal')">
+          <div style="font-size:36px; margin-bottom:10px; opacity:0.4">＋</div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-3)">Add New Doctor</div>
+          <div style="font-size:12px; color:var(--text-3); margin-top:4px;">Click to register</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add Doctor Modal -->
+<div class="modal-overlay" id="add-doctor-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Add New Doctor</div>
+      <button class="modal-close" onclick="closeModal('add-doctor-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" class="form-control" placeholder="Dr. Name" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Specialization *</label>
+          <input type="text" class="form-control" placeholder="e.g. Cardiology" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Phone *</label>
+          <input type="tel" class="form-control" placeholder="10-digit" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-control" placeholder="doctor@hms.com" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Salary (₹) *</label>
+          <input type="number" class="form-control" placeholder="Min. 30,000" min="30000" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department *</label>
+          <select class="form-control" required>
+            <option value="">Select dept.</option>
+            <option>Cardiology</option>
+            <option>Neurology</option>
+            <option>Orthopaedics</option>
+            <option>General Medicine</option>
+            <option>Gynaecology</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('add-doctor-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="showToast('Doctor added successfully!','success'); closeModal('add-doctor-modal')">✓ Add Doctor</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Doctor Modal -->
+<div class="modal-overlay" id="edit-doctor-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Edit Doctor</div>
+      <button class="modal-close" onclick="closeModal('edit-doctor-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-control" value="Dr. Ramesh Kumar" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Salary (₹)</label>
+          <input type="number" class="form-control" value="85000" min="30000" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-control" value="9876543210" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('edit-doctor-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="showToast('Doctor updated!','success'); closeModal('edit-doctor-modal')">💾 Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+  // Filter doctor cards
+  document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.doctor-card[data-category]').forEach(card => {
+        card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // Search
+  document.querySelector('.filter-search input').addEventListener('input', function () {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.doctor-card[data-category]').forEach(card => {
+      card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
