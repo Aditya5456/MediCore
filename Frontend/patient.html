@@ -1,398 +1,576 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HMS — Patients</title>
+  <title>HMS â€” Patients</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+  <meta name="description" content="MediCore HMS â€” Patient registry, admissions and health records management." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>ðŸ¥</text></svg>">
 </head>
+
 <body>
-<div class="layout">
+  <div class="layout">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-icon">🏥</div>
-      <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section-label">Overview</div>
-      <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
-      <div class="nav-section-label">Management</div>
-      <a class="nav-link active" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
-      <a class="nav-link" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
-      <a class="nav-link" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span class="nav-badge">3</span></a>
-      <a class="nav-link" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
-      <div class="nav-section-label">System</div>
-      <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
-      <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="user-avatar">A</div>
-        <div class="user-info"><div class="uname">Admin User</div><div class="urole">Super Admin</div></div>
-        <span style="color:var(--text-3); font-size:14px;">⋯</span>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">ðŸ¥</div>
+        <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
       </div>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <div class="topbar-left">
-        <div>
-          <div class="page-title">Patients</div>
-          <div class="page-breadcrumb">Dashboard / Patients</div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Overview</div>
+        <a class="nav-link" href="index.html"><span class="nav-icon">âŠž</span> Dashboard</a>
+        <div class="nav-section-label">Management</div>
+        <a class="nav-link active" href="patient.html"><span class="nav-icon">ðŸ‘¤</span> Patients</a>
+        <a class="nav-link" href="doctor.html"><span class="nav-icon">ðŸ©º</span> Doctors</a>
+        <a class="nav-link" href="appointment.html"><span class="nav-icon">ðŸ“…</span> Appointments<span
+            class="nav-badge">3</span></a>
+        <a class="nav-link" href="billing.html"><span class="nav-icon">ðŸ’³</span> Billing</a>
+        <div class="nav-section-label">System</div>
+        <a class="nav-link" href="#"><span class="nav-icon">ðŸ“Š</span> Reports</a>
+        <a class="nav-link" href="#"><span class="nav-icon">âš™ï¸</span> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">A</div>
+          <div class="user-info">
+            <div class="uname">Admin User</div>
+            <div class="urole">Super Admin</div>
+          </div>
+          <span style="color:var(--text-3); font-size:14px;">â‹¯</span>
         </div>
       </div>
-      <div class="topbar-right">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Search patients…" />
-        </div>
-        <button class="icon-btn">🔔<span class="notif-dot"></span></button>
-        <button class="btn btn-primary" onclick="openModal('add-patient-modal')">
-          ＋ Add Patient
-        </button>
-      </div>
-    </header>
+    </aside>
 
-    <div class="page-body">
-
-      <!-- Stats row -->
-      <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:24px;">
-        <div class="stat-card teal">
-          <div class="stat-icon">👥</div>
-          <div class="stat-value" data-count="1248">0</div>
-          <div class="stat-label">Total Patients</div>
-        </div>
-        <div class="stat-card blue">
-          <div class="stat-icon">🛏️</div>
-          <div class="stat-value" data-count="127">0</div>
-          <div class="stat-label">Currently Admitted</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-icon">✅</div>
-          <div class="stat-value" data-count="984">0</div>
-          <div class="stat-label">Discharged</div>
-        </div>
-        <div class="stat-card amber">
-          <div class="stat-icon">🚑</div>
-          <div class="stat-value" data-count="137">0</div>
-          <div class="stat-label">Outpatients</div>
-        </div>
-      </div>
-
-      <!-- Table Card -->
-      <div class="card animate-fade-up">
-        <div class="card-header" style="padding:20px 24px;">
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
           <div>
-            <div class="card-title">Patient Registry</div>
-            <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
+            <div class="page-title">Patients</div>
+            <div class="page-breadcrumb">Dashboard / Patients</div>
           </div>
-          <div style="display:flex; gap:10px;">
-            <button class="btn btn-ghost btn-sm">⬇ Export</button>
-            <button class="btn btn-primary btn-sm" onclick="openModal('add-patient-modal')">＋ Add Patient</button>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <span class="search-icon">ðŸ”</span>
+            <input type="text" placeholder="Search patientsâ€¦" />
+          </div>
+          <button class="icon-btn">ðŸ””<span class="notif-dot"></span></button>
+          <button class="btn btn-primary" onclick="openModal('add-patient-modal')">
+            ï¼‹ Add Patient
+          </button>
+        </div>
+      </header>
+
+      <div class="page-body">
+
+        <!-- Stats row -->
+        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:24px;">
+          <div class="stat-card teal">
+            <div class="stat-icon">ðŸ‘¥</div>
+            <div class="stat-value" data-count="1248">0</div>
+            <div class="stat-label">Total Patients</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">ðŸ›ï¸</div>
+            <div class="stat-value" data-count="127">0</div>
+            <div class="stat-label">Currently Admitted</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">âœ…</div>
+            <div class="stat-value" data-count="984">0</div>
+            <div class="stat-label">Discharged</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-icon">ðŸš‘</div>
+            <div class="stat-value" data-count="137">0</div>
+            <div class="stat-label">Outpatients</div>
           </div>
         </div>
 
-        <!-- Filter bar -->
-        <div style="padding: 14px 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-          <div class="filter-search" style="max-width:280px">
-            <span style="color:var(--text-3)">🔍</span>
-            <input type="text" placeholder="Search by name, ID, phone…" />
-          </div>
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="admitted">Admitted</button>
-          <button class="filter-btn" data-filter="discharged">Discharged</button>
-          <button class="filter-btn" data-filter="outpatient">Outpatient</button>
-          <div style="margin-left:auto; display:flex; gap:8px;">
-            <select class="form-control" style="width:auto; padding:6px 12px; font-size:12.5px;">
-              <option>Sort: Name A–Z</option>
-              <option>Sort: Newest</option>
-              <option>Sort: Bill Amount</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="card-body" style="padding:0;">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Patient</th>
-                  <th>ID</th>
-                  <th>DOB / Age</th>
-                  <th>Blood Group</th>
-                  <th>Phone</th>
-                  <th>City</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-category="admitted">
-                  <td>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                      <div class="avatar" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
-                      <div>
-                        <div>Arun Kumar</div>
-                        <div style="font-size:11px; color:var(--text-3)">arun@gmail.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="num-chip">P-1001</span></td>
-                  <td>15 Jun 1990<br><span style="font-size:11px; color:var(--text-3)">34 yrs</span></td>
-                  <td><span class="badge badge-rose">B+</span></td>
-                  <td>9845671230</td>
-                  <td>Chennai</td>
-                  <td><span class="badge badge-blue">Admitted</span></td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" title="View">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openModal('edit-patient-modal')">✏️</button>
-                      <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);" title="Delete">🗑</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="admitted">
-                  <td>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                      <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                      <div>
-                        <div>Meena Devi</div>
-                        <div style="font-size:11px; color:var(--text-3)">meena@gmail.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="num-chip">P-1002</span></td>
-                  <td>22 Mar 1985<br><span style="font-size:11px; color:var(--text-3)">40 yrs</span></td>
-                  <td><span class="badge badge-teal">O-</span></td>
-                  <td>9756432108</td>
-                  <td>Coimbatore</td>
-                  <td><span class="badge badge-blue">Admitted</span></td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" title="View">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openModal('edit-patient-modal')">✏️</button>
-                      <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);">🗑</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="outpatient">
-                  <td>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                      <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                      <div>
-                        <div>Vikram Singh</div>
-                        <div style="font-size:11px; color:var(--text-3)">vikram@gmail.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="num-chip">P-1003</span></td>
-                  <td>08 Nov 1978<br><span style="font-size:11px; color:var(--text-3)">46 yrs</span></td>
-                  <td><span class="badge badge-amber">A+</span></td>
-                  <td>9812345670</td>
-                  <td>Madurai</td>
-                  <td><span class="badge badge-amber">Outpatient</span></td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" title="View">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openModal('edit-patient-modal')">✏️</button>
-                      <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);">🗑</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="discharged">
-                  <td>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                      <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                      <div>
-                        <div>Divya Nair</div>
-                        <div style="font-size:11px; color:var(--text-3)">divya@gmail.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="num-chip">P-1004</span></td>
-                  <td>30 Jul 1995<br><span style="font-size:11px; color:var(--text-3)">29 yrs</span></td>
-                  <td><span class="badge badge-blue">AB+</span></td>
-                  <td>9865432107</td>
-                  <td>Trichy</td>
-                  <td><span class="badge badge-green">Discharged</span></td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" title="View">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openModal('edit-patient-modal')">✏️</button>
-                      <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);">🗑</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="discharged">
-                  <td>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                      <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                      <div>
-                        <div>Karthik Raj</div>
-                        <div style="font-size:11px; color:var(--text-3)">karthik@gmail.com</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td><span class="num-chip">P-1005</span></td>
-                  <td>14 Feb 1988<br><span style="font-size:11px; color:var(--text-3)">37 yrs</span></td>
-                  <td><span class="badge badge-muted">O+</span></td>
-                  <td>9745321089</td>
-                  <td>Salem</td>
-                  <td><span class="badge badge-green">Discharged</span></td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" title="View">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openModal('edit-patient-modal')">✏️</button>
-                      <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);">🗑</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Table Card -->
+        <div class="card animate-fade-up">
+          <div class="card-header" style="padding:20px 24px;">
+            <div>
+              <div class="card-title">Patient Registry</div>
+              <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
+            </div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-ghost btn-sm">â¬‡ Export</button>
+              <button class="btn btn-primary btn-sm" onclick="openModal('add-patient-modal')">ï¼‹ Add Patient</button>
+            </div>
           </div>
 
-          <!-- Pagination -->
-          <div style="padding:16px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
-            <span style="font-size:12.5px; color:var(--text-3)">Showing 1–5 of 1,248 patients</span>
-            <div style="display:flex; gap:6px;">
-              <button class="btn btn-ghost btn-sm">← Prev</button>
-              <button class="btn btn-primary btn-sm">1</button>
-              <button class="btn btn-ghost btn-sm">2</button>
-              <button class="btn btn-ghost btn-sm">3</button>
-              <button class="btn btn-ghost btn-sm">Next →</button>
+          <!-- Filter bar -->
+          <div
+            style="padding: 14px 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <div class="filter-search" style="max-width:280px">
+              <span style="color:var(--text-3)">ðŸ”</span>
+              <input type="text" placeholder="Search by name, ID, phoneâ€¦" />
+            </div>
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="admitted">Admitted</button>
+            <button class="filter-btn" data-filter="discharged">Discharged</button>
+            <button class="filter-btn" data-filter="outpatient">Outpatient</button>
+            <div style="margin-left:auto; display:flex; gap:8px;">
+              <select class="form-control" style="width:auto; padding:6px 12px; font-size:12.5px;">
+                <option>Sort: Name Aâ€“Z</option>
+                <option>Sort: Newest</option>
+                <option>Sort: Bill Amount</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>ID</th>
+                    <th>DOB / Age</th>
+                    <th>Blood Group</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-category="admitted">
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="avatar" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
+                        <div>
+                          <div>Arun Kumar</div>
+                          <div style="font-size:11px; color:var(--text-3)">arun@gmail.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="num-chip">P-1001</span></td>
+                    <td>15 Jun 1990<br><span style="font-size:11px; color:var(--text-3)">34 yrs</span></td>
+                    <td><span class="badge badge-rose">B+</span></td>
+                    <td>9845671230</td>
+                    <td>Chennai</td>
+                    <td><span class="badge badge-blue">Admitted</span></td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
+                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
+                          onclick="openEditPatientModal(this)">âœï¸</button>
+                        <button class="btn btn-sm"
+                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
+                          title="Delete"
+                          onclick="confirmDelete('Arun Kumar', () => { this.closest('tr').style.opacity='0.4'; showToast('Arun Kumar deleted','success'); })">ðŸ—‘</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="admitted">
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
+                        <div>
+                          <div>Meena Devi</div>
+                          <div style="font-size:11px; color:var(--text-3)">meena@gmail.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="num-chip">P-1002</span></td>
+                    <td>22 Mar 1985<br><span style="font-size:11px; color:var(--text-3)">40 yrs</span></td>
+                    <td><span class="badge badge-teal">O-</span></td>
+                    <td>9756432108</td>
+                    <td>Coimbatore</td>
+                    <td><span class="badge badge-blue">Admitted</span></td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
+                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
+                          onclick="openEditPatientModal(this)">âœï¸</button>
+                        <button class="btn btn-sm"
+                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
+                          title="Delete"
+                          onclick="confirmDelete('Meena Devi', () => { this.closest('tr').style.opacity='0.4'; showToast('Meena Devi deleted','success'); })">ðŸ—‘</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="outpatient">
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
+                        <div>
+                          <div>Vikram Singh</div>
+                          <div style="font-size:11px; color:var(--text-3)">vikram@gmail.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="num-chip">P-1003</span></td>
+                    <td>08 Nov 1978<br><span style="font-size:11px; color:var(--text-3)">46 yrs</span></td>
+                    <td><span class="badge badge-amber">A+</span></td>
+                    <td>9812345670</td>
+                    <td>Madurai</td>
+                    <td><span class="badge badge-amber">Outpatient</span></td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
+                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
+                          onclick="openEditPatientModal(this)">âœï¸</button>
+                        <button class="btn btn-sm"
+                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
+                          title="Delete"
+                          onclick="confirmDelete('Vikram Singh', () => { this.closest('tr').style.opacity='0.4'; showToast('Vikram Singh deleted','success'); })">ðŸ—‘</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="discharged">
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
+                        <div>
+                          <div>Divya Nair</div>
+                          <div style="font-size:11px; color:var(--text-3)">divya@gmail.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="num-chip">P-1004</span></td>
+                    <td>30 Jul 1995<br><span style="font-size:11px; color:var(--text-3)">29 yrs</span></td>
+                    <td><span class="badge badge-blue">AB+</span></td>
+                    <td>9865432107</td>
+                    <td>Trichy</td>
+                    <td><span class="badge badge-green">Discharged</span></td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
+                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
+                          onclick="openEditPatientModal(this)">âœï¸</button>
+                        <button class="btn btn-sm"
+                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
+                          title="Delete"
+                          onclick="confirmDelete('Divya Nair', () => { this.closest('tr').style.opacity='0.4'; showToast('Divya Nair deleted','success'); })">ðŸ—‘</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="discharged">
+                    <td>
+                      <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
+                        <div>
+                          <div>Karthik Raj</div>
+                          <div style="font-size:11px; color:var(--text-3)">karthik@gmail.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td><span class="num-chip">P-1005</span></td>
+                    <td>14 Feb 1988<br><span style="font-size:11px; color:var(--text-3)">37 yrs</span></td>
+                    <td><span class="badge badge-muted">O+</span></td>
+                    <td>9745321089</td>
+                    <td>Salem</td>
+                    <td><span class="badge badge-green">Discharged</span></td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
+                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
+                          onclick="openEditPatientModal(this)">âœï¸</button>
+                        <button class="btn btn-sm"
+                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
+                          title="Delete"
+                          onclick="confirmDelete('Karthik Raj', () => { this.closest('tr').style.opacity='0.4'; showToast('Karthik Raj deleted','success'); })">ðŸ—‘</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <div
+              style="padding:16px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
+              <span style="font-size:12.5px; color:var(--text-3)">Showing 1â€“5 of 1,248 patients</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-ghost btn-sm">â† Prev</button>
+                <button class="btn btn-primary btn-sm">1</button>
+                <button class="btn btn-ghost btn-sm">2</button>
+                <button class="btn btn-ghost btn-sm">3</button>
+                <button class="btn btn-ghost btn-sm">Next â†’</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-    </div><!-- end page-body -->
+      </div><!-- end page-body -->
+    </div>
+
+  </div><!-- end layout -->
+
+  <!-- Add Patient Modal -->
+  <div class="modal-overlay" id="add-patient-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Register New Patient</div>
+        <button class="modal-close" onclick="closeModal('add-patient-modal')">âœ•</button>
+      </div>
+      <div class="modal-body">
+        <div id="add-patient-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-control" placeholder="e.g. Arun Kumar" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date of Birth *</label>
+              <input type="date" class="form-control" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Gender *</label>
+              <select class="form-control" required>
+                <option value="">Select gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Blood Group</label>
+              <select class="form-control">
+                <option value="">Select</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>O+</option>
+                <option>O-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone *</label>
+              <input type="tel" class="form-control" placeholder="10-digit number" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" placeholder="patient@email.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-control" placeholder="City, Streetâ€¦" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('add-patient-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="handleAddPatient()">âœ“ Register Patient</button>
+      </div>
+    </div>
   </div>
 
-</div><!-- end layout -->
-
-<!-- Add Patient Modal -->
-<div class="modal-overlay" id="add-patient-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Register New Patient</div>
-      <button class="modal-close" onclick="closeModal('add-patient-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div id="add-patient-form">
+  <!-- Edit Patient Modal -->
+  <div class="modal-overlay" id="edit-patient-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Edit Patient</div>
+        <button class="modal-close" onclick="closeModal('edit-patient-modal')">âœ•</button>
+      </div>
+      <div class="modal-body">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Full Name *</label>
-            <input type="text" class="form-control" placeholder="e.g. Arun Kumar" required />
+            <input type="text" class="form-control" value="Arun Kumar" />
           </div>
           <div class="form-group">
-            <label class="form-label">Date of Birth *</label>
-            <input type="date" class="form-control" required />
+            <label class="form-label">Phone *</label>
+            <input type="tel" class="form-control" value="9845671230" />
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Gender *</label>
-            <select class="form-control" required>
-              <option value="">Select gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
-          </div>
           <div class="form-group">
             <label class="form-label">Blood Group</label>
             <select class="form-control">
-              <option value="">Select</option>
-              <option>A+</option><option>A-</option>
-              <option>B+</option><option>B-</option>
-              <option>O+</option><option>O-</option>
-              <option>AB+</option><option>AB-</option>
+              <option selected>B+</option>
             </select>
           </div>
-        </div>
-        <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Phone *</label>
-            <input type="tel" class="form-control" placeholder="10-digit number" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" placeholder="patient@email.com" />
+            <label class="form-label">Gender</label>
+            <select class="form-control">
+              <option>Male</option>
+            </select>
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Address</label>
-          <input type="text" class="form-control" placeholder="City, Street…" />
+          <input type="text" class="form-control" value="Chennai" />
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('add-patient-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="handleAddPatient()">✓ Register Patient</button>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('edit-patient-modal')">Cancel</button>
+        <button class="btn btn-primary" onclick="saveEditPatient()">ðŸ’¾ Save Changes</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Edit Patient Modal -->
-<div class="modal-overlay" id="edit-patient-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Edit Patient</div>
-      <button class="modal-close" onclick="closeModal('edit-patient-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Full Name *</label>
-          <input type="text" class="form-control" value="Arun Kumar" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone *</label>
-          <input type="tel" class="form-control" value="9845671230" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Blood Group</label>
-          <select class="form-control"><option selected>B+</option></select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Gender</label>
-          <select class="form-control"><option>Male</option></select>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Address</label>
-        <input type="text" class="form-control" value="Chennai" />
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('edit-patient-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="showToast('Patient updated successfully!','success'); closeModal('edit-patient-modal')">💾 Save Changes</button>
-    </div>
-  </div>
-</div>
+  <script src="js/api.js"></script>
+  <script src="js/script.js"></script>
+  <script>
+    /* â”€â”€ State â”€â”€ */
+    let _editPatientId = null;
 
-<script src="js/script.js"></script>
-<script>
-  function handleAddPatient() {
-    const inputs = document.querySelectorAll('#add-patient-form [required]');
-    let valid = true;
-    inputs.forEach(i => {
-      if (!i.value.trim()) {
-        i.style.borderColor = 'var(--rose)';
-        valid = false;
-        i.addEventListener('input', () => i.style.borderColor = '', { once: true });
+    /* â”€â”€ Load patients from API â”€â”€ */
+    async function loadPatients() {
+      renderLoading('patient-tbody', 8);
+      try {
+        const patients = await Patients.getAll();
+        renderPatientRows(patients);
+      } catch {
+        renderError('patient-tbody', 8);
       }
-    });
-    if (!valid) { showToast('Please fill in all required fields.', 'error'); return; }
-    showToast('Patient registered successfully!', 'success');
-    closeModal('add-patient-modal');
-  }
-</script>
+    }
+
+    function renderPatientRows(patients) {
+      const tbody = document.getElementById('patient-tbody');
+      if (!patients || patients.length === 0) {
+        renderEmpty('patient-tbody', 8, 'No patients registered yet');
+        return;
+      }
+      const avatarColors = [
+        'linear-gradient(135deg,#00D2BE,#0095FF)',
+        'linear-gradient(135deg,#F43F5E,#DC2626)',
+        'linear-gradient(135deg,#0EA5E9,#0284C7)',
+        'linear-gradient(135deg,#A78BFA,#7C3AED)',
+        'linear-gradient(135deg,#F59E0B,#D97706)',
+        'linear-gradient(135deg,#22C55E,#16A34A)',
+      ];
+      tbody.innerHTML = patients.map((p, i) => {
+        const initial = (p.name || '?')[0].toUpperCase();
+        const color = avatarColors[i % avatarColors.length];
+        const dob = p.dob ? new Date(p.dob).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) : 'â€”';
+        const age = p.dob ? Math.floor((Date.now() - new Date(p.dob)) / 3.156e10) : '?';
+        return `
+          <tr data-category="${(p.admissionStatus || 'Outpatient').toLowerCase().replace(' ','')}" data-id="${p.id}">
+            <td>
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div class="avatar" style="background:${color}">${initial}</div>
+                <div>
+                  <div>${p.name}</div>
+                  <div style="font-size:11px; color:var(--text-3)">${p.email || 'â€”'}</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="num-chip">P-${String(p.id).padStart(4,'0')}</span></td>
+            <td>${dob}<br><span style="font-size:11px; color:var(--text-3)">${age} yrs</span></td>
+            <td>${p.bloodGroup ? `<span class="badge badge-rose">${p.bloodGroup}</span>` : 'â€”'}</td>
+            <td>${p.phone || 'â€”'}</td>
+            <td>${p.address || 'â€”'}</td>
+            <td>${statusBadge(p.admissionStatus || 'Outpatient')}</td>
+            <td>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-ghost btn-sm btn-icon" title="View" onclick="viewPatient(${p.id})">ðŸ‘</button>
+                <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openEditPatientModal(this)">âœï¸</button>
+                <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);" title="Delete"
+                  onclick="deletePatient(${p.id}, '${p.name}', this)">ðŸ—‘</button>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
+      updateRowCount();
+    }
+
+    /* â”€â”€ View patient details â”€â”€ */
+    function viewPatient(id) {
+      showToast(`Loading patient #${id}â€¦`, 'info');
+    }
+
+    /* â”€â”€ Open edit modal and prefill from row OR from id attr â”€â”€ */
+    function openEditPatientModal(btn) {
+      const row = btn.closest('tr');
+      _editPatientId = row?.dataset?.id || null;
+      const cells = row.querySelectorAll('td');
+      const name  = cells[0]?.querySelector('div > div > div:first-child')?.textContent.trim() || '';
+      const phone = cells[4]?.textContent.trim() || '';
+      const city  = cells[5]?.textContent.trim() || '';
+      document.querySelector('#edit-patient-modal input[type="text"]').value = name;
+      document.querySelector('#edit-patient-modal input[type="tel"]').value = phone;
+      document.querySelector('#edit-patient-modal input[type="text"]:last-of-type').value = city;
+      openModal('edit-patient-modal');
+    }
+
+    /* â”€â”€ Save edit via PUT /api/patients/{id} â”€â”€ */
+    async function saveEditPatient() {
+      if (!_editPatientId) { showToast('No patient selected.', 'error'); return; }
+      const name  = document.querySelector('#edit-patient-modal input[type="text"]').value.trim();
+      const phone = document.querySelector('#edit-patient-modal input[type="tel"]').value.trim();
+      const city  = document.querySelector('#edit-patient-modal input[type="text"]:last-of-type').value.trim();
+      if (!name || !phone) { showToast('Name and phone are required.', 'error'); return; }
+      try {
+        await Patients.update(_editPatientId, { name, phone, address: city });
+        showToast('Patient updated successfully!', 'success');
+        closeModal('edit-patient-modal');
+        loadPatients();
+      } catch { /* toast already shown */ }
+    }
+
+    /* â”€â”€ Add patient via POST /api/patients â”€â”€ */
+    async function handleAddPatient() {
+      const inputs = document.querySelectorAll('#add-patient-form [required]');
+      let valid = true;
+      inputs.forEach(i => {
+        if (!i.value.trim()) {
+          i.style.borderColor = 'var(--rose)';
+          valid = false;
+          i.addEventListener('input', () => i.style.borderColor = '', { once: true });
+        }
+      });
+      if (!valid) { showToast('Please fill in all required fields.', 'error'); return; }
+
+      const form = document.getElementById('add-patient-form');
+      const inputs2 = form.querySelectorAll('input, select');
+      const data = {
+        name:       inputs2[0]?.value.trim(),
+        dob:        inputs2[1]?.value,
+        gender:     inputs2[2]?.value,
+        bloodGroup: inputs2[3]?.value,
+        phone:      inputs2[4]?.value.trim(),
+        email:      inputs2[5]?.value.trim(),
+        address:    inputs2[6]?.value.trim(),
+      };
+      try {
+        await Patients.create(data);
+        showToast('Patient registered successfully!', 'success');
+        closeModal('add-patient-modal');
+        form.querySelectorAll('input, select').forEach(i => i.value = '');
+        loadPatients();
+      } catch { /* toast already shown */ }
+    }
+
+    /* â”€â”€ Delete patient via DELETE /api/patients/{id} â”€â”€ */
+    function deletePatient(id, name, btn) {
+      confirmDelete(name, async () => {
+        try {
+          await Patients.delete(id);
+          showToast(`${name} deleted successfully.`, 'success');
+          btn.closest('tr').remove();
+          updateRowCount();
+        } catch { /* toast already shown */ }
+      });
+    }
+
+    /* â”€â”€ Boot â”€â”€ */
+    document.addEventListener('DOMContentLoaded', loadPatients);
+  </script>rror'); return; }
+      showToast('Patient registered successfully!', 'success');
+      closeModal('add-patient-modal');
+    }
+  </script>
 </body>
+
 </html>

@@ -1,384 +1,427 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HMS — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+  <meta name="description" content="MediCore HMS Dashboard — manage patients, doctors, appointments and billing." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
 </head>
+
 <body>
-<div class="layout">
+  <div class="layout">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-icon">🏥</div>
-      <div class="logo-text">
-        <strong>MediCore</strong>
-        <span>Hospital Suite</span>
-      </div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section-label">Overview</div>
-      <a class="nav-link active" href="index.html">
-        <span class="nav-icon">⊞</span> Dashboard
-      </a>
-
-      <div class="nav-section-label">Management</div>
-      <a class="nav-link" href="patient.html">
-        <span class="nav-icon">👤</span> Patients
-      </a>
-      <a class="nav-link" href="doctor.html">
-        <span class="nav-icon">🩺</span> Doctors
-      </a>
-      <a class="nav-link" href="appointment.html">
-        <span class="nav-icon">📅</span> Appointments
-        <span class="nav-badge">3</span>
-      </a>
-      <a class="nav-link" href="billing.html">
-        <span class="nav-icon">💳</span> Billing
-      </a>
-
-      <div class="nav-section-label">System</div>
-      <a class="nav-link" href="#">
-        <span class="nav-icon">📊</span> Reports
-      </a>
-      <a class="nav-link" href="#">
-        <span class="nav-icon">⚙️</span> Settings
-      </a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="user-avatar">A</div>
-        <div class="user-info">
-          <div class="uname">Admin User</div>
-          <div class="urole">Super Admin</div>
-        </div>
-        <span style="color:var(--text-3); font-size:14px;">⋯</span>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Main -->
-  <div class="main">
-    <!-- Topbar -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="icon-btn" onclick="toggleSidebar()" style="display:none" id="menu-btn">☰</button>
-        <div>
-          <div class="page-title">Dashboard</div>
-          <div class="page-breadcrumb">Welcome back, Admin 👋</div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🏥</div>
+        <div class="logo-text">
+          <strong>MediCore</strong>
+          <span>Hospital Suite</span>
         </div>
       </div>
-      <div class="topbar-right">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Search records…" />
-        </div>
-        <button class="icon-btn" title="Notifications">
-          🔔<span class="notif-dot"></span>
-        </button>
-        <button class="icon-btn" title="Help">❓</button>
-      </div>
-    </header>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Overview</div>
+        <a class="nav-link active" href="index.html">
+          <span class="nav-icon">⊞</span> Dashboard
+        </a>
 
-    <!-- Body -->
-    <div class="page-body">
+        <div class="nav-section-label">Management</div>
+        <a class="nav-link" href="patient.html">
+          <span class="nav-icon">👤</span> Patients
+        </a>
+        <a class="nav-link" href="doctor.html">
+          <span class="nav-icon">🩺</span> Doctors
+        </a>
+        <a class="nav-link" href="appointment.html">
+          <span class="nav-icon">📅</span> Appointments
+          <span class="nav-badge">3</span>
+        </a>
+        <a class="nav-link" href="billing.html">
+          <span class="nav-icon">💳</span> Billing
+        </a>
 
-      <!-- Stats -->
-      <div class="stats-grid">
-        <div class="stat-card teal">
-          <div class="stat-icon">👥</div>
-          <div class="stat-value" data-count="1248">0</div>
-          <div class="stat-label">Total Patients</div>
-          <div class="stat-change up">▲ 12% this month</div>
-        </div>
-        <div class="stat-card blue">
-          <div class="stat-icon">🩺</div>
-          <div class="stat-value" data-count="86">0</div>
-          <div class="stat-label">Active Doctors</div>
-          <div class="stat-change up">▲ 3 new this month</div>
-        </div>
-        <div class="stat-card amber">
-          <div class="stat-icon">📅</div>
-          <div class="stat-value" data-count="34">0</div>
-          <div class="stat-label">Today's Appointments</div>
-          <div class="stat-change down">▼ 5 cancelled</div>
-        </div>
-        <div class="stat-card rose">
-          <div class="stat-icon">🛏️</div>
-          <div class="stat-value" data-count="127">0</div>
-          <div class="stat-label">Admitted Patients</div>
-          <div class="stat-change up">▲ 8 new admissions</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-icon">💰</div>
-          <div class="stat-value" style="font-size:22px;" data-count="284750">0</div>
-          <div class="stat-label">Revenue This Month (₹)</div>
-          <div class="stat-change up">▲ 18% vs last month</div>
+        <div class="nav-section-label">System</div>
+        <a class="nav-link" href="#">
+          <span class="nav-icon">📊</span> Reports
+        </a>
+        <a class="nav-link" href="#">
+          <span class="nav-icon">⚙️</span> Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">A</div>
+          <div class="user-info">
+            <div class="uname">Admin User</div>
+            <div class="urole">Super Admin</div>
+          </div>
+          <span style="color:var(--text-3); font-size:14px;">⋯</span>
         </div>
       </div>
+    </aside>
 
-      <!-- Grid Row 1 -->
-      <div class="grid-2" style="margin-bottom:24px;">
-
-        <!-- Recent Appointments -->
-        <div class="card animate-fade-up" style="animation-delay:0.1s">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Today's Appointments</div>
-              <div class="card-subtitle">Mar 10, 2025 • 34 scheduled</div>
-            </div>
-            <a href="appointment.html" class="btn btn-ghost btn-sm">View all →</a>
+    <!-- Main -->
+    <div class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="icon-btn" onclick="toggleSidebar()" style="display:none" id="menu-btn">☰</button>
+          <div>
+            <div class="page-title">Dashboard</div>
+            <div class="page-breadcrumb">Welcome back, Admin 👋</div>
           </div>
-          <div class="card-body">
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">09:00</div><div class="period">AM</div></div>
-              <div class="appt-line" style="background:var(--teal)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Arun Kumar</div>
-                <div class="appt-doctor">Dr. Ramesh Kumar · Cardiology</div>
-              </div>
-              <span class="badge badge-teal">Done</span>
-            </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">10:00</div><div class="period">AM</div></div>
-              <div class="appt-line" style="background:var(--teal)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Meena Devi</div>
-                <div class="appt-doctor">Dr. Priya Sharma · Neurology</div>
-              </div>
-              <span class="badge badge-teal">Done</span>
-            </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">11:00</div><div class="period">AM</div></div>
-              <div class="appt-line" style="background:var(--amber)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Vikram Singh</div>
-                <div class="appt-doctor">Dr. Anand Rajan · Orthopaedics</div>
-              </div>
-              <span class="badge badge-amber">Scheduled</span>
-            </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">02:00</div><div class="period">PM</div></div>
-              <div class="appt-line" style="background:var(--rose)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Divya Nair</div>
-                <div class="appt-doctor">Dr. Ramesh Kumar · Cardiology</div>
-              </div>
-              <span class="badge badge-rose">Cancelled</span>
-            </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">03:00</div><div class="period">PM</div></div>
-              <div class="appt-line" style="background:var(--teal)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Karthik Raj</div>
-                <div class="appt-doctor">Dr. Kavitha Menon · Gynaecology</div>
-              </div>
-              <span class="badge badge-teal">Done</span>
-            </div>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search records…" />
+          </div>
+          <button class="icon-btn" title="Notifications">
+            🔔<span class="notif-dot"></span>
+          </button>
+          <button class="icon-btn" title="Help">❓</button>
+        </div>
+      </header>
+
+      <!-- Body -->
+      <div class="page-body">
+
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card teal">
+            <div class="stat-icon">👥</div>
+            <div class="stat-value" data-count="1248">0</div>
+            <div class="stat-label">Total Patients</div>
+            <div class="stat-change up">▲ 12% this month</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">🩺</div>
+            <div class="stat-value" data-count="86">0</div>
+            <div class="stat-label">Active Doctors</div>
+            <div class="stat-change up">▲ 3 new this month</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-icon">📅</div>
+            <div class="stat-value" data-count="34">0</div>
+            <div class="stat-label">Today's Appointments</div>
+            <div class="stat-change down">▼ 5 cancelled</div>
+          </div>
+          <div class="stat-card rose">
+            <div class="stat-icon">🛏️</div>
+            <div class="stat-value" data-count="127">0</div>
+            <div class="stat-label">Admitted Patients</div>
+            <div class="stat-change up">▲ 8 new admissions</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" style="font-size:22px;" data-count="284750">0</div>
+            <div class="stat-label">Revenue This Month (₹)</div>
+            <div class="stat-change up">▲ 18% vs last month</div>
           </div>
         </div>
 
-        <!-- Pending Bills -->
-        <div class="card animate-fade-up" style="animation-delay:0.2s">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Billing Overview</div>
-              <div class="card-subtitle">Outstanding & recent payments</div>
-            </div>
-            <a href="billing.html" class="btn btn-ghost btn-sm">View all →</a>
-          </div>
-          <div class="card-body">
-            <div style="display:flex; flex-direction:column; gap:14px;">
-              <!-- Bill row -->
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#22C55E,#16A34A)">A</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Arun Kumar</div>
-                  <div style="font-size:11px; color:var(--text-3)">Bill #7001 · Mar 10</div>
-                </div>
-                <div class="billing-amount paid">₹7,300</div>
-                <span class="badge badge-green">Paid</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Meena Devi</div>
-                  <div style="font-size:11px; color:var(--text-3)">Bill #7002 · Mar 11</div>
-                </div>
-                <div class="billing-amount pending">₹6,300</div>
-                <span class="badge badge-amber">Pending</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Vikram Singh</div>
-                  <div style="font-size:11px; color:var(--text-3)">Bill #7003 · Mar 12</div>
-                </div>
-                <div class="billing-amount partial">₹5,400</div>
-                <span class="badge badge-blue">Partial</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Divya Nair</div>
-                  <div style="font-size:11px; color:var(--text-3)">Bill #7004 · Mar 13</div>
-                </div>
-                <div class="billing-amount paid">₹7,950</div>
-                <span class="badge badge-green">Paid</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:12px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Karthik Raj</div>
-                  <div style="font-size:11px; color:var(--text-3)">Bill #7005 · Mar 01</div>
-                </div>
-                <div class="billing-amount partial">₹10,900</div>
-                <span class="badge badge-blue">Partial</span>
-              </div>
-            </div>
+        <!-- Grid Row 1 -->
+        <div class="grid-2" style="margin-bottom:24px;">
 
-            <div class="divider"></div>
-
-            <!-- Payment breakdown -->
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center;">
+          <!-- Recent Appointments -->
+          <div class="card animate-fade-up" style="animation-delay:0.1s">
+            <div class="card-header">
               <div>
-                <div style="font-size:18px; font-weight:700; color:var(--green); font-family:'Playfair Display',serif">2</div>
-                <div style="font-size:11px; color:var(--text-3)">Paid</div>
+                <div class="card-title">Today's Appointments</div>
+                <div class="card-subtitle">Mar 10, 2025 • 34 scheduled</div>
               </div>
-              <div>
-                <div style="font-size:18px; font-weight:700; color:var(--amber); font-family:'Playfair Display',serif">1</div>
-                <div style="font-size:11px; color:var(--text-3)">Pending</div>
+              <a href="appointment.html" class="btn btn-ghost btn-sm">View all →</a>
+            </div>
+            <div class="card-body">
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">09:00</div>
+                  <div class="period">AM</div>
+                </div>
+                <div class="appt-line" style="background:var(--teal)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Arun Kumar</div>
+                  <div class="appt-doctor">Dr. Ramesh Kumar · Cardiology</div>
+                </div>
+                <span class="badge badge-teal">Done</span>
               </div>
-              <div>
-                <div style="font-size:18px; font-weight:700; color:var(--blue); font-family:'Playfair Display',serif">2</div>
-                <div style="font-size:11px; color:var(--text-3)">Partial</div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">10:00</div>
+                  <div class="period">AM</div>
+                </div>
+                <div class="appt-line" style="background:var(--teal)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Meena Devi</div>
+                  <div class="appt-doctor">Dr. Priya Sharma · Neurology</div>
+                </div>
+                <span class="badge badge-teal">Done</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">11:00</div>
+                  <div class="period">AM</div>
+                </div>
+                <div class="appt-line" style="background:var(--amber)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Vikram Singh</div>
+                  <div class="appt-doctor">Dr. Anand Rajan · Orthopaedics</div>
+                </div>
+                <span class="badge badge-amber">Scheduled</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">02:00</div>
+                  <div class="period">PM</div>
+                </div>
+                <div class="appt-line" style="background:var(--rose)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Divya Nair</div>
+                  <div class="appt-doctor">Dr. Ramesh Kumar · Cardiology</div>
+                </div>
+                <span class="badge badge-rose">Cancelled</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">03:00</div>
+                  <div class="period">PM</div>
+                </div>
+                <div class="appt-line" style="background:var(--teal)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Karthik Raj</div>
+                  <div class="appt-doctor">Dr. Kavitha Menon · Gynaecology</div>
+                </div>
+                <span class="badge badge-teal">Done</span>
               </div>
             </div>
           </div>
+
+          <!-- Pending Bills -->
+          <div class="card animate-fade-up" style="animation-delay:0.2s">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Billing Overview</div>
+                <div class="card-subtitle">Outstanding & recent payments</div>
+              </div>
+              <a href="billing.html" class="btn btn-ghost btn-sm">View all →</a>
+            </div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                <!-- Bill row -->
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#22C55E,#16A34A)">A</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Arun Kumar</div>
+                    <div style="font-size:11px; color:var(--text-3)">Bill #7001 · Mar 10</div>
+                  </div>
+                  <div class="billing-amount paid">₹7,300</div>
+                  <span class="badge badge-green">Paid</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Meena Devi</div>
+                    <div style="font-size:11px; color:var(--text-3)">Bill #7002 · Mar 11</div>
+                  </div>
+                  <div class="billing-amount pending">₹6,300</div>
+                  <span class="badge badge-amber">Pending</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Vikram Singh</div>
+                    <div style="font-size:11px; color:var(--text-3)">Bill #7003 · Mar 12</div>
+                  </div>
+                  <div class="billing-amount partial">₹5,400</div>
+                  <span class="badge badge-blue">Partial</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Divya Nair</div>
+                    <div style="font-size:11px; color:var(--text-3)">Bill #7004 · Mar 13</div>
+                  </div>
+                  <div class="billing-amount paid">₹7,950</div>
+                  <span class="badge badge-green">Paid</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Karthik Raj</div>
+                    <div style="font-size:11px; color:var(--text-3)">Bill #7005 · Mar 01</div>
+                  </div>
+                  <div class="billing-amount partial">₹10,900</div>
+                  <span class="badge badge-blue">Partial</span>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- Payment breakdown -->
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center;">
+                <div>
+                  <div
+                    style="font-size:18px; font-weight:700; color:var(--green); font-family:'Playfair Display',serif">2
+                  </div>
+                  <div style="font-size:11px; color:var(--text-3)">Paid</div>
+                </div>
+                <div>
+                  <div
+                    style="font-size:18px; font-weight:700; color:var(--amber); font-family:'Playfair Display',serif">1
+                  </div>
+                  <div style="font-size:11px; color:var(--text-3)">Pending</div>
+                </div>
+                <div>
+                  <div style="font-size:18px; font-weight:700; color:var(--blue); font-family:'Playfair Display',serif">
+                    2</div>
+                  <div style="font-size:11px; color:var(--text-3)">Partial</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-      </div>
+        <!-- Grid Row 2 -->
+        <div class="grid-2" style="margin-bottom:24px;">
 
-      <!-- Grid Row 2 -->
-      <div class="grid-2" style="margin-bottom:24px;">
-
-        <!-- Departments -->
-        <div class="card animate-fade-up" style="animation-delay:0.3s">
-          <div class="card-header">
-            <div>
-              <div class="card-title">Departments</div>
-              <div class="card-subtitle">Capacity & occupancy</div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div style="display:flex; flex-direction:column; gap:18px;">
+          <!-- Departments -->
+          <div class="card animate-fade-up" style="animation-delay:0.3s">
+            <div class="card-header">
               <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); font-weight:500">❤️ Cardiology</span>
-                  <span style="font-size:12px; color:var(--teal)">78%</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:78%; background:var(--teal)"></div></div>
-              </div>
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); font-weight:500">🧠 Neurology</span>
-                  <span style="font-size:12px; color:var(--blue)">65%</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:65%; background:var(--blue)"></div></div>
-              </div>
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); font-weight:500">🦴 Orthopaedics</span>
-                  <span style="font-size:12px; color:var(--amber)">52%</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:52%; background:var(--amber)"></div></div>
-              </div>
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); font-weight:500">🌸 Gynaecology</span>
-                  <span style="font-size:12px; color:var(--rose)">90%</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:90%; background:var(--rose)"></div></div>
-              </div>
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); font-weight:500">💊 General Medicine</span>
-                  <span style="font-size:12px; color:var(--green)">43%</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:43%; background:var(--green)"></div></div>
+                <div class="card-title">Departments</div>
+                <div class="card-subtitle">Capacity & occupancy</div>
               </div>
             </div>
+            <div class="card-body">
+              <div style="display:flex; flex-direction:column; gap:18px;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); font-weight:500">❤️ Cardiology</span>
+                    <span style="font-size:12px; color:var(--teal)">78%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:78%; background:var(--teal)"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); font-weight:500">🧠 Neurology</span>
+                    <span style="font-size:12px; color:var(--blue)">65%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:65%; background:var(--blue)"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); font-weight:500">🦴 Orthopaedics</span>
+                    <span style="font-size:12px; color:var(--amber)">52%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:52%; background:var(--amber)"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); font-weight:500">🌸 Gynaecology</span>
+                    <span style="font-size:12px; color:var(--rose)">90%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:90%; background:var(--rose)"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); font-weight:500">💊 General Medicine</span>
+                    <span style="font-size:12px; color:var(--green)">43%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:43%; background:var(--green)"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <!-- Quick Actions -->
+          <div class="card animate-fade-up" style="animation-delay:0.35s">
+            <div class="card-header">
+              <div class="card-title">Quick Actions</div>
+            </div>
+            <div class="card-body">
+              <div class="quick-grid">
+                <a href="patient.html" class="quick-card">
+                  <span class="qc-icon">➕👤</span>
+                  <div class="qc-label">New Patient</div>
+                  <div class="qc-sub">Register</div>
+                </a>
+                <a href="appointment.html" class="quick-card">
+                  <span class="qc-icon">📆</span>
+                  <div class="qc-label">Book Appt.</div>
+                  <div class="qc-sub">Schedule</div>
+                </a>
+                <a href="billing.html" class="quick-card">
+                  <span class="qc-icon">🧾</span>
+                  <div class="qc-label">Generate Bill</div>
+                  <div class="qc-sub">Billing</div>
+                </a>
+                <a href="doctor.html" class="quick-card">
+                  <span class="qc-icon">🩺</span>
+                  <div class="qc-label">Add Doctor</div>
+                  <div class="qc-sub">Staff</div>
+                </a>
+              </div>
+
+              <div class="divider"></div>
+
+              <!-- Recent activity -->
+              <div
+                style="font-size:12px; font-weight:600; color:var(--text-3); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">
+                Recent Activity</div>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <div class="timeline-dot" style="background:var(--teal)"></div>
+                  <div style="flex:1">
+                    <div style="font-size:13px; color:var(--text-1)">Patient <strong>Arun Kumar</strong> discharged
+                    </div>
+                    <div style="font-size:11px; color:var(--text-3)">2 hours ago</div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <div class="timeline-dot" style="background:var(--amber)"></div>
+                  <div style="flex:1">
+                    <div style="font-size:13px; color:var(--text-1)">Bill <strong>#7002</strong> is overdue</div>
+                    <div style="font-size:11px; color:var(--text-3)">4 hours ago</div>
+                  </div>
+                </div>
+                <div style="display:flex; gap:10px; align-items:flex-start;">
+                  <div class="timeline-dot" style="background:var(--blue)"></div>
+                  <div style="flex:1">
+                    <div style="font-size:13px; color:var(--text-1)">New doctor <strong>Dr. Meera Das</strong> added
+                    </div>
+                    <div style="font-size:11px; color:var(--text-3)">Yesterday</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Quick Actions -->
-        <div class="card animate-fade-up" style="animation-delay:0.35s">
-          <div class="card-header">
-            <div class="card-title">Quick Actions</div>
-          </div>
-          <div class="card-body">
-            <div class="quick-grid">
-              <a href="patient.html" class="quick-card">
-                <span class="qc-icon">➕👤</span>
-                <div class="qc-label">New Patient</div>
-                <div class="qc-sub">Register</div>
-              </a>
-              <a href="appointment.html" class="quick-card">
-                <span class="qc-icon">📆</span>
-                <div class="qc-label">Book Appt.</div>
-                <div class="qc-sub">Schedule</div>
-              </a>
-              <a href="billing.html" class="quick-card">
-                <span class="qc-icon">🧾</span>
-                <div class="qc-label">Generate Bill</div>
-                <div class="qc-sub">Billing</div>
-              </a>
-              <a href="doctor.html" class="quick-card">
-                <span class="qc-icon">🩺</span>
-                <div class="qc-label">Add Doctor</div>
-                <div class="qc-sub">Staff</div>
-              </a>
-            </div>
+      </div><!-- end page-body -->
+    </div><!-- end main -->
+  </div><!-- end layout -->
 
-            <div class="divider"></div>
-
-            <!-- Recent activity -->
-            <div style="font-size:12px; font-weight:600; color:var(--text-3); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">Recent Activity</div>
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <div style="display:flex; gap:10px; align-items:flex-start;">
-                <div class="timeline-dot" style="background:var(--teal)"></div>
-                <div style="flex:1">
-                  <div style="font-size:13px; color:var(--text-1)">Patient <strong>Arun Kumar</strong> discharged</div>
-                  <div style="font-size:11px; color:var(--text-3)">2 hours ago</div>
-                </div>
-              </div>
-              <div style="display:flex; gap:10px; align-items:flex-start;">
-                <div class="timeline-dot" style="background:var(--amber)"></div>
-                <div style="flex:1">
-                  <div style="font-size:13px; color:var(--text-1)">Bill <strong>#7002</strong> is overdue</div>
-                  <div style="font-size:11px; color:var(--text-3)">4 hours ago</div>
-                </div>
-              </div>
-              <div style="display:flex; gap:10px; align-items:flex-start;">
-                <div class="timeline-dot" style="background:var(--blue)"></div>
-                <div style="flex:1">
-                  <div style="font-size:13px; color:var(--text-1)">New doctor <strong>Dr. Meera Das</strong> added</div>
-                  <div style="font-size:11px; color:var(--text-3)">Yesterday</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div><!-- end page-body -->
-  </div><!-- end main -->
-</div><!-- end layout -->
-
-<script src="js/script.js"></script>
+  <script src="js/script.js"></script>
 </body>
+
 </html>

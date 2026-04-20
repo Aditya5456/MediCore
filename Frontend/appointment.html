@@ -1,440 +1,498 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HMS — Appointments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+  <meta name="description" content="MediCore HMS — Schedule and track patient appointments and doctor availability." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
 </head>
+
 <body>
-<div class="layout">
+  <div class="layout">
 
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-icon">🏥</div>
-      <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section-label">Overview</div>
-      <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
-      <div class="nav-section-label">Management</div>
-      <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
-      <a class="nav-link" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
-      <a class="nav-link active" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span class="nav-badge">3</span></a>
-      <a class="nav-link" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
-      <div class="nav-section-label">System</div>
-      <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
-      <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="user-avatar">A</div>
-        <div class="user-info"><div class="uname">Admin User</div><div class="urole">Super Admin</div></div>
-        <span style="color:var(--text-3); font-size:14px;">⋯</span>
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🏥</div>
+        <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
       </div>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <div class="topbar-left">
-        <div>
-          <div class="page-title">Appointments</div>
-          <div class="page-breadcrumb">Dashboard / Appointments</div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Overview</div>
+        <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
+        <div class="nav-section-label">Management</div>
+        <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
+        <a class="nav-link" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
+        <a class="nav-link active" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span
+            class="nav-badge">3</span></a>
+        <a class="nav-link" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
+        <div class="nav-section-label">System</div>
+        <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
+        <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">A</div>
+          <div class="user-info">
+            <div class="uname">Admin User</div>
+            <div class="urole">Super Admin</div>
+          </div>
+          <span style="color:var(--text-3); font-size:14px;">⋯</span>
         </div>
       </div>
-      <div class="topbar-right">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Search appointments…" />
-        </div>
-        <button class="icon-btn">🔔<span class="notif-dot"></span></button>
-        <button class="btn btn-primary" onclick="openModal('book-appt-modal')">＋ Book Appointment</button>
-      </div>
-    </header>
+    </aside>
 
-    <div class="page-body">
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div>
+            <div class="page-title">Appointments</div>
+            <div class="page-breadcrumb">Dashboard / Appointments</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search appointments…" />
+          </div>
+          <button class="icon-btn">🔔<span class="notif-dot"></span></button>
+          <button class="btn btn-primary" onclick="openModal('book-appt-modal')">＋ Book Appointment</button>
+        </div>
+      </header>
 
-      <!-- Stats -->
-      <div class="stats-grid" style="grid-template-columns: repeat(4,1fr); margin-bottom:24px;">
-        <div class="stat-card teal">
-          <div class="stat-icon">📅</div>
-          <div class="stat-value" data-count="34">0</div>
-          <div class="stat-label">Today's Total</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-icon">✅</div>
-          <div class="stat-value" data-count="18">0</div>
-          <div class="stat-label">Completed</div>
-        </div>
-        <div class="stat-card amber">
-          <div class="stat-icon">⏳</div>
-          <div class="stat-value" data-count="11">0</div>
-          <div class="stat-label">Scheduled</div>
-        </div>
-        <div class="stat-card rose">
-          <div class="stat-icon">❌</div>
-          <div class="stat-value" data-count="5">0</div>
-          <div class="stat-label">Cancelled</div>
-        </div>
-      </div>
+      <div class="page-body">
 
-      <div class="grid-2">
+        <!-- Stats -->
+        <div class="stats-grid" style="grid-template-columns: repeat(4,1fr); margin-bottom:24px;">
+          <div class="stat-card teal">
+            <div class="stat-icon">📅</div>
+            <div class="stat-value" data-count="34">0</div>
+            <div class="stat-label">Today's Total</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value" data-count="18">0</div>
+            <div class="stat-label">Completed</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-value" data-count="11">0</div>
+            <div class="stat-label">Scheduled</div>
+          </div>
+          <div class="stat-card rose">
+            <div class="stat-icon">❌</div>
+            <div class="stat-value" data-count="5">0</div>
+            <div class="stat-label">Cancelled</div>
+          </div>
+        </div>
 
-        <!-- Mini Calendar -->
-        <div class="card animate-fade-up" style="animation-delay:0.1s">
-          <div class="card-header">
-            <div class="card-title">March 2025</div>
-            <div style="display:flex; gap:8px;">
-              <button class="btn btn-ghost btn-sm btn-icon">‹</button>
-              <button class="btn btn-ghost btn-sm btn-icon">›</button>
+        <div class="grid-2">
+
+          <!-- Mini Calendar -->
+          <div class="card animate-fade-up" style="animation-delay:0.1s">
+            <div class="card-header">
+              <div class="card-title" id="cal-title">March 2025</div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-ghost btn-sm btn-icon" onclick="changeMonth(-1)" id="cal-prev">‹</button>
+                <button class="btn btn-ghost btn-sm btn-icon" onclick="changeMonth(1)" id="cal-next">›</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="mini-cal" style="font-family:'DM Mono',monospace;"></div>
             </div>
           </div>
-          <div class="card-body">
-            <div id="mini-cal" style="font-family:'DM Mono',monospace;"></div>
+
+          <!-- Today's Queue -->
+          <div class="card animate-fade-up" style="animation-delay:0.15s">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Today's Queue</div>
+                <div class="card-subtitle">Mar 10, 2025</div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="openModal('book-appt-modal')">＋ Book</button>
+            </div>
+            <div class="card-body" style="padding-top:12px;">
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">09:00</div>
+                  <div class="period">AM</div>
+                </div>
+                <div class="appt-line" style="background:var(--teal)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Arun Kumar</div>
+                  <div class="appt-doctor">Dr. Ramesh Kumar · Chest pain</div>
+                </div>
+                <span class="badge badge-teal">Done</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">10:00</div>
+                  <div class="period">AM</div>
+                </div>
+                <div class="appt-line" style="background:var(--teal)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Meena Devi</div>
+                  <div class="appt-doctor">Dr. Priya Sharma · Headache</div>
+                </div>
+                <span class="badge badge-teal">Done</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">11:00</div>
+                  <div class="period">AM</div>
+                </div>
+                <div class="appt-line" style="background:var(--amber)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Vikram Singh</div>
+                  <div class="appt-doctor">Dr. Anand Rajan · Knee pain</div>
+                </div>
+                <span class="badge badge-amber">Scheduled</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">02:00</div>
+                  <div class="period">PM</div>
+                </div>
+                <div class="appt-line" style="background:var(--rose)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Divya Nair</div>
+                  <div class="appt-doctor">Dr. Ramesh Kumar · Routine</div>
+                </div>
+                <span class="badge badge-rose">Cancelled</span>
+              </div>
+              <div class="appt-item">
+                <div class="appt-time">
+                  <div class="time">03:00</div>
+                  <div class="period">PM</div>
+                </div>
+                <div class="appt-line" style="background:var(--teal)"></div>
+                <div class="appt-details">
+                  <div class="appt-patient">Karthik Raj</div>
+                  <div class="appt-doctor">Dr. Kavitha Menon · Prenatal</div>
+                </div>
+                <span class="badge badge-teal">Done</span>
+              </div>
+            </div>
           </div>
+
         </div>
 
-        <!-- Today's Queue -->
-        <div class="card animate-fade-up" style="animation-delay:0.15s">
+        <!-- Full Appointments Table -->
+        <div class="card animate-fade-up mt-6" style="animation-delay:0.2s">
           <div class="card-header">
             <div>
-              <div class="card-title">Today's Queue</div>
-              <div class="card-subtitle">Mar 10, 2025</div>
+              <div class="card-title">All Appointments</div>
+              <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="openModal('book-appt-modal')">＋ Book</button>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-ghost btn-sm">⬇ Export</button>
+              <button class="btn btn-primary btn-sm" onclick="openModal('book-appt-modal')">＋ Book</button>
+            </div>
           </div>
-          <div class="card-body" style="padding-top:12px;">
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">09:00</div><div class="period">AM</div></div>
-              <div class="appt-line" style="background:var(--teal)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Arun Kumar</div>
-                <div class="appt-doctor">Dr. Ramesh Kumar · Chest pain</div>
-              </div>
-              <span class="badge badge-teal">Done</span>
+
+          <div
+            style="padding:12px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <div class="filter-search" style="max-width:260px">
+              <span style="color:var(--text-3)">🔍</span>
+              <input type="text" placeholder="Search…" />
             </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">10:00</div><div class="period">AM</div></div>
-              <div class="appt-line" style="background:var(--teal)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Meena Devi</div>
-                <div class="appt-doctor">Dr. Priya Sharma · Headache</div>
-              </div>
-              <span class="badge badge-teal">Done</span>
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="scheduled">Scheduled</button>
+            <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+          </div>
+
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Appt. ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-category="completed">
+                    <td><span class="num-chip">A-2001</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
+                        Arun Kumar
+                      </div>
+                    </td>
+                    <td>Dr. Ramesh Kumar</td>
+                    <td>Mar 10, 2025</td>
+                    <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">09:00 AM</span></td>
+                    <td><span class="badge badge-teal">Completed</span></td>
+                    <td
+                      style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-3)">
+                      Chest pain</td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon"
+                          onclick="openModal('edit-appt-modal')">✏️</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="completed">
+                    <td><span class="num-chip">A-2002</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
+                        Meena Devi
+                      </div>
+                    </td>
+                    <td>Dr. Priya Sharma</td>
+                    <td>Mar 11, 2025</td>
+                    <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">10:00 AM</span></td>
+                    <td><span class="badge badge-teal">Completed</span></td>
+                    <td style="color:var(--text-3)">Headache</td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon"
+                          onclick="openModal('edit-appt-modal')">✏️</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="scheduled">
+                    <td><span class="num-chip">A-2003</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
+                        Vikram Singh
+                      </div>
+                    </td>
+                    <td>Dr. Anand Rajan</td>
+                    <td>Mar 12, 2025</td>
+                    <td><span style="font-family:'DM Mono',monospace; color:var(--amber)">11:00 AM</span></td>
+                    <td><span class="badge badge-amber">Scheduled</span></td>
+                    <td style="color:var(--text-3)">Knee pain</td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon"
+                          onclick="openModal('edit-appt-modal')">✏️</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="cancelled">
+                    <td><span class="num-chip">A-2004</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
+                        Divya Nair
+                      </div>
+                    </td>
+                    <td>Dr. Ramesh Kumar</td>
+                    <td>Mar 13, 2025</td>
+                    <td><span style="font-family:'DM Mono',monospace; color:var(--text-3)">02:00 PM</span></td>
+                    <td><span class="badge badge-rose">Cancelled</span></td>
+                    <td style="color:var(--text-3)">Routine checkup</td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon"
+                          onclick="openModal('edit-appt-modal')">✏️</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="completed">
+                    <td><span class="num-chip">A-2005</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
+                        Karthik Raj
+                      </div>
+                    </td>
+                    <td>Dr. Kavitha Menon</td>
+                    <td>Mar 14, 2025</td>
+                    <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">03:00 PM</span></td>
+                    <td><span class="badge badge-teal">Completed</span></td>
+                    <td style="color:var(--text-3)">Prenatal visit</td>
+                    <td>
+                      <div style="display:flex; gap:6px;">
+                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon"
+                          onclick="openModal('edit-appt-modal')">✏️</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">11:00</div><div class="period">AM</div></div>
-              <div class="appt-line" style="background:var(--amber)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Vikram Singh</div>
-                <div class="appt-doctor">Dr. Anand Rajan · Knee pain</div>
+            <div
+              style="padding:14px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
+              <span style="font-size:12.5px; color:var(--text-3)">Showing 1–5 of 34 appointments</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-ghost btn-sm">← Prev</button>
+                <button class="btn btn-primary btn-sm">1</button>
+                <button class="btn btn-ghost btn-sm">2</button>
+                <button class="btn btn-ghost btn-sm">Next →</button>
               </div>
-              <span class="badge badge-amber">Scheduled</span>
-            </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">02:00</div><div class="period">PM</div></div>
-              <div class="appt-line" style="background:var(--rose)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Divya Nair</div>
-                <div class="appt-doctor">Dr. Ramesh Kumar · Routine</div>
-              </div>
-              <span class="badge badge-rose">Cancelled</span>
-            </div>
-            <div class="appt-item">
-              <div class="appt-time"><div class="time">03:00</div><div class="period">PM</div></div>
-              <div class="appt-line" style="background:var(--teal)"></div>
-              <div class="appt-details">
-                <div class="appt-patient">Karthik Raj</div>
-                <div class="appt-doctor">Dr. Kavitha Menon · Prenatal</div>
-              </div>
-              <span class="badge badge-teal">Done</span>
             </div>
           </div>
         </div>
 
       </div>
-
-      <!-- Full Appointments Table -->
-      <div class="card animate-fade-up mt-6" style="animation-delay:0.2s">
-        <div class="card-header">
-          <div>
-            <div class="card-title">All Appointments</div>
-            <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
-          </div>
-          <div style="display:flex; gap:8px;">
-            <button class="btn btn-ghost btn-sm">⬇ Export</button>
-            <button class="btn btn-primary btn-sm" onclick="openModal('book-appt-modal')">＋ Book</button>
-          </div>
-        </div>
-
-        <div style="padding:12px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-          <div class="filter-search" style="max-width:260px">
-            <span style="color:var(--text-3)">🔍</span>
-            <input type="text" placeholder="Search…" />
-          </div>
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="completed">Completed</button>
-          <button class="filter-btn" data-filter="scheduled">Scheduled</button>
-          <button class="filter-btn" data-filter="cancelled">Cancelled</button>
-        </div>
-
-        <div class="card-body" style="padding:0;">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Appt. ID</th>
-                  <th>Patient</th>
-                  <th>Doctor</th>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th>Status</th>
-                  <th>Notes</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-category="completed">
-                  <td><span class="num-chip">A-2001</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
-                      Arun Kumar
-                    </div>
-                  </td>
-                  <td>Dr. Ramesh Kumar</td>
-                  <td>Mar 10, 2025</td>
-                  <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">09:00 AM</span></td>
-                  <td><span class="badge badge-teal">Completed</span></td>
-                  <td style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-3)">Chest pain</td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" onclick="openModal('edit-appt-modal')">✏️</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="completed">
-                  <td><span class="num-chip">A-2002</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                      Meena Devi
-                    </div>
-                  </td>
-                  <td>Dr. Priya Sharma</td>
-                  <td>Mar 11, 2025</td>
-                  <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">10:00 AM</span></td>
-                  <td><span class="badge badge-teal">Completed</span></td>
-                  <td style="color:var(--text-3)">Headache</td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" onclick="openModal('edit-appt-modal')">✏️</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="scheduled">
-                  <td><span class="num-chip">A-2003</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                      Vikram Singh
-                    </div>
-                  </td>
-                  <td>Dr. Anand Rajan</td>
-                  <td>Mar 12, 2025</td>
-                  <td><span style="font-family:'DM Mono',monospace; color:var(--amber)">11:00 AM</span></td>
-                  <td><span class="badge badge-amber">Scheduled</span></td>
-                  <td style="color:var(--text-3)">Knee pain</td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" onclick="openModal('edit-appt-modal')">✏️</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="cancelled">
-                  <td><span class="num-chip">A-2004</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                      Divya Nair
-                    </div>
-                  </td>
-                  <td>Dr. Ramesh Kumar</td>
-                  <td>Mar 13, 2025</td>
-                  <td><span style="font-family:'DM Mono',monospace; color:var(--text-3)">02:00 PM</span></td>
-                  <td><span class="badge badge-rose">Cancelled</span></td>
-                  <td style="color:var(--text-3)">Routine checkup</td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" onclick="openModal('edit-appt-modal')">✏️</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="completed">
-                  <td><span class="num-chip">A-2005</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                      Karthik Raj
-                    </div>
-                  </td>
-                  <td>Dr. Kavitha Menon</td>
-                  <td>Mar 14, 2025</td>
-                  <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">03:00 PM</span></td>
-                  <td><span class="badge badge-teal">Completed</span></td>
-                  <td style="color:var(--text-3)">Prenatal visit</td>
-                  <td>
-                    <div style="display:flex; gap:6px;">
-                      <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" onclick="openModal('edit-appt-modal')">✏️</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div style="padding:14px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
-            <span style="font-size:12.5px; color:var(--text-3)">Showing 1–5 of 34 appointments</span>
-            <div style="display:flex; gap:6px;">
-              <button class="btn btn-ghost btn-sm">← Prev</button>
-              <button class="btn btn-primary btn-sm">1</button>
-              <button class="btn btn-ghost btn-sm">2</button>
-              <button class="btn btn-ghost btn-sm">Next →</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
-</div>
 
-<!-- Book Appointment Modal -->
-<div class="modal-overlay" id="book-appt-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Book Appointment</div>
-      <button class="modal-close" onclick="closeModal('book-appt-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Patient *</label>
-          <select class="form-control" required>
-            <option value="">Select patient</option>
-            <option>Arun Kumar (P-1001)</option>
-            <option>Meena Devi (P-1002)</option>
-            <option>Vikram Singh (P-1003)</option>
-            <option>Divya Nair (P-1004)</option>
-            <option>Karthik Raj (P-1005)</option>
-          </select>
+  <!-- Book Appointment Modal -->
+  <div class="modal-overlay" id="book-appt-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Book Appointment</div>
+        <button class="modal-close" onclick="closeModal('book-appt-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Patient *</label>
+            <select class="form-control" required>
+              <option value="">Select patient</option>
+              <option>Arun Kumar (P-1001)</option>
+              <option>Meena Devi (P-1002)</option>
+              <option>Vikram Singh (P-1003)</option>
+              <option>Divya Nair (P-1004)</option>
+              <option>Karthik Raj (P-1005)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Doctor *</label>
+            <select class="form-control" required>
+              <option value="">Select doctor</option>
+              <option>Dr. Ramesh Kumar</option>
+              <option>Dr. Priya Sharma</option>
+              <option>Dr. Anand Rajan</option>
+              <option>Dr. Kavitha Menon</option>
+              <option>Dr. Suresh Pillai</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date *</label>
+            <input type="date" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time *</label>
+            <input type="time" class="form-control" required />
+          </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Doctor *</label>
-          <select class="form-control" required>
-            <option value="">Select doctor</option>
-            <option>Dr. Ramesh Kumar</option>
-            <option>Dr. Priya Sharma</option>
-            <option>Dr. Anand Rajan</option>
-            <option>Dr. Kavitha Menon</option>
-            <option>Dr. Suresh Pillai</option>
-          </select>
+          <label class="form-label">Notes / Reason</label>
+          <textarea class="form-control" rows="3"
+            placeholder="Brief description of symptoms or visit reason…"></textarea>
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Date *</label>
-          <input type="date" class="form-control" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Time *</label>
-          <input type="time" class="form-control" required />
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('book-appt-modal')">Cancel</button>
+        <button class="btn btn-primary"
+          onclick="showToast('Appointment booked successfully!','success'); closeModal('book-appt-modal')">📅 Confirm
+          Booking</button>
       </div>
-      <div class="form-group">
-        <label class="form-label">Notes / Reason</label>
-        <textarea class="form-control" rows="3" placeholder="Brief description of symptoms or visit reason…"></textarea>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('book-appt-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="showToast('Appointment booked successfully!','success'); closeModal('book-appt-modal')">📅 Confirm Booking</button>
     </div>
   </div>
-</div>
 
-<!-- Edit Appointment Modal -->
-<div class="modal-overlay" id="edit-appt-modal">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Update Appointment</div>
-      <button class="modal-close" onclick="closeModal('edit-appt-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Status</label>
-          <select class="form-control">
-            <option>Scheduled</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-          </select>
+  <!-- Edit Appointment Modal -->
+  <div class="modal-overlay" id="edit-appt-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Update Appointment</div>
+        <button class="modal-close" onclick="closeModal('edit-appt-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Status</label>
+            <select class="form-control">
+              <option>Scheduled</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time</label>
+            <input type="time" class="form-control" value="09:00" />
+          </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Time</label>
-          <input type="time" class="form-control" value="09:00" />
+          <label class="form-label">Notes</label>
+          <textarea class="form-control" rows="3">Chest pain</textarea>
         </div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Notes</label>
-        <textarea class="form-control" rows="3">Chest pain</textarea>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('edit-appt-modal')">Cancel</button>
+        <button class="btn btn-primary"
+          onclick="showToast('Appointment updated!','success'); closeModal('edit-appt-modal')">💾 Save</button>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('edit-appt-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="showToast('Appointment updated!','success'); closeModal('edit-appt-modal')">💾 Save</button>
     </div>
   </div>
-</div>
 
-<script src="js/script.js"></script>
-<script>
-// Mini calendar
-(function buildCal() {
-  const days = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-  const highlighted = [10, 11, 12, 14];
-  const today = 10;
-  let html = `<div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center;">`;
-  days.forEach(d => {
-    html += `<div style="font-size:11px; color:var(--text-3); padding:4px; font-weight:600;">${d}</div>`;
-  });
-  // Offset: March 2025 starts Saturday (index 6)
-  for (let i = 0; i < 6; i++) html += `<div></div>`;
-  for (let d = 1; d <= 31; d++) {
-    const isToday = d === today;
-    const hasAppt = highlighted.includes(d);
-    html += `<div style="
+  <script src="js/script.js"></script>
+  <script>
+    // Mini calendar state
+    let calYear = 2025, calMonth = 2; // 0-indexed: March = 2
+    const APPT_DATES = { '2025-2': [10, 11, 12, 14] };
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    function buildCal() {
+      const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+      const highlighted = APPT_DATES[`${calYear}-${calMonth}`] || [];
+      const today = (calYear === 2025 && calMonth === 2) ? 10 : -1;
+      const firstDay = new Date(calYear, calMonth, 1).getDay();
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+      document.getElementById('cal-title').textContent = `${MONTHS[calMonth]} ${calYear}`;
+
+      let html = `<div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center;">`;
+      days.forEach(d => {
+        html += `<div style="font-size:11px; color:var(--text-3); padding:4px; font-weight:600;">${d}</div>`;
+      });
+      for (let i = 0; i < firstDay; i++) html += `<div></div>`;
+      for (let d = 1; d <= daysInMonth; d++) {
+        const isToday = d === today;
+        const hasAppt = highlighted.includes(d);
+        html += `<div style="
       padding:6px 4px; border-radius:8px; font-size:13px; cursor:pointer;
       font-family:'DM Mono',monospace;
       background:${isToday ? 'var(--teal)' : hasAppt ? 'rgba(0,210,190,0.1)' : 'transparent'};
       color:${isToday ? '#021016' : hasAppt ? 'var(--teal)' : 'var(--text-2)'};
       font-weight:${isToday || hasAppt ? '600' : '400'};
       transition:background 0.15s;
-    " onmouseover="this.style.background=this.style.background||'var(--bg-2)'">${d}</div>`;
-  }
-  html += `</div>`;
-  html += `<div style="margin-top:14px; display:flex; align-items:center; gap:12px; font-size:12px; color:var(--text-3);">
+    " onmouseover="if(!this.style.background||this.style.background==='transparent')this.style.background='rgba(255,255,255,0.04)'" onmouseout="if(this.style.background==='rgba(255, 255, 255, 0.04)')this.style.background='transparent'">${d}</div>`;
+      }
+      html += `</div>`;
+      html += `<div style="margin-top:14px; display:flex; align-items:center; gap:12px; font-size:12px; color:var(--text-3);">
     <span style="width:10px;height:10px;border-radius:50%;background:var(--teal);display:inline-block"></span> Today
     <span style="width:10px;height:10px;border-radius:50%;background:rgba(0,210,190,0.3);display:inline-block"></span> Has appointments
   </div>`;
-  document.getElementById('mini-cal').innerHTML = html;
-})();
-</script>
+      document.getElementById('mini-cal').innerHTML = html;
+    }
+
+    function changeMonth(dir) {
+      calMonth += dir;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      buildCal();
+    }
+
+    buildCal();
+  </script>
 </body>
+
 </html>

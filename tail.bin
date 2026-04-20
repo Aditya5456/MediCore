@@ -1,0 +1,9 @@
+MContentLoaded', loadPatients);
+  </script>rror'); return; }
+      showToast('Patient registered successfully!', 'success');
+      closeModal('add-patient-modal');
+    }
+  </script>
+</body>
+
+</html>

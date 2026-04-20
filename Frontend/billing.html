@@ -1,507 +1,608 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HMS — Billing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+  <meta name="description" content="MediCore HMS — Hospital billing, invoices and payment tracking." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
 </head>
+
 <body>
-<div class="layout">
+  <div class="layout">
 
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-icon">🏥</div>
-      <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-section-label">Overview</div>
-      <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
-      <div class="nav-section-label">Management</div>
-      <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
-      <a class="nav-link" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
-      <a class="nav-link" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span class="nav-badge">3</span></a>
-      <a class="nav-link active" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
-      <div class="nav-section-label">System</div>
-      <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
-      <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
-    </nav>
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="user-avatar">A</div>
-        <div class="user-info"><div class="uname">Admin User</div><div class="urole">Super Admin</div></div>
-        <span style="color:var(--text-3); font-size:14px;">⋯</span>
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🏥</div>
+        <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
       </div>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="topbar">
-      <div class="topbar-left">
-        <div>
-          <div class="page-title">Billing</div>
-          <div class="page-breadcrumb">Dashboard / Billing</div>
-        </div>
-      </div>
-      <div class="topbar-right">
-        <div class="search-box">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Search bills…" />
-        </div>
-        <button class="icon-btn">🔔<span class="notif-dot"></span></button>
-        <button class="btn btn-primary" onclick="openModal('add-bill-modal')">＋ Generate Bill</button>
-      </div>
-    </header>
-
-    <div class="page-body">
-
-      <!-- Stats -->
-      <div class="stats-grid" style="grid-template-columns:repeat(4,1fr); margin-bottom:24px;">
-        <div class="stat-card teal">
-          <div class="stat-icon">💰</div>
-          <div class="stat-value" style="font-size:22px;" data-count="37850">0</div>
-          <div class="stat-label">Total Revenue (₹)</div>
-          <div class="stat-change up">▲ Billed this week</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-icon">✅</div>
-          <div class="stat-value" data-count="2">0</div>
-          <div class="stat-label">Paid Bills</div>
-        </div>
-        <div class="stat-card amber">
-          <div class="stat-icon">⏰</div>
-          <div class="stat-value" data-count="1">0</div>
-          <div class="stat-label">Pending Bills</div>
-        </div>
-        <div class="stat-card blue">
-          <div class="stat-icon">🔄</div>
-          <div class="stat-value" data-count="2">0</div>
-          <div class="stat-label">Partial Bills</div>
-        </div>
-      </div>
-
-      <!-- Revenue Breakdown + Bill List -->
-      <div class="grid-2" style="margin-bottom:24px;">
-
-        <!-- Revenue Breakdown -->
-        <div class="card animate-fade-up" style="animation-delay:0.1s">
-          <div class="card-header">
-            <div class="card-title">Revenue Breakdown</div>
-            <div class="card-subtitle">March 2025</div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Overview</div>
+        <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
+        <div class="nav-section-label">Management</div>
+        <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
+        <a class="nav-link" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
+        <a class="nav-link" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span
+            class="nav-badge">3</span></a>
+        <a class="nav-link active" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
+        <div class="nav-section-label">System</div>
+        <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
+        <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="user-avatar">A</div>
+          <div class="user-info">
+            <div class="uname">Admin User</div>
+            <div class="urole">Super Admin</div>
           </div>
-          <div class="card-body">
-            <!-- Donut-like bars -->
-            <div style="display:flex; flex-direction:column; gap:16px;">
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:8px;">
-                    <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block"></span>
-                    Room Charges
-                  </span>
-                  <span style="font-family:'DM Mono',monospace; font-size:13px; color:var(--teal); font-weight:600">₹26,500</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:70%; background:var(--teal)"></div></div>
-              </div>
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:8px;">
-                    <span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block"></span>
-                    Doctor Charges
-                  </span>
-                  <span style="font-family:'DM Mono',monospace; font-size:13px; color:var(--blue); font-weight:600">₹8,500</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:23%; background:var(--blue)"></div></div>
-              </div>
-              <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                  <span style="font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:8px;">
-                    <span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block"></span>
-                    Medicine Charges
-                  </span>
-                  <span style="font-family:'DM Mono',monospace; font-size:13px; color:var(--amber); font-weight:600">₹2,850</span>
-                </div>
-                <div class="progress"><div class="progress-bar" style="width:8%; background:var(--amber)"></div></div>
-              </div>
-            </div>
-
-            <div class="divider"></div>
-
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <div>
-                <div style="font-size:12px; color:var(--text-3)">Total Billed</div>
-                <div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--text-1)">₹37,850</div>
-              </div>
-              <div style="text-align:right;">
-                <div style="font-size:12px; color:var(--text-3)">Collected</div>
-                <div style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--green)">₹23,250</div>
-              </div>
-            </div>
-            <div class="progress" style="height:8px; margin-top:12px; border-radius:10px;">
-              <div class="progress-bar" style="width:61%; background:linear-gradient(90deg, var(--green), var(--teal)); border-radius:10px;"></div>
-            </div>
-            <div style="display:flex; justify-content:space-between; margin-top:6px;">
-              <span style="font-size:11px; color:var(--text-3)">Collection Rate</span>
-              <span style="font-size:11px; color:var(--teal); font-weight:600">61.4%</span>
-            </div>
-          </div>
+          <span style="color:var(--text-3); font-size:14px;">⋯</span>
         </div>
-
-        <!-- Pending alert card -->
-        <div class="card animate-fade-up" style="animation-delay:0.15s">
-          <div class="card-header">
-            <div class="card-title">Outstanding Bills</div>
-            <div class="card-subtitle">Requires follow-up</div>
-          </div>
-          <div class="card-body">
-            <!-- Pending -->
-            <div style="background:rgba(245,158,11,0.07); border:1px solid rgba(245,158,11,0.2); border-radius:12px; padding:16px; margin-bottom:14px;">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Meena Devi</div>
-                  <div style="font-size:11.5px; color:var(--text-3)">Bill #7002 · Due: Mar 11, 2025</div>
-                  <div style="font-size:11px; color:var(--amber); margin-top:3px;">⚠️ Overdue by 2 days</div>
-                </div>
-                <div>
-                  <div class="billing-amount pending" style="font-size:18px; font-family:'Playfair Display',serif">₹6,300</div>
-                  <span class="badge badge-amber" style="margin-top:4px; display:flex;">Pending</span>
-                </div>
-              </div>
-              <button class="btn btn-sm" style="margin-top:12px; width:100%; background:rgba(245,158,11,0.1); color:var(--amber); border:1px solid rgba(245,158,11,0.25);" onclick="showToast('Reminder sent to Meena Devi','info')">📩 Send Payment Reminder</button>
-            </div>
-
-            <!-- Partial 1 -->
-            <div style="background:rgba(14,165,233,0.05); border:1px solid rgba(14,165,233,0.15); border-radius:12px; padding:16px; margin-bottom:14px;">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Vikram Singh</div>
-                  <div style="font-size:11.5px; color:var(--text-3)">Bill #7003 · Paid ₹3,000 of ₹5,400</div>
-                  <div class="progress" style="margin-top:6px;"><div class="progress-bar" style="width:55%; background:var(--blue)"></div></div>
-                </div>
-                <div>
-                  <div class="billing-amount partial" style="font-size:18px; font-family:'Playfair Display',serif">₹2,400</div>
-                  <span style="font-size:11px; color:var(--text-3)">remaining</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Partial 2 -->
-            <div style="background:rgba(14,165,233,0.05); border:1px solid rgba(14,165,233,0.15); border-radius:12px; padding:16px;">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                <div style="flex:1">
-                  <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Karthik Raj</div>
-                  <div style="font-size:11.5px; color:var(--text-3)">Bill #7005 · Paid ₹5,000 of ₹10,900</div>
-                  <div class="progress" style="margin-top:6px;"><div class="progress-bar" style="width:46%; background:var(--blue)"></div></div>
-                </div>
-                <div>
-                  <div class="billing-amount partial" style="font-size:18px; font-family:'Playfair Display',serif">₹5,900</div>
-                  <span style="font-size:11px; color:var(--text-3)">remaining</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
+    </aside>
 
-      <!-- Full Billing Table -->
-      <div class="card animate-fade-up" style="animation-delay:0.2s">
-        <div class="card-header">
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
           <div>
-            <div class="card-title">All Bills</div>
-            <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
+            <div class="page-title">Billing</div>
+            <div class="page-breadcrumb">Dashboard / Billing</div>
           </div>
-          <div style="display:flex; gap:8px;">
-            <button class="btn btn-ghost btn-sm">⬇ Export</button>
-            <button class="btn btn-primary btn-sm" onclick="openModal('add-bill-modal')">＋ Generate Bill</button>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search bills…" />
+          </div>
+          <button class="icon-btn">🔔<span class="notif-dot"></span></button>
+          <button class="btn btn-primary" onclick="openModal('add-bill-modal')">＋ Generate Bill</button>
+        </div>
+      </header>
+
+      <div class="page-body">
+
+        <!-- Stats -->
+        <div class="stats-grid" style="grid-template-columns:repeat(4,1fr); margin-bottom:24px;">
+          <div class="stat-card teal">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" style="font-size:22px;" data-count="37850">0</div>
+            <div class="stat-label">Total Revenue (₹)</div>
+            <div class="stat-change up">▲ Billed this week</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">✅</div>
+            <div class="stat-value" data-count="2">0</div>
+            <div class="stat-label">Paid Bills</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-icon">⏰</div>
+            <div class="stat-value" data-count="1">0</div>
+            <div class="stat-label">Pending Bills</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">🔄</div>
+            <div class="stat-value" data-count="2">0</div>
+            <div class="stat-label">Partial Bills</div>
           </div>
         </div>
 
-        <div style="padding:12px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-          <div class="filter-search" style="max-width:260px">
-            <span style="color:var(--text-3)">🔍</span>
-            <input type="text" placeholder="Search by patient or bill ID…" />
+        <!-- Revenue Breakdown + Bill List -->
+        <div class="grid-2" style="margin-bottom:24px;">
+
+          <!-- Revenue Breakdown -->
+          <div class="card animate-fade-up" style="animation-delay:0.1s">
+            <div class="card-header">
+              <div class="card-title">Revenue Breakdown</div>
+              <div class="card-subtitle">March 2025</div>
+            </div>
+            <div class="card-body">
+              <!-- Donut-like bars -->
+              <div style="display:flex; flex-direction:column; gap:16px;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:8px;">
+                      <span
+                        style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block"></span>
+                      Room Charges
+                    </span>
+                    <span
+                      style="font-family:'DM Mono',monospace; font-size:13px; color:var(--teal); font-weight:600">₹26,500</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:70%; background:var(--teal)"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:8px;">
+                      <span
+                        style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block"></span>
+                      Doctor Charges
+                    </span>
+                    <span
+                      style="font-family:'DM Mono',monospace; font-size:13px; color:var(--blue); font-weight:600">₹8,500</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:23%; background:var(--blue)"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                    <span style="font-size:13px; color:var(--text-1); display:flex; align-items:center; gap:8px;">
+                      <span
+                        style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block"></span>
+                      Medicine Charges
+                    </span>
+                    <span
+                      style="font-family:'DM Mono',monospace; font-size:13px; color:var(--amber); font-weight:600">₹2,850</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" style="width:8%; background:var(--amber)"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-size:12px; color:var(--text-3)">Total Billed</div>
+                  <div
+                    style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--text-1)">
+                    ₹37,850</div>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:12px; color:var(--text-3)">Collected</div>
+                  <div
+                    style="font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--green)">
+                    ₹23,250</div>
+                </div>
+              </div>
+              <div class="progress" style="height:8px; margin-top:12px; border-radius:10px;">
+                <div class="progress-bar"
+                  style="width:61%; background:linear-gradient(90deg, var(--green), var(--teal)); border-radius:10px;">
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-top:6px;">
+                <span style="font-size:11px; color:var(--text-3)">Collection Rate</span>
+                <span style="font-size:11px; color:var(--teal); font-weight:600">61.4%</span>
+              </div>
+            </div>
           </div>
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="paid">Paid</button>
-          <button class="filter-btn" data-filter="pending">Pending</button>
-          <button class="filter-btn" data-filter="partial">Partial</button>
+
+          <!-- Pending alert card -->
+          <div class="card animate-fade-up" style="animation-delay:0.15s">
+            <div class="card-header">
+              <div class="card-title">Outstanding Bills</div>
+              <div class="card-subtitle">Requires follow-up</div>
+            </div>
+            <div class="card-body">
+              <!-- Pending -->
+              <div
+                style="background:rgba(245,158,11,0.07); border:1px solid rgba(245,158,11,0.2); border-radius:12px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Meena Devi</div>
+                    <div style="font-size:11.5px; color:var(--text-3)">Bill #7002 · Due: Mar 11, 2025</div>
+                    <div style="font-size:11px; color:var(--amber); margin-top:3px;">⚠️ Overdue by 2 days</div>
+                  </div>
+                  <div>
+                    <div class="billing-amount pending" style="font-size:18px; font-family:'Playfair Display',serif">
+                      ₹6,300</div>
+                    <span class="badge badge-amber" style="margin-top:4px; display:flex;">Pending</span>
+                  </div>
+                </div>
+                <button class="btn btn-sm"
+                  style="margin-top:12px; width:100%; background:rgba(245,158,11,0.1); color:var(--amber); border:1px solid rgba(245,158,11,0.25);"
+                  onclick="showToast('Reminder sent to Meena Devi','info')">📩 Send Payment Reminder</button>
+              </div>
+
+              <!-- Partial 1 -->
+              <div
+                style="background:rgba(14,165,233,0.05); border:1px solid rgba(14,165,233,0.15); border-radius:12px; padding:16px; margin-bottom:14px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Vikram Singh</div>
+                    <div style="font-size:11.5px; color:var(--text-3)">Bill #7003 · Paid ₹3,000 of ₹5,400</div>
+                    <div class="progress" style="margin-top:6px;">
+                      <div class="progress-bar" style="width:55%; background:var(--blue)"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="billing-amount partial" style="font-size:18px; font-family:'Playfair Display',serif">
+                      ₹2,400</div>
+                    <span style="font-size:11px; color:var(--text-3)">remaining</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Partial 2 -->
+              <div
+                style="background:rgba(14,165,233,0.05); border:1px solid rgba(14,165,233,0.15); border-radius:12px; padding:16px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Karthik Raj</div>
+                    <div style="font-size:11.5px; color:var(--text-3)">Bill #7005 · Paid ₹5,000 of ₹10,900</div>
+                    <div class="progress" style="margin-top:6px;">
+                      <div class="progress-bar" style="width:46%; background:var(--blue)"></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="billing-amount partial" style="font-size:18px; font-family:'Playfair Display',serif">
+                      ₹5,900</div>
+                    <span style="font-size:11px; color:var(--text-3)">remaining</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div class="card-body" style="padding:0;">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Bill ID</th>
-                  <th>Patient</th>
-                  <th>Admission</th>
-                  <th>Date</th>
-                  <th>Room</th>
-                  <th>Medicine</th>
-                  <th>Doctor</th>
-                  <th>Total</th>
-                  <th>Paid</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-category="paid">
-                  <td><span class="num-chip">B-7001</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
-                      Arun Kumar
-                    </div>
-                  </td>
-                  <td><span class="num-chip">AD-3001</span></td>
-                  <td>Mar 10, 2025</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹5,000</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹300</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹2,000</td>
-                  <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹7,300</td>
-                  <td class="billing-amount paid">₹7,300</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td>
-                    <div style="display:flex; gap:5px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" title="View" onclick="openModal('view-bill-modal')">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon" title="Print">🖨</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="pending">
-                  <td><span class="num-chip">B-7002</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                      Meena Devi
-                    </div>
-                  </td>
-                  <td><span class="num-chip">AD-3002</span></td>
-                  <td>Mar 11, 2025</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹4,000</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹800</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹1,500</td>
-                  <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹6,300</td>
-                  <td class="billing-amount pending">₹0</td>
-                  <td><span class="badge badge-amber">Pending</span></td>
-                  <td>
-                    <div style="display:flex; gap:5px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
-                      <button class="btn btn-primary btn-sm" onclick="showToast('Processing payment…','info')">Pay</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="partial">
-                  <td><span class="num-chip">B-7003</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                      Vikram Singh
-                    </div>
-                  </td>
-                  <td><span class="num-chip">AD-3003</span></td>
-                  <td>Mar 12, 2025</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹3,500</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹400</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹1,500</td>
-                  <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹5,400</td>
-                  <td class="billing-amount partial">₹3,000</td>
-                  <td><span class="badge badge-blue">Partial</span></td>
-                  <td>
-                    <div style="display:flex; gap:5px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
-                      <button class="btn btn-primary btn-sm" onclick="showToast('Processing payment…','info')">Pay</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="paid">
-                  <td><span class="num-chip">B-7004</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                      Divya Nair
-                    </div>
-                  </td>
-                  <td><span class="num-chip">AD-3004</span></td>
-                  <td>Mar 13, 2025</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹6,000</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹450</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹1,500</td>
-                  <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹7,950</td>
-                  <td class="billing-amount paid">₹7,950</td>
-                  <td><span class="badge badge-green">Paid</span></td>
-                  <td>
-                    <div style="display:flex; gap:5px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
-                      <button class="btn btn-outline btn-sm btn-icon">🖨</button>
-                    </div>
-                  </td>
-                </tr>
-                <tr data-category="partial">
-                  <td><span class="num-chip">B-7005</span></td>
-                  <td>
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                      Karthik Raj
-                    </div>
-                  </td>
-                  <td><span class="num-chip">AD-3005</span></td>
-                  <td>Mar 01, 2025</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹8,000</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹900</td>
-                  <td class="billing-amount" style="color:var(--text-2)">₹2,000</td>
-                  <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹10,900</td>
-                  <td class="billing-amount partial">₹5,000</td>
-                  <td><span class="badge badge-blue">Partial</span></td>
-                  <td>
-                    <div style="display:flex; gap:5px;">
-                      <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
-                      <button class="btn btn-primary btn-sm" onclick="showToast('Processing payment…','info')">Pay</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <!-- Full Billing Table -->
+        <div class="card animate-fade-up" style="animation-delay:0.2s">
+          <div class="card-header">
+            <div>
+              <div class="card-title">All Bills</div>
+              <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-ghost btn-sm">⬇ Export</button>
+              <button class="btn btn-primary btn-sm" onclick="openModal('add-bill-modal')">＋ Generate Bill</button>
+            </div>
           </div>
-          <div style="padding:14px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
-            <span style="font-size:12.5px; color:var(--text-3)">Showing 1–5 of 5 bills</span>
-            <div style="display:flex; gap:6px;">
-              <button class="btn btn-primary btn-sm">1</button>
+
+          <div
+            style="padding:12px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <div class="filter-search" style="max-width:260px">
+              <span style="color:var(--text-3)">🔍</span>
+              <input type="text" placeholder="Search by patient or bill ID…" />
+            </div>
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="paid">Paid</button>
+            <button class="filter-btn" data-filter="pending">Pending</button>
+            <button class="filter-btn" data-filter="partial">Partial</button>
+          </div>
+
+          <div class="card-body" style="padding:0;">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Bill ID</th>
+                    <th>Patient</th>
+                    <th>Admission</th>
+                    <th>Date</th>
+                    <th>Room</th>
+                    <th>Medicine</th>
+                    <th>Doctor</th>
+                    <th>Total</th>
+                    <th>Paid</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-category="paid">
+                    <td><span class="num-chip">B-7001</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
+                        Arun Kumar
+                      </div>
+                    </td>
+                    <td><span class="num-chip">AD-3001</span></td>
+                    <td>Mar 10, 2025</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹5,000</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹300</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹2,000</td>
+                    <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹7,300</td>
+                    <td class="billing-amount paid">₹7,300</td>
+                    <td><span class="badge badge-green">Paid</span></td>
+                    <td>
+                      <div style="display:flex; gap:5px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" title="View"
+                          onclick="openModal('view-bill-modal')">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon" title="Print">🖨</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="pending">
+                    <td><span class="num-chip">B-7002</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
+                        Meena Devi
+                      </div>
+                    </td>
+                    <td><span class="num-chip">AD-3002</span></td>
+                    <td>Mar 11, 2025</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹4,000</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹800</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹1,500</td>
+                    <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹6,300</td>
+                    <td class="billing-amount pending">₹0</td>
+                    <td><span class="badge badge-amber">Pending</span></td>
+                    <td>
+                      <div style="display:flex; gap:5px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
+                        <button class="btn btn-primary btn-sm"
+                          onclick="showToast('Processing payment…','info')">Pay</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="partial">
+                    <td><span class="num-chip">B-7003</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
+                        Vikram Singh
+                      </div>
+                    </td>
+                    <td><span class="num-chip">AD-3003</span></td>
+                    <td>Mar 12, 2025</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹3,500</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹400</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹1,500</td>
+                    <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹5,400</td>
+                    <td class="billing-amount partial">₹3,000</td>
+                    <td><span class="badge badge-blue">Partial</span></td>
+                    <td>
+                      <div style="display:flex; gap:5px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
+                        <button class="btn btn-primary btn-sm"
+                          onclick="showToast('Processing payment…','info')">Pay</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="paid">
+                    <td><span class="num-chip">B-7004</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
+                        Divya Nair
+                      </div>
+                    </td>
+                    <td><span class="num-chip">AD-3004</span></td>
+                    <td>Mar 13, 2025</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹6,000</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹450</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹1,500</td>
+                    <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹7,950</td>
+                    <td class="billing-amount paid">₹7,950</td>
+                    <td><span class="badge badge-green">Paid</span></td>
+                    <td>
+                      <div style="display:flex; gap:5px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
+                        <button class="btn btn-outline btn-sm btn-icon">🖨</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr data-category="partial">
+                    <td><span class="num-chip">B-7005</span></td>
+                    <td>
+                      <div style="display:flex; align-items:center; gap:8px;">
+                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
+                        Karthik Raj
+                      </div>
+                    </td>
+                    <td><span class="num-chip">AD-3005</span></td>
+                    <td>Mar 01, 2025</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹8,000</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹900</td>
+                    <td class="billing-amount" style="color:var(--text-2)">₹2,000</td>
+                    <td class="billing-amount" style="color:var(--text-1); font-weight:600">₹10,900</td>
+                    <td class="billing-amount partial">₹5,000</td>
+                    <td><span class="badge badge-blue">Partial</span></td>
+                    <td>
+                      <div style="display:flex; gap:5px;">
+                        <button class="btn btn-ghost btn-sm btn-icon" onclick="openModal('view-bill-modal')">👁</button>
+                        <button class="btn btn-primary btn-sm"
+                          onclick="showToast('Processing payment…','info')">Pay</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div
+              style="padding:14px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
+              <span style="font-size:12.5px; color:var(--text-3)">Showing 1–5 of 5 bills</span>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-primary btn-sm">1</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Generate Bill Modal -->
-<div class="modal-overlay" id="add-bill-modal">
-  <div class="modal" style="max-width:600px">
-    <div class="modal-header">
-      <div class="modal-title">Generate New Bill</div>
-      <button class="modal-close" onclick="closeModal('add-bill-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Patient *</label>
-          <select class="form-control" required>
-            <option value="">Select patient</option>
-            <option>Arun Kumar (P-1001)</option>
-            <option>Meena Devi (P-1002)</option>
-            <option>Vikram Singh (P-1003)</option>
-            <option>Divya Nair (P-1004)</option>
-            <option>Karthik Raj (P-1005)</option>
-          </select>
+  <!-- Generate Bill Modal -->
+  <div class="modal-overlay" id="add-bill-modal">
+    <div class="modal" style="max-width:600px">
+      <div class="modal-header">
+        <div class="modal-title">Generate New Bill</div>
+        <button class="modal-close" onclick="closeModal('add-bill-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Patient *</label>
+            <select class="form-control" required>
+              <option value="">Select patient</option>
+              <option>Arun Kumar (P-1001)</option>
+              <option>Meena Devi (P-1002)</option>
+              <option>Vikram Singh (P-1003)</option>
+              <option>Divya Nair (P-1004)</option>
+              <option>Karthik Raj (P-1005)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Admission ID *</label>
+            <select class="form-control" required>
+              <option value="">Select admission</option>
+              <option>AD-3001 (Arun Kumar)</option>
+              <option>AD-3002 (Meena Devi)</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Admission ID *</label>
-          <select class="form-control" required>
-            <option value="">Select admission</option>
-            <option>AD-3001 (Arun Kumar)</option>
-            <option>AD-3002 (Meena Devi)</option>
-          </select>
+        <div class="form-row cols-3">
+          <div class="form-group">
+            <label class="form-label">Room Charges (₹)</label>
+            <input type="number" class="form-control" placeholder="0" min="0" id="room-ch" oninput="calcTotal()" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Medicine Charges (₹)</label>
+            <input type="number" class="form-control" placeholder="0" min="0" id="med-ch" oninput="calcTotal()" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Doctor Charges (₹)</label>
+            <input type="number" class="form-control" placeholder="0" min="0" id="doc-ch" oninput="calcTotal()" />
+          </div>
+        </div>
+        <div
+          style="background:rgba(0,210,190,0.06); border:1px solid var(--border-hi); border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:12px; color:var(--text-3); margin-bottom:4px;">Total Amount</div>
+          <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--teal)"
+            id="bill-total">₹0</div>
+        </div>
+        <div class="form-row" style="margin-top:16px;">
+          <div class="form-group">
+            <label class="form-label">Paid Amount (₹)</label>
+            <input type="number" class="form-control" placeholder="0" min="0" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bill Date *</label>
+            <input type="date" class="form-control" required />
+          </div>
         </div>
       </div>
-      <div class="form-row cols-3">
-        <div class="form-group">
-          <label class="form-label">Room Charges (₹)</label>
-          <input type="number" class="form-control" placeholder="0" min="0" id="room-ch" oninput="calcTotal()" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Medicine Charges (₹)</label>
-          <input type="number" class="form-control" placeholder="0" min="0" id="med-ch" oninput="calcTotal()" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Doctor Charges (₹)</label>
-          <input type="number" class="form-control" placeholder="0" min="0" id="doc-ch" oninput="calcTotal()" />
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('add-bill-modal')">Cancel</button>
+        <button class="btn btn-primary"
+          onclick="showToast('Bill generated successfully!','success'); closeModal('add-bill-modal')">🧾 Generate
+          Bill</button>
       </div>
-      <div style="background:rgba(0,210,190,0.06); border:1px solid var(--border-hi); border-radius:10px; padding:16px; text-align:center;">
-        <div style="font-size:12px; color:var(--text-3); margin-bottom:4px;">Total Amount</div>
-        <div style="font-family:'Playfair Display',serif; font-size:32px; font-weight:700; color:var(--teal)" id="bill-total">₹0</div>
-      </div>
-      <div class="form-row" style="margin-top:16px;">
-        <div class="form-group">
-          <label class="form-label">Paid Amount (₹)</label>
-          <input type="number" class="form-control" placeholder="0" min="0" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Bill Date *</label>
-          <input type="date" class="form-control" required />
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('add-bill-modal')">Cancel</button>
-      <button class="btn btn-primary" onclick="showToast('Bill generated successfully!','success'); closeModal('add-bill-modal')">🧾 Generate Bill</button>
     </div>
   </div>
-</div>
 
-<!-- View Bill Modal -->
-<div class="modal-overlay" id="view-bill-modal">
-  <div class="modal" style="max-width:500px">
-    <div class="modal-header">
-      <div class="modal-title">Bill #7001</div>
-      <button class="modal-close" onclick="closeModal('view-bill-modal')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div style="text-align:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border);">
-        <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--teal)">MediCore Hospital</div>
-        <div style="font-size:12px; color:var(--text-3); margin-top:4px;">Tax Invoice · Mar 10, 2025</div>
+  <!-- View Bill Modal -->
+  <div class="modal-overlay" id="view-bill-modal">
+    <div class="modal" style="max-width:500px">
+      <div class="modal-header">
+        <div class="modal-title">Bill #7001</div>
+        <button class="modal-close" onclick="closeModal('view-bill-modal')">✕</button>
       </div>
-      <div style="display:flex; justify-content:space-between; margin-bottom:16px;">
-        <div><div style="font-size:11px; color:var(--text-3)">Patient</div><div style="font-size:14px; font-weight:600">Arun Kumar</div></div>
-        <div style="text-align:right;"><div style="font-size:11px; color:var(--text-3)">Admission</div><div style="font-size:14px; font-weight:600">AD-3001</div></div>
+      <div class="modal-body">
+        <div style="text-align:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border);">
+          <div style="font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--teal)">MediCore
+            Hospital</div>
+          <div style="font-size:12px; color:var(--text-3); margin-top:4px;">Tax Invoice · Mar 10, 2025</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:16px;">
+          <div>
+            <div style="font-size:11px; color:var(--text-3)">Patient</div>
+            <div style="font-size:14px; font-weight:600">Arun Kumar</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px; color:var(--text-3)">Admission</div>
+            <div style="font-size:14px; font-weight:600">AD-3001</div>
+          </div>
+        </div>
+        <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
+          <thead>
+            <tr>
+              <th
+                style="text-align:left; font-size:11px; color:var(--text-3); padding:8px 0; border-bottom:1px solid var(--border)">
+                Description</th>
+              <th
+                style="text-align:right; font-size:11px; color:var(--text-3); padding:8px 0; border-bottom:1px solid var(--border)">
+                Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:10px 0; font-size:13.5px; color:var(--text-2)">Room Charges</td>
+              <td style="text-align:right; font-family:'DM Mono',monospace; color:var(--text-1)">₹5,000</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0; font-size:13.5px; color:var(--text-2)">Medicine Charges</td>
+              <td style="text-align:right; font-family:'DM Mono',monospace; color:var(--text-1)">₹300</td>
+            </tr>
+            <tr>
+              <td style="padding:10px 0; font-size:13.5px; color:var(--text-2)">Doctor Charges</td>
+              <td style="text-align:right; font-family:'DM Mono',monospace; color:var(--text-1)">₹2,000</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="2" style="height:1px; background:var(--border); padding:0;"></td>
+            </tr>
+            <tr>
+              <td style="padding:12px 0; font-size:15px; font-weight:700; color:var(--text-1)">Total</td>
+              <td
+                style="text-align:right; font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--teal)">
+                ₹7,300</td>
+            </tr>
+          </tfoot>
+        </table>
+        <div
+          style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:10px; padding:12px; text-align:center;">
+          <span style="color:var(--green); font-weight:600; font-size:14px;">✅ Fully Paid — ₹7,300</span>
+        </div>
       </div>
-      <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
-        <thead>
-          <tr>
-            <th style="text-align:left; font-size:11px; color:var(--text-3); padding:8px 0; border-bottom:1px solid var(--border)">Description</th>
-            <th style="text-align:right; font-size:11px; color:var(--text-3); padding:8px 0; border-bottom:1px solid var(--border)">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td style="padding:10px 0; font-size:13.5px; color:var(--text-2)">Room Charges</td><td style="text-align:right; font-family:'DM Mono',monospace; color:var(--text-1)">₹5,000</td></tr>
-          <tr><td style="padding:10px 0; font-size:13.5px; color:var(--text-2)">Medicine Charges</td><td style="text-align:right; font-family:'DM Mono',monospace; color:var(--text-1)">₹300</td></tr>
-          <tr><td style="padding:10px 0; font-size:13.5px; color:var(--text-2)">Doctor Charges</td><td style="text-align:right; font-family:'DM Mono',monospace; color:var(--text-1)">₹2,000</td></tr>
-        </tbody>
-        <tfoot>
-          <tr><td colspan="2" style="height:1px; background:var(--border); padding:0;"></td></tr>
-          <tr>
-            <td style="padding:12px 0; font-size:15px; font-weight:700; color:var(--text-1)">Total</td>
-            <td style="text-align:right; font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:var(--teal)">₹7,300</td>
-          </tr>
-        </tfoot>
-      </table>
-      <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.2); border-radius:10px; padding:12px; text-align:center;">
-        <span style="color:var(--green); font-weight:600; font-size:14px;">✅ Fully Paid — ₹7,300</span>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeModal('view-bill-modal')">Close</button>
+        <button class="btn btn-outline" onclick="showToast('Bill downloaded!','success')">⬇ Download PDF</button>
+        <button class="btn btn-primary" onclick="printBill()">🖨 Print</button>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('view-bill-modal')">Close</button>
-      <button class="btn btn-outline" onclick="showToast('Bill downloaded!','success')">⬇ Download PDF</button>
-      <button class="btn btn-primary" onclick="showToast('Bill printed!','success')">🖨 Print</button>
     </div>
   </div>
-</div>
 
-<script src="js/script.js"></script>
-<script>
-  function calcTotal() {
-    const r = parseFloat(document.getElementById('room-ch').value) || 0;
-    const m = parseFloat(document.getElementById('med-ch').value) || 0;
-    const d = parseFloat(document.getElementById('doc-ch').value) || 0;
-    document.getElementById('bill-total').textContent = '₹' + (r + m + d).toLocaleString('en-IN');
-  }
-</script>
+  <script src="js/script.js"></script>
+  <script>
+    function calcTotal() {
+      const r = parseFloat(document.getElementById('room-ch').value) || 0;
+      const m = parseFloat(document.getElementById('med-ch').value) || 0;
+      const d = parseFloat(document.getElementById('doc-ch').value) || 0;
+      document.getElementById('bill-total').textContent = '₹' + (r + m + d).toLocaleString('en-IN');
+    }
+
+    function printBill() {
+      const billContent = document.querySelector('#view-bill-modal .modal-body').innerHTML;
+      const win = window.open('', '_blank', 'width=520,height=650');
+      win.document.write(`
+      <!DOCTYPE html><html><head>
+        <title>MediCore — Bill Receipt</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@400;600&family=DM+Mono:wght@400&display=swap" />
+        <style>
+          body { font-family: 'DM Sans', sans-serif; padding: 32px; color: #111; background: #fff; }
+          table { width:100%; border-collapse:collapse; }
+          th, td { padding: 8px 0; font-size: 13px; }
+          .billing-amount { font-family: 'DM Mono', monospace; }
+          .billing-amount.paid { color: #16a34a; }
+          @media print { button { display:none; } }
+        </style>
+      </head><body>
+        ${billContent}
+        <script>window.onload=()=>window.print();<\/script>
+      </body></html>
+    `);
+      win.document.close();
+    }
+  </script>
 </body>
+
 </html>

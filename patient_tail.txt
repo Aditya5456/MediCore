@@ -1,0 +1,20 @@
+      confirmDelete(name, async () => {
+        try {
+          await Patients.delete(id);
+          showToast(`${name} deleted successfully.`, 'success');
+          btn.closest('tr').remove();
+          updateRowCount();
+        } catch { /* toast already shown */ }
+      });
+    }
+
+    /* ?????? Boot ?????? */
+    document.addEventListener('DOMContentLoaded', loadPatients);
+  </script>rror'); return; }
+      showToast('Patient registered successfully!', 'success');
+      closeModal('add-patient-modal');
+    }
+  </script>
+</body>
+
+</html>
