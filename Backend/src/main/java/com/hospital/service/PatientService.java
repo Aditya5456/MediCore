@@ -7,6 +7,8 @@ import com.hospital.exception.DuplicateResourceException;
 import com.hospital.exception.ResourceNotFoundException;
 import com.hospital.model.Patient;
 import com.hospital.repository.PatientRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,17 +29,17 @@ import java.util.stream.Collectors;
  *  @Transactional → wraps each public method in a DB transaction automatically.
  *                   If any exception occurs mid-method, the whole transaction
  *                   rolls back — keeping the DB consistent.
+ *  @RequiredArgsConstructor (Lombok) → generates constructor injection for
+ *                   all 'final' fields (preferred over @Autowired)
  * ─────────────────────────────────────────────────────────────────────────────
  */
 @Service
+@Slf4j
+@RequiredArgsConstructor
 @Transactional
 public class PatientService {
 
     private final PatientRepository patientRepository;
-
-    public PatientService(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
-    }
 
     // ── CREATE ────────────────────────────────────────────────────────────────
 
@@ -46,7 +48,7 @@ public class PatientService {
      * Checks for duplicate phone and email before saving.
      */
     public PatientResponseDTO addPatient(PatientRequestDTO request) {
-        System.out.println("Registering new patient: " + request.getName());
+        log.info("Registering new patient: {}", request.getName());
 
         // Business rule: phone number must be unique
         if (patientRepository.existsByPhone(request.getPhone())) {
@@ -72,7 +74,7 @@ public class PatientService {
 
         // Save to DB (JPA handles the INSERT)
         Patient saved = patientRepository.save(patient);
-        System.out.println("Patient registered with ID: " + saved.getPatientId());
+        log.info("Patient registered with ID: {}", saved.getPatientId());
 
         return toResponseDTO(saved);
     }
@@ -128,7 +130,7 @@ public class PatientService {
 
     public PatientResponseDTO updatePatient(Integer id, PatientRequestDTO request) {
         Patient patient = findPatientOrThrow(id);
-        System.out.println("Updating patient ID: " + id);
+        log.info("Updating patient ID: {}", id);
 
         // If phone is being changed, check it's not taken by someone else
         if (!patient.getPhone().equals(request.getPhone())
@@ -154,7 +156,7 @@ public class PatientService {
 
     public void deletePatient(Integer id) {
         Patient patient = findPatientOrThrow(id);
-        System.out.println("Deleting patient ID: " + id + " — " + patient.getName());
+        log.warn("Deleting patient ID: {} — {}", id, patient.getName());
         patientRepository.delete(patient);
     }
 

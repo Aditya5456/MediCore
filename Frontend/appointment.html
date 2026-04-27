@@ -1,498 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HMS — Appointments</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/style.css" />
-  <meta name="description" content="MediCore HMS — Schedule and track patient appointments and doctor availability." />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediCore HMS - Appointments</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#003c90","on-primary":"#ffffff","primary-container":"#0f52ba","primary-fixed":"#d9e2ff","secondary":"#006a6a","on-secondary":"#ffffff","secondary-container":"#90efef","on-secondary-container":"#006e6e","error":"#ba1a1a","on-error":"#ffffff","error-container":"#ffdad6","on-error-container":"#93000a","surface":"#f8f9ff","surface-dim":"#cbdbf5","surface-bright":"#f8f9ff","surface-container-lowest":"#ffffff","surface-container-low":"#eff4ff","surface-container":"#e5eeff","surface-container-high":"#dce9ff","on-surface":"#0b1c30","on-surface-variant":"#434653","outline":"#737784","outline-variant":"#c3c6d5","background":"#f8f9ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","md":"1rem"},fontFamily:{"sans":["Public Sans","sans-serif"]},fontSize:{"h1":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"h3":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}]}}}}
+</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}.icon-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}</style>
 </head>
+<body class="bg-background text-on-background font-sans antialiased flex min-h-screen">
 
-<body>
-  <div class="layout">
+<aside class="bg-white fixed left-0 top-0 h-screen w-[280px] border-r border-slate-200 flex flex-col py-6 px-4 z-50">
+  <div class="flex items-center gap-3 px-2 mb-8"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-white text-[20px]">local_hospital</span></div><div><div class="text-[15px] font-bold text-primary">MediCore</div><div class="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Central Admin</div></div></div>
+  <div class="px-2 mb-5"><button onclick="openModal('book-modal')" class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-lg py-2.5 text-[13px] font-semibold hover:bg-primary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>New Appointment</button></div>
+  <nav class="flex-1 space-y-0.5">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+    <a href="patient.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">person_search</span>Patients</a>
+    <a href="doctor.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">medical_services</span>Doctors</a>
+    <a href="appointment.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-semibold text-primary bg-blue-50 border-r-4 border-primary"><span class="material-symbols-outlined icon-fill text-[20px]">event_note</span>Appointments</a>
+    <a href="billing.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">payments</span>Billing</a>
+  </nav>
+  <div class="border-t border-slate-200 pt-4 space-y-0.5">
+    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a>
+  </div>
+</aside>
 
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-icon">🏥</div>
-        <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
-      </div>
-      <nav class="sidebar-nav">
-        <div class="nav-section-label">Overview</div>
-        <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
-        <div class="nav-section-label">Management</div>
-        <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
-        <a class="nav-link" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
-        <a class="nav-link active" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span
-            class="nav-badge">3</span></a>
-        <a class="nav-link" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
-        <div class="nav-section-label">System</div>
-        <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
-        <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="sidebar-user">
-          <div class="user-avatar">A</div>
-          <div class="user-info">
-            <div class="uname">Admin User</div>
-            <div class="urole">Super Admin</div>
-          </div>
-          <span style="color:var(--text-3); font-size:14px;">⋯</span>
+<div class="flex-1 flex flex-col ml-[280px]">
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 flex justify-between items-center px-8 h-16">
+    <div class="relative w-80"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span><input id="search-input" type="text" placeholder="Search patient or doctor name..." class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-[13px] placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 outline-none"/></div>
+    <div class="flex items-center gap-3">
+      <span class="text-[12px] font-mono text-outline" id="api-status">Connecting...</span>
+      <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white font-bold text-[13px]">A</div>
+      <span class="text-[13px] font-semibold">Admin User</span>
+    </div>
+  </header>
+
+  <main class="flex-1 p-gutter max-w-[1440px] mx-auto w-full flex flex-col gap-gutter">
+    <div class="flex justify-between items-end">
+      <div><h1 class="text-h1 font-bold text-on-surface mb-1">Appointments</h1><p class="text-[14px] text-outline">Live schedule — all bookings from the database.</p></div>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center border border-outline-variant rounded-lg bg-white p-0.5">
+          <button onclick="loadAppointments('all',this)" class="px-3 py-1.5 rounded bg-surface-container text-primary text-label-md font-semibold filter-btn">All</button>
+          <button onclick="loadAppointments('Scheduled',this)" class="px-3 py-1.5 rounded text-on-surface-variant text-label-md hover:bg-surface-container-low filter-btn">Scheduled</button>
+          <button onclick="loadAppointments('Completed',this)" class="px-3 py-1.5 rounded text-on-surface-variant text-label-md hover:bg-surface-container-low filter-btn">Completed</button>
+          <button onclick="loadAppointments('Cancelled',this)" class="px-3 py-1.5 rounded text-on-surface-variant text-label-md hover:bg-surface-container-low filter-btn">Cancelled</button>
         </div>
-      </div>
-    </aside>
-
-    <div class="main">
-      <header class="topbar">
-        <div class="topbar-left">
-          <div>
-            <div class="page-title">Appointments</div>
-            <div class="page-breadcrumb">Dashboard / Appointments</div>
-          </div>
-        </div>
-        <div class="topbar-right">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Search appointments…" />
-          </div>
-          <button class="icon-btn">🔔<span class="notif-dot"></span></button>
-          <button class="btn btn-primary" onclick="openModal('book-appt-modal')">＋ Book Appointment</button>
-        </div>
-      </header>
-
-      <div class="page-body">
-
-        <!-- Stats -->
-        <div class="stats-grid" style="grid-template-columns: repeat(4,1fr); margin-bottom:24px;">
-          <div class="stat-card teal">
-            <div class="stat-icon">📅</div>
-            <div class="stat-value" data-count="34">0</div>
-            <div class="stat-label">Today's Total</div>
-          </div>
-          <div class="stat-card green">
-            <div class="stat-icon">✅</div>
-            <div class="stat-value" data-count="18">0</div>
-            <div class="stat-label">Completed</div>
-          </div>
-          <div class="stat-card amber">
-            <div class="stat-icon">⏳</div>
-            <div class="stat-value" data-count="11">0</div>
-            <div class="stat-label">Scheduled</div>
-          </div>
-          <div class="stat-card rose">
-            <div class="stat-icon">❌</div>
-            <div class="stat-value" data-count="5">0</div>
-            <div class="stat-label">Cancelled</div>
-          </div>
-        </div>
-
-        <div class="grid-2">
-
-          <!-- Mini Calendar -->
-          <div class="card animate-fade-up" style="animation-delay:0.1s">
-            <div class="card-header">
-              <div class="card-title" id="cal-title">March 2025</div>
-              <div style="display:flex; gap:8px;">
-                <button class="btn btn-ghost btn-sm btn-icon" onclick="changeMonth(-1)" id="cal-prev">‹</button>
-                <button class="btn btn-ghost btn-sm btn-icon" onclick="changeMonth(1)" id="cal-next">›</button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div id="mini-cal" style="font-family:'DM Mono',monospace;"></div>
-            </div>
-          </div>
-
-          <!-- Today's Queue -->
-          <div class="card animate-fade-up" style="animation-delay:0.15s">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Today's Queue</div>
-                <div class="card-subtitle">Mar 10, 2025</div>
-              </div>
-              <button class="btn btn-primary btn-sm" onclick="openModal('book-appt-modal')">＋ Book</button>
-            </div>
-            <div class="card-body" style="padding-top:12px;">
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">09:00</div>
-                  <div class="period">AM</div>
-                </div>
-                <div class="appt-line" style="background:var(--teal)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Arun Kumar</div>
-                  <div class="appt-doctor">Dr. Ramesh Kumar · Chest pain</div>
-                </div>
-                <span class="badge badge-teal">Done</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">10:00</div>
-                  <div class="period">AM</div>
-                </div>
-                <div class="appt-line" style="background:var(--teal)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Meena Devi</div>
-                  <div class="appt-doctor">Dr. Priya Sharma · Headache</div>
-                </div>
-                <span class="badge badge-teal">Done</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">11:00</div>
-                  <div class="period">AM</div>
-                </div>
-                <div class="appt-line" style="background:var(--amber)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Vikram Singh</div>
-                  <div class="appt-doctor">Dr. Anand Rajan · Knee pain</div>
-                </div>
-                <span class="badge badge-amber">Scheduled</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">02:00</div>
-                  <div class="period">PM</div>
-                </div>
-                <div class="appt-line" style="background:var(--rose)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Divya Nair</div>
-                  <div class="appt-doctor">Dr. Ramesh Kumar · Routine</div>
-                </div>
-                <span class="badge badge-rose">Cancelled</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">03:00</div>
-                  <div class="period">PM</div>
-                </div>
-                <div class="appt-line" style="background:var(--teal)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Karthik Raj</div>
-                  <div class="appt-doctor">Dr. Kavitha Menon · Prenatal</div>
-                </div>
-                <span class="badge badge-teal">Done</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Full Appointments Table -->
-        <div class="card animate-fade-up mt-6" style="animation-delay:0.2s">
-          <div class="card-header">
-            <div>
-              <div class="card-title">All Appointments</div>
-              <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
-            </div>
-            <div style="display:flex; gap:8px;">
-              <button class="btn btn-ghost btn-sm">⬇ Export</button>
-              <button class="btn btn-primary btn-sm" onclick="openModal('book-appt-modal')">＋ Book</button>
-            </div>
-          </div>
-
-          <div
-            style="padding:12px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-            <div class="filter-search" style="max-width:260px">
-              <span style="color:var(--text-3)">🔍</span>
-              <input type="text" placeholder="Search…" />
-            </div>
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="completed">Completed</button>
-            <button class="filter-btn" data-filter="scheduled">Scheduled</button>
-            <button class="filter-btn" data-filter="cancelled">Cancelled</button>
-          </div>
-
-          <div class="card-body" style="padding:0;">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Appt. ID</th>
-                    <th>Patient</th>
-                    <th>Doctor</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th>Notes</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-category="completed">
-                    <td><span class="num-chip">A-2001</span></td>
-                    <td>
-                      <div style="display:flex; align-items:center; gap:8px;">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
-                        Arun Kumar
-                      </div>
-                    </td>
-                    <td>Dr. Ramesh Kumar</td>
-                    <td>Mar 10, 2025</td>
-                    <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">09:00 AM</span></td>
-                    <td><span class="badge badge-teal">Completed</span></td>
-                    <td
-                      style="max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-3)">
-                      Chest pain</td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                        <button class="btn btn-outline btn-sm btn-icon"
-                          onclick="openModal('edit-appt-modal')">✏️</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="completed">
-                    <td><span class="num-chip">A-2002</span></td>
-                    <td>
-                      <div style="display:flex; align-items:center; gap:8px;">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                        Meena Devi
-                      </div>
-                    </td>
-                    <td>Dr. Priya Sharma</td>
-                    <td>Mar 11, 2025</td>
-                    <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">10:00 AM</span></td>
-                    <td><span class="badge badge-teal">Completed</span></td>
-                    <td style="color:var(--text-3)">Headache</td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                        <button class="btn btn-outline btn-sm btn-icon"
-                          onclick="openModal('edit-appt-modal')">✏️</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="scheduled">
-                    <td><span class="num-chip">A-2003</span></td>
-                    <td>
-                      <div style="display:flex; align-items:center; gap:8px;">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                        Vikram Singh
-                      </div>
-                    </td>
-                    <td>Dr. Anand Rajan</td>
-                    <td>Mar 12, 2025</td>
-                    <td><span style="font-family:'DM Mono',monospace; color:var(--amber)">11:00 AM</span></td>
-                    <td><span class="badge badge-amber">Scheduled</span></td>
-                    <td style="color:var(--text-3)">Knee pain</td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                        <button class="btn btn-outline btn-sm btn-icon"
-                          onclick="openModal('edit-appt-modal')">✏️</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="cancelled">
-                    <td><span class="num-chip">A-2004</span></td>
-                    <td>
-                      <div style="display:flex; align-items:center; gap:8px;">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                        Divya Nair
-                      </div>
-                    </td>
-                    <td>Dr. Ramesh Kumar</td>
-                    <td>Mar 13, 2025</td>
-                    <td><span style="font-family:'DM Mono',monospace; color:var(--text-3)">02:00 PM</span></td>
-                    <td><span class="badge badge-rose">Cancelled</span></td>
-                    <td style="color:var(--text-3)">Routine checkup</td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                        <button class="btn btn-outline btn-sm btn-icon"
-                          onclick="openModal('edit-appt-modal')">✏️</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="completed">
-                    <td><span class="num-chip">A-2005</span></td>
-                    <td>
-                      <div style="display:flex; align-items:center; gap:8px;">
-                        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                        Karthik Raj
-                      </div>
-                    </td>
-                    <td>Dr. Kavitha Menon</td>
-                    <td>Mar 14, 2025</td>
-                    <td><span style="font-family:'DM Mono',monospace; color:var(--teal)">03:00 PM</span></td>
-                    <td><span class="badge badge-teal">Completed</span></td>
-                    <td style="color:var(--text-3)">Prenatal visit</td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon">👁</button>
-                        <button class="btn btn-outline btn-sm btn-icon"
-                          onclick="openModal('edit-appt-modal')">✏️</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              style="padding:14px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
-              <span style="font-size:12.5px; color:var(--text-3)">Showing 1–5 of 34 appointments</span>
-              <div style="display:flex; gap:6px;">
-                <button class="btn btn-ghost btn-sm">← Prev</button>
-                <button class="btn btn-primary btn-sm">1</button>
-                <button class="btn btn-ghost btn-sm">2</button>
-                <button class="btn btn-ghost btn-sm">Next →</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <button onclick="loadAppointments(currentFilter)" class="border border-outline-variant rounded-lg bg-white p-2 hover:bg-surface-container-low text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">refresh</span></button>
+        <button onclick="openModal('book-modal')" class="bg-primary text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 hover:bg-primary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>Book Appointment</button>
       </div>
     </div>
-  </div>
 
-  <!-- Book Appointment Modal -->
-  <div class="modal-overlay" id="book-appt-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Book Appointment</div>
-        <button class="modal-close" onclick="closeModal('book-appt-modal')">✕</button>
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[22px]">calendar_month</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-all">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Total</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-secondary text-[22px]">check_circle</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-completed">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Completed</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[22px]">schedule</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-scheduled">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Scheduled</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-error text-[22px]">cancel</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-cancelled">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Cancelled</div></div></div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+      <div class="px-5 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+        <h2 class="text-h3 font-semibold text-on-surface" id="table-title">All Appointments</h2>
+        <span class="text-[13px] text-outline" id="table-count">Loading...</span>
       </div>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Patient *</label>
-            <select class="form-control" required>
-              <option value="">Select patient</option>
-              <option>Arun Kumar (P-1001)</option>
-              <option>Meena Devi (P-1002)</option>
-              <option>Vikram Singh (P-1003)</option>
-              <option>Divya Nair (P-1004)</option>
-              <option>Karthik Raj (P-1005)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Doctor *</label>
-            <select class="form-control" required>
-              <option value="">Select doctor</option>
-              <option>Dr. Ramesh Kumar</option>
-              <option>Dr. Priya Sharma</option>
-              <option>Dr. Anand Rajan</option>
-              <option>Dr. Kavitha Menon</option>
-              <option>Dr. Suresh Pillai</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Date *</label>
-            <input type="date" class="form-control" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Time *</label>
-            <input type="time" class="form-control" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Notes / Reason</label>
-          <textarea class="form-control" rows="3"
-            placeholder="Brief description of symptoms or visit reason…"></textarea>
-        </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead><tr class="bg-surface-container-low border-b border-outline-variant">
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Date & Time</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Patient</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Doctor</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Notes</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Status</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase text-right">Actions</th>
+          </tr></thead>
+          <tbody id="appt-tbody" class="divide-y divide-outline-variant"></tbody>
+        </table>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('book-appt-modal')">Cancel</button>
-        <button class="btn btn-primary"
-          onclick="showToast('Appointment booked successfully!','success'); closeModal('book-appt-modal')">📅 Confirm
-          Booking</button>
+      <div class="px-5 py-3.5 border-t border-outline-variant bg-surface-bright flex justify-between items-center">
+        <span class="text-[13px] text-outline" id="footer-count">Loading...</span>
+        <button onclick="loadAppointments(currentFilter)" class="text-[13px] font-semibold text-primary hover:opacity-75 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">sync</span>Reload</button>
       </div>
     </div>
-  </div>
+  </main>
+</div>
 
-  <!-- Edit Appointment Modal -->
-  <div class="modal-overlay" id="edit-appt-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Update Appointment</div>
-        <button class="modal-close" onclick="closeModal('edit-appt-modal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Status</label>
-            <select class="form-control">
-              <option>Scheduled</option>
-              <option>Completed</option>
-              <option>Cancelled</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Time</label>
-            <input type="time" class="form-control" value="09:00" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Notes</label>
-          <textarea class="form-control" rows="3">Chest pain</textarea>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('edit-appt-modal')">Cancel</button>
-        <button class="btn btn-primary"
-          onclick="showToast('Appointment updated!','success'); closeModal('edit-appt-modal')">💾 Save</button>
-      </div>
+<!-- Book Appointment Modal -->
+<div id="book-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 backdrop-blur-sm" onclick="if(event.target===this)closeModal('book-modal')">
+  <div class="bg-white rounded-xl w-full max-w-lg shadow-xl p-6">
+    <div class="flex justify-between items-center mb-5"><h2 class="text-h3 font-semibold">Book Appointment</h2><button onclick="closeModal('book-modal')" class="p-1.5 rounded-full hover:bg-surface-container text-outline"><span class="material-symbols-outlined text-[20px]">close</span></button></div>
+    <form id="book-form" class="grid grid-cols-2 gap-4">
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Patient *</label><select name="patientId" required id="patient-select" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"><option value="">Loading...</option></select></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Doctor *</label><select name="doctorId" required id="doctor-select" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"><option value="">Loading...</option></select></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Date *</label><input name="appointmentDate" required type="date" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Time</label><input name="appointmentTime" type="time" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"/></div>
+      <div class="col-span-2"><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Notes / Reason</label><textarea name="notes" rows="3" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="Symptoms or reason for visit..."></textarea></div>
+    </form>
+    <div id="book-error" class="hidden mt-3 p-3 bg-error-container/30 border border-error/20 rounded-lg text-[13px] text-error font-medium"></div>
+    <div class="flex gap-3 mt-6 justify-end">
+      <button onclick="closeModal('book-modal')" class="px-4 py-2 border border-outline-variant rounded-lg text-[13px] font-semibold text-on-surface-variant hover:bg-surface-container-low">Cancel</button>
+      <button id="book-btn" onclick="bookAppointment()" class="px-5 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container flex items-center gap-2">Confirm Booking</button>
     </div>
   </div>
+</div>
 
-  <script src="js/script.js"></script>
-  <script>
-    // Mini calendar state
-    let calYear = 2025, calMonth = 2; // 0-indexed: March = 2
-    const APPT_DATES = { '2025-2': [10, 11, 12, 14] };
-    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2"></div>
 
-    function buildCal() {
-      const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-      const highlighted = APPT_DATES[`${calYear}-${calMonth}`] || [];
-      const today = (calYear === 2025 && calMonth === 2) ? 10 : -1;
-      const firstDay = new Date(calYear, calMonth, 1).getDay();
-      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+<script type="module">
+import { AppointmentAPI, PatientAPI, DoctorAPI, showToast } from './js/api.js';
 
-      document.getElementById('cal-title').textContent = `${MONTHS[calMonth]} ${calYear}`;
+window.openModal = id => { const m=document.getElementById(id); m.classList.remove('hidden'); m.classList.add('flex'); };
+window.closeModal = id => { const m=document.getElementById(id); m.classList.add('hidden'); m.classList.remove('flex'); };
+window.showToast = showToast;
+window.currentFilter = 'all';
 
-      let html = `<div style="display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center;">`;
-      days.forEach(d => {
-        html += `<div style="font-size:11px; color:var(--text-3); padding:4px; font-weight:600;">${d}</div>`;
-      });
-      for (let i = 0; i < firstDay; i++) html += `<div></div>`;
-      for (let d = 1; d <= daysInMonth; d++) {
-        const isToday = d === today;
-        const hasAppt = highlighted.includes(d);
-        html += `<div style="
-      padding:6px 4px; border-radius:8px; font-size:13px; cursor:pointer;
-      font-family:'DM Mono',monospace;
-      background:${isToday ? 'var(--teal)' : hasAppt ? 'rgba(0,210,190,0.1)' : 'transparent'};
-      color:${isToday ? '#021016' : hasAppt ? 'var(--teal)' : 'var(--text-2)'};
-      font-weight:${isToday || hasAppt ? '600' : '400'};
-      transition:background 0.15s;
-    " onmouseover="if(!this.style.background||this.style.background==='transparent')this.style.background='rgba(255,255,255,0.04)'" onmouseout="if(this.style.background==='rgba(255, 255, 255, 0.04)')this.style.background='transparent'">${d}</div>`;
-      }
-      html += `</div>`;
-      html += `<div style="margin-top:14px; display:flex; align-items:center; gap:12px; font-size:12px; color:var(--text-3);">
-    <span style="width:10px;height:10px;border-radius:50%;background:var(--teal);display:inline-block"></span> Today
-    <span style="width:10px;height:10px;border-radius:50%;background:rgba(0,210,190,0.3);display:inline-block"></span> Has appointments
-  </div>`;
-      document.getElementById('mini-cal').innerHTML = html;
+function statusBadge(s) {
+  const map = { Completed:'bg-secondary-container text-on-secondary-container', Scheduled:'bg-surface-dim text-on-surface', Cancelled:'bg-error-container text-on-error-container' };
+  return `<span class="inline-flex px-2 py-0.5 rounded text-label-md ${map[s]||'bg-surface-container text-on-surface'}">${s}</span>`;
+}
+
+window.loadAppointments = async (filter='all', btn=null) => {
+  window.currentFilter = filter;
+  if (btn) {
+    document.querySelectorAll('.filter-btn').forEach(b=>{b.classList.remove('bg-surface-container','text-primary','font-semibold');b.classList.add('text-on-surface-variant');});
+    btn.classList.add('bg-surface-container','text-primary','font-semibold');
+    btn.classList.remove('text-on-surface-variant');
+  }
+  const tbody = document.getElementById('appt-tbody');
+  tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center"><div class="flex flex-col items-center gap-2"><div class="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div><span class="text-[12px] text-outline">Loading...</span></div></td></tr>`;
+
+  try {
+    const all = await AppointmentAPI.getAll();
+    document.getElementById('api-status').textContent = '🟢 Connected';
+
+    // Update stats from full list
+    document.getElementById('stat-all').textContent       = all.length;
+    document.getElementById('stat-completed').textContent  = all.filter(a=>a.status==='Completed').length;
+    document.getElementById('stat-scheduled').textContent  = all.filter(a=>a.status==='Scheduled').length;
+    document.getElementById('stat-cancelled').textContent  = all.filter(a=>a.status==='Cancelled').length;
+
+    const filtered = filter==='all' ? all : all.filter(a=>a.status===filter);
+    document.getElementById('table-title').textContent = filter==='all' ? 'All Appointments' : `${filter} Appointments`;
+    document.getElementById('table-count').textContent = `${filtered.length} record(s)`;
+    document.getElementById('footer-count').textContent = `${filtered.length} of ${all.length} appointments`;
+
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center"><div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-outline-variant text-[36px]">event_busy</span><span class="text-[13px] text-outline">No ${filter==='all'?'':filter.toLowerCase()+' '}appointments found.</span></div></td></tr>`;
+      return;
     }
 
-    function changeMonth(dir) {
-      calMonth += dir;
-      if (calMonth < 0) { calMonth = 11; calYear--; }
-      if (calMonth > 11) { calMonth = 0; calYear++; }
-      buildCal();
-    }
+    tbody.innerHTML = filtered.map(a => `
+      <tr class="hover:bg-surface-container-lowest transition-colors">
+        <td class="py-3.5 px-4">
+          <div class="font-mono text-[13px] font-medium text-on-surface">${a.appointmentDate||'—'}</div>
+          <div class="text-[11px] text-outline">${a.appointmentTime||'—'}</div>
+        </td>
+        <td class="py-3.5 px-4">
+          <div class="text-[13px] font-semibold text-on-surface">${a.patientName}</div>
+          <div class="text-[11px] text-outline">P-${a.patientId}</div>
+        </td>
+        <td class="py-3.5 px-4">
+          <div class="text-[13px] text-on-surface">${a.doctorName}</div>
+          <div class="text-[11px] text-outline">${a.doctorSpecialization}</div>
+        </td>
+        <td class="py-3.5 px-4 text-[12px] text-outline max-w-[160px] truncate">${a.notes||'—'}</td>
+        <td class="py-3.5 px-4">${statusBadge(a.status)}</td>
+        <td class="py-3.5 px-4 text-right">
+          ${a.status==='Scheduled' ? `<button onclick="cancelAppt(${a.appointmentId})" class="text-outline hover:text-error transition-colors p-1 rounded hover:bg-error-container" title="Cancel appointment"><span class="material-symbols-outlined text-[18px]">cancel</span></button>` : ''}
+          ${a.status==='Scheduled' ? `<button onclick="markDone(${a.appointmentId})" class="text-outline hover:text-secondary transition-colors p-1 rounded hover:bg-secondary-container ml-1" title="Mark completed"><span class="material-symbols-outlined text-[18px]">check_circle</span></button>` : ''}
+        </td>
+      </tr>`).join('');
+  } catch (err) {
+    document.getElementById('api-status').textContent = '🔴 Backend offline';
+    tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center"><div class="flex flex-col items-center gap-3"><span class="material-symbols-outlined text-error text-[32px]">wifi_off</span><span class="text-[13px] text-error font-semibold">Cannot connect to backend</span><span class="text-[12px] text-outline">${err.message}</span><span class="text-[12px] text-outline">Run: <code class="bg-surface-container px-2 py-0.5 rounded font-mono">mvn spring-boot:run</code></span></div></td></tr>`;
+  }
+};
 
-    buildCal();
-  </script>
+window.cancelAppt = async (id) => {
+  if (!confirm('Cancel this appointment?')) return;
+  try { await AppointmentAPI.cancel(id); showToast('Appointment cancelled.', 'success'); await window.loadAppointments(window.currentFilter); }
+  catch (err) { showToast(err.message, 'error'); }
+};
+
+window.markDone = async (id) => {
+  try { await AppointmentAPI.updateStatus(id, 'Completed'); showToast('Appointment marked as Completed.', 'success'); await window.loadAppointments(window.currentFilter); }
+  catch (err) { showToast(err.message, 'error'); }
+};
+
+// Load dropdowns
+async function loadDropdowns() {
+  try {
+    const [patients, doctors] = await Promise.all([PatientAPI.getAll(), DoctorAPI.getAll()]);
+    document.getElementById('patient-select').innerHTML =
+      `<option value="">Select patient</option>` + patients.map(p=>`<option value="${p.patientId}">${p.name} (P-${p.patientId})</option>`).join('');
+    document.getElementById('doctor-select').innerHTML =
+      `<option value="">Select doctor</option>` + doctors.map(d=>`<option value="${d.doctorId}">${d.name} — ${d.specialization}</option>`).join('');
+  } catch {
+    document.getElementById('patient-select').innerHTML = `<option value="">Backend offline</option>`;
+    document.getElementById('doctor-select').innerHTML  = `<option value="">Backend offline</option>`;
+  }
+}
+
+window.bookAppointment = async () => {
+  const btn = document.getElementById('book-btn');
+  const errDiv = document.getElementById('book-error');
+  errDiv.classList.add('hidden');
+  const form = document.getElementById('book-form');
+  const data = {};
+  form.querySelectorAll('[name]').forEach(f => { if (f.value.trim()) data[f.name] = f.name==='patientId'||f.name==='doctorId' ? parseInt(f.value) : f.value.trim(); });
+  if (!data.patientId || !data.doctorId || !data.appointmentDate) {
+    errDiv.textContent = 'Patient, Doctor, and Date are required.'; errDiv.classList.remove('hidden'); return;
+  }
+  btn.disabled = true;
+  btn.innerHTML = `<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Booking...`;
+  try {
+    await AppointmentAPI.create(data);
+    showToast('Appointment booked successfully!', 'success');
+    closeModal('book-modal');
+    form.reset();
+    await window.loadAppointments(window.currentFilter);
+  } catch (err) { errDiv.textContent = err.message; errDiv.classList.remove('hidden'); }
+  finally { btn.disabled=false; btn.innerHTML='Confirm Booking'; }
+};
+
+// Search filter
+let st;
+document.getElementById('search-input').addEventListener('input', async e => {
+  clearTimeout(st);
+  const q = e.target.value.trim().toLowerCase();
+  st = setTimeout(async () => {
+    if (!q) { window.loadAppointments(window.currentFilter); return; }
+    try {
+      const all = await AppointmentAPI.getAll();
+      const filtered = all.filter(a => a.patientName?.toLowerCase().includes(q) || a.doctorName?.toLowerCase().includes(q));
+      const tbody = document.getElementById('appt-tbody');
+      document.getElementById('table-count').textContent = `${filtered.length} result(s) for "${q}"`;
+      tbody.innerHTML = filtered.length
+        ? filtered.map(a=>`<tr class="hover:bg-surface-container-lowest transition-colors"><td class="py-3.5 px-4"><div class="font-mono text-[13px] font-medium text-on-surface">${a.appointmentDate||'—'}</div><div class="text-[11px] text-outline">${a.appointmentTime||'—'}</div></td><td class="py-3.5 px-4"><div class="text-[13px] font-semibold text-on-surface">${a.patientName}</div></td><td class="py-3.5 px-4"><div class="text-[13px]">${a.doctorName}</div><div class="text-[11px] text-outline">${a.doctorSpecialization}</div></td><td class="py-3.5 px-4 text-[12px] text-outline truncate max-w-[160px]">${a.notes||'—'}</td><td class="py-3.5 px-4"><span class="inline-flex px-2 py-0.5 rounded text-label-md ${a.status==='Completed'?'bg-secondary-container text-on-secondary-container':a.status==='Cancelled'?'bg-error-container text-on-error-container':'bg-surface-dim text-on-surface'}">${a.status}</span></td><td></td></tr>`).join('')
+        : `<tr><td colspan="6" class="py-8 text-center text-[13px] text-outline">No results for "${q}"</td></tr>`;
+    } catch {}
+  }, 350);
+});
+
+loadDropdowns();
+window.loadAppointments('all');
+</script>
 </body>
-
 </html>

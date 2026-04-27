@@ -1,10 +1,16 @@
 package com.hospital.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.*;
+
 import java.time.LocalDate;
 
 // ─── Patient Request DTO ────────────────────────────────────────────────────
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PatientRequestDTO {
 
     @NotBlank(message = "Name is required")
@@ -32,66 +38,4 @@ public class PatientRequestDTO {
 
     @Size(max = 100, message = "Address must not exceed 100 characters")
     private String address;
-
-    // ── Constructors ───────────────────────────────────────────────────────────
-    public PatientRequestDTO() {}
-
-    public PatientRequestDTO(String name, LocalDate dob, String gender, String bloodGroup, String phone, String email, String address) {
-        this.name = name;
-        this.dob = dob;
-        this.gender = gender;
-        this.bloodGroup = bloodGroup;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-    }
-
-    // ── Getters & Setters ──────────────────────────────────────────────────────
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public LocalDate getDob() { return dob; }
-    public void setDob(LocalDate dob) { this.dob = dob; }
-
-    public String getGender() { return gender; }
-    public void setGender(String gender) { this.gender = gender; }
-
-    public String getBloodGroup() { return bloodGroup; }
-    public void setBloodGroup(String bloodGroup) { this.bloodGroup = bloodGroup; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
-
-    // ── Builder pattern ───────────────────────────────────────────────────────
-    public static Builder builder() {
-        return new Builder();
-    }
-
-    public static class Builder {
-        private String name;
-        private LocalDate dob;
-        private String gender;
-        private String bloodGroup;
-        private String phone;
-        private String email;
-        private String address;
-
-        public Builder name(String name) { this.name = name; return this; }
-        public Builder dob(LocalDate dob) { this.dob = dob; return this; }
-        public Builder gender(String gender) { this.gender = gender; return this; }
-        public Builder bloodGroup(String bloodGroup) { this.bloodGroup = bloodGroup; return this; }
-        public Builder phone(String phone) { this.phone = phone; return this; }
-        public Builder email(String email) { this.email = email; return this; }
-        public Builder address(String address) { this.address = address; return this; }
-
-        public PatientRequestDTO build() {
-            return new PatientRequestDTO(name, dob, gender, bloodGroup, phone, email, address);
-        }
-    }
 }

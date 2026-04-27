@@ -1,152 +1,186 @@
-/* ═══════════════════════════════════════════════════════════════════════════
- *  MediCore API Client  —  api.js
- *  All fetch() calls to the Spring Boot backend (localhost:8080)
- *  Responses always follow:  { success, message, data }
- * ═══════════════════════════════════════════════════════════════════════════ */
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ *  api.js  —  MediCore HMS Frontend API Client
+ *
+ *  Single source of truth for all backend calls.
+ *  Every function returns a Promise that resolves to the `data` field
+ *  from the ApiResponse envelope:  { success, message, data }
+ *
+ *  Usage in any page:
+ *    import { PatientAPI } from './api.js';
+ *    const patients = await PatientAPI.getAll();
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
 
-const API_BASE = 'http://localhost:8080/api';
+const BASE_URL = 'http://localhost:8080/api';
 
-/* ─── Internal helper ────────────────────────────────────────────────────── */
-async function _request(method, path, body = null) {
-  const opts = {
+// ── Core fetch wrapper ────────────────────────────────────────────────────────
+async function request(method, path, body = null) {
+  const options = {
     method,
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
   };
-  if (body) opts.body = JSON.stringify(body);
+  if (body) options.body = JSON.stringify(body);
 
-  try {
-    const res = await fetch(`${API_BASE}${path}`, opts);
-    const json = await res.json();
+  const res = await fetch(`${BASE_URL}${path}`, options);
+  const json = await res.json();
 
-    if (!res.ok) {
-      // Use server error message if present
-      const msg = json?.message || `Server error ${res.status}`;
-      throw new Error(msg);
-    }
-    return json.data;          // unwrap the ApiResponse wrapper
-  } catch (err) {
-    if (err.message === 'Failed to fetch') {
-      showToast('⚠️ Cannot reach server — is the backend running?', 'error', 5000);
-    } else {
-      showToast(err.message, 'error');
-    }
-    throw err;
+  if (!res.ok) {
+    // json is an ApiError { status, error, message, fieldErrors }
+    const msg = json.fieldErrors
+      ? Object.values(json.fieldErrors).join(' · ')
+      : json.message || 'Something went wrong.';
+    throw new Error(msg);
   }
+
+  return json.data;   // unwrap the ApiResponse envelope
 }
 
-const get    = (path)         => _request('GET',    path);
-const post   = (path, body)   => _request('POST',   path, body);
-const put    = (path, body)   => _request('PUT',    path, body);
-const patch  = (path, body)   => _request('PATCH',  path, body);
-const del    = (path)         => _request('DELETE', path);
-
-
-/* ═══════════════════════════════════════════════════════════════════════════
- *  PATIENTS    /api/patients
- * ═══════════════════════════════════════════════════════════════════════════ */
-const Patients = {
-  getAll:           ()          => get('/patients'),
-  getById:          (id)        => get(`/patients/${id}`),
-  search:           (q)         => get(`/patients/search?q=${encodeURIComponent(q)}`),
-  pendingBills:     ()          => get('/patients/pending-bills'),
-  create:           (data)      => post('/patients', data),
-  update:           (id, data)  => put(`/patients/${id}`, data),
-  delete:           (id)        => del(`/patients/${id}`),
+// ── Patient API ───────────────────────────────────────────────────────────────
+export const PatientAPI = {
+  getAll:            ()       => request('GET',  '/patients'),
+  getById:           (id)     => request('GET',  `/patients/${id}`),
+  search:            (q)      => request('GET',  `/patients/search?q=${encodeURIComponent(q)}`),
+  getPendingBills:   ()       => request('GET',  '/patients/pending-bills'),
+  create:            (data)   => request('POST', '/patients', data),
+  update:            (id, data)=> request('PUT', `/patients/${id}`, data),
+  delete:            (id)     => request('DELETE',`/patients/${id}`),
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DOCTORS     /api/doctors
- * ═══════════════════════════════════════════════════════════════════════════ */
-const Doctors = {
-  getAll:           ()          => get('/doctors'),
-  getById:          (id)        => get(`/doctors/${id}`),
-  search:           (name)      => get(`/doctors/search?name=${encodeURIComponent(name)}`),
-  byDepartment:     (deptId)    => get(`/doctors/department/${deptId}`),
-  topSalary:        ()          => get('/doctors/top-salary'),
-  create:           (data)      => post('/doctors', data),
-  update:           (id, data)  => put(`/doctors/${id}`, data),
-  delete:           (id)        => del(`/doctors/${id}`),
+// ── Doctor API ────────────────────────────────────────────────────────────────
+export const DoctorAPI = {
+  getAll:            ()       => request('GET',  '/doctors'),
+  getById:           (id)     => request('GET',  `/doctors/${id}`),
+  search:            (name)   => request('GET',  `/doctors/search?name=${encodeURIComponent(name)}`),
+  getByDepartment:   (deptId) => request('GET',  `/doctors/department/${deptId}`),
+  getTopSalary:      ()       => request('GET',  '/doctors/top-salary'),
+  create:            (data)   => request('POST', '/doctors', data),
+  update:            (id, data)=> request('PUT', `/doctors/${id}`, data),
+  delete:            (id)     => request('DELETE',`/doctors/${id}`),
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  APPOINTMENTS  /api/appointments
- * ═══════════════════════════════════════════════════════════════════════════ */
-const Appointments = {
-  getAll:           ()          => get('/appointments'),
-  getById:          (id)        => get(`/appointments/${id}`),
-  today:            ()          => get('/appointments/today'),
-  byDate:           (date)      => get(`/appointments/date?date=${date}`),
-  byPatient:        (pid)       => get(`/appointments/patient/${pid}`),
-  byDoctor:         (did)       => get(`/appointments/doctor/${did}`),
-  book:             (data)      => post('/appointments', data),
-  updateStatus:     (id, status)=> patch(`/appointments/${id}/status?status=${encodeURIComponent(status)}`),
-  cancel:           (id)        => del(`/appointments/${id}/cancel`),
+// ── Department API ────────────────────────────────────────────────────────────
+export const DepartmentAPI = {
+  getAll:            ()       => request('GET',  '/departments'),
+  getById:           (id)     => request('GET',  `/departments/${id}`),
+  create:            (data)   => request('POST', '/departments', data),
+  update:            (id, data)=> request('PUT', `/departments/${id}`, data),
+  delete:            (id)     => request('DELETE',`/departments/${id}`),
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  BILLING     /api/billing
- * ═══════════════════════════════════════════════════════════════════════════ */
-const Billing = {
-  getAll:           ()          => get('/billing'),
-  getById:          (id)        => get(`/billing/${id}`),
-  byPatient:        (pid)       => get(`/billing/patient/${pid}`),
-  pending:          ()          => get('/billing/pending'),
-  generate:         (data)      => post('/billing', data),
-  recordPayment:    (id, amount)=> patch(`/billing/${id}/payment?amount=${amount}`),
+// ── Appointment API ───────────────────────────────────────────────────────────
+export const AppointmentAPI = {
+  getAll:            ()       => request('GET',  '/appointments'),
+  getById:           (id)     => request('GET',  `/appointments/${id}`),
+  getToday:          ()       => request('GET',  '/appointments/today'),
+  getByDate:         (date)   => request('GET',  `/appointments/date?date=${date}`),
+  getByPatient:      (pid)    => request('GET',  `/appointments/patient/${pid}`),
+  getByDoctor:       (did)    => request('GET',  `/appointments/doctor/${did}`),
+  create:            (data)   => request('POST', '/appointments', data),
+  updateStatus:      (id, status)=> request('PATCH',`/appointments/${id}/status?status=${status}`),
+  cancel:            (id)     => request('DELETE',`/appointments/${id}/cancel`),
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════
- *  DOM Rendering helpers — used by each page
- * ═══════════════════════════════════════════════════════════════════════════ */
+// ── Admission API ─────────────────────────────────────────────────────────────
+export const AdmissionAPI = {
+  getAll:            ()       => request('GET',  '/admissions'),
+  getById:           (id)     => request('GET',  `/admissions/${id}`),
+  getCurrent:        ()       => request('GET',  '/admissions/current'),
+  getByPatient:      (pid)    => request('GET',  `/admissions/patient/${pid}`),
+  admit:             (data)   => request('POST', '/admissions', data),
+  discharge:         (id, date, charges) =>
+                               request('PATCH', `/admissions/${id}/discharge?dischargeDate=${date}&totalCharges=${charges}`),
+};
 
-/** Renders a "Loading…" skeleton row into any <tbody> */
-function renderLoading(tbodyId, colSpan = 8) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody) return;
-  tbody.innerHTML = `
-    <tr><td colspan="${colSpan}" style="text-align:center; padding:40px; color:var(--text-3);">
-      <div style="font-size:28px; margin-bottom:8px;">⏳</div>
-      <div style="font-size:14px;">Loading from server…</div>
-    </td></tr>`;
+// ── Medical Record API ────────────────────────────────────────────────────────
+export const MedicalRecordAPI = {
+  getAll:            ()       => request('GET',  '/medical-records'),
+  getById:           (id)     => request('GET',  `/medical-records/${id}`),
+  getByPatient:      (pid)    => request('GET',  `/medical-records/patient/${pid}`),
+  getByAdmission:    (aid)    => request('GET',  `/medical-records/admission/${aid}`),
+  create:            (data)   => request('POST', '/medical-records', data),
+  update:            (id, data)=> request('PUT', `/medical-records/${id}`, data),
+  delete:            (id)     => request('DELETE',`/medical-records/${id}`),
+};
+
+// ── Medicine API ──────────────────────────────────────────────────────────────
+export const MedicineAPI = {
+  getAll:            ()       => request('GET',  '/medicines'),
+  getById:           (id)     => request('GET',  `/medicines/${id}`),
+  search:            (q)      => request('GET',  `/medicines/search?q=${encodeURIComponent(q)}`),
+  getLowStock:       ()       => request('GET',  '/medicines/low-stock'),
+  getExpiringSoon:   ()       => request('GET',  '/medicines/expiring-soon'),
+  create:            (data)   => request('POST', '/medicines', data),
+  update:            (id, data)=> request('PUT', `/medicines/${id}`, data),
+  restock:           (id, qty)=> request('PATCH',`/medicines/${id}/restock?qty=${qty}`),
+  delete:            (id)     => request('DELETE',`/medicines/${id}`),
+};
+
+// ── Billing API ───────────────────────────────────────────────────────────────
+export const BillingAPI = {
+  getAll:            ()       => request('GET',  '/billing'),
+  getById:           (id)     => request('GET',  `/billing/${id}`),
+  getByPatient:      (pid)    => request('GET',  `/billing/patient/${pid}`),
+  getPending:        ()       => request('GET',  '/billing/pending'),
+  create:            (data)   => request('POST', '/billing', data),
+  recordPayment:     (id, amt)=> request('PATCH',`/billing/${id}/payment?amount=${amt}`),
+};
+
+// ── Utility helpers used by HTML pages ────────────────────────────────────────
+
+/** Show a toast notification (reused by all pages) */
+export function showToast(msg, type = 'info') {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'fixed bottom-6 right-6 z-[100] flex flex-col gap-2';
+    document.body.appendChild(container);
+  }
+  const icons   = { success: 'check_circle', error: 'error', info: 'info' };
+  const colors  = { success: 'text-secondary', error: 'text-error', info: 'text-primary' };
+  const t = document.createElement('div');
+  t.className = 'bg-white border border-outline-variant rounded-xl px-4 py-3 flex items-center gap-3 shadow-md min-w-[260px] text-[13px]';
+  t.innerHTML = `<span class="material-symbols-outlined icon-fill ${colors[type]} text-[20px]">${icons[type]}</span><span class="text-on-surface font-medium flex-1">${msg}</span><button onclick="this.parentElement.remove()" class="text-outline hover:text-on-surface"><span class="material-symbols-outlined text-[18px]">close</span></button>`;
+  container.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 3500);
 }
 
-/** Renders an error row when the API is unreachable */
-function renderError(tbodyId, colSpan = 8) {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody) return;
-  tbody.innerHTML = `
-    <tr><td colspan="${colSpan}" style="text-align:center; padding:40px; color:var(--rose);">
-      <div style="font-size:28px; margin-bottom:8px;">🔌</div>
-      <div style="font-size:14px; font-weight:600;">Backend offline</div>
-      <div style="font-size:12px; color:var(--text-3); margin-top:4px;">
-        Run <code style="background:var(--bg-2); padding:2px 6px; border-radius:4px;">mvn spring-boot:run</code> then refresh.
+/** Show an inline loading spinner inside a container */
+export function showLoading(containerId) {
+  const el = document.getElementById(containerId);
+  if (el) el.innerHTML = `
+    <tr><td colspan="10" class="py-12 text-center">
+      <div class="flex flex-col items-center gap-3">
+        <div class="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+        <span class="text-[13px] text-outline">Loading data...</span>
       </div>
     </td></tr>`;
 }
 
-/** Empty state helper */
-function renderEmpty(tbodyId, colSpan = 8, label = 'No records found') {
-  const tbody = document.getElementById(tbodyId);
-  if (!tbody) return;
-  tbody.innerHTML = `
-    <tr><td colspan="${colSpan}" style="text-align:center; padding:40px; color:var(--text-3);">
-      <div style="font-size:32px; margin-bottom:8px;">📭</div>
-      <div style="font-size:14px; font-weight:500;">${label}</div>
+/** Show an empty state inside a table body */
+export function showEmpty(containerId, message = 'No records found.') {
+  const el = document.getElementById(containerId);
+  if (el) el.innerHTML = `
+    <tr><td colspan="10" class="py-12 text-center">
+      <div class="flex flex-col items-center gap-2">
+        <span class="material-symbols-outlined text-outline-variant text-[40px]">inbox</span>
+        <span class="text-[13px] text-outline">${message}</span>
+      </div>
     </td></tr>`;
 }
 
-/** Badge helper */
-function statusBadge(status) {
-  const map = {
-    'Admitted':    'badge-blue',
-    'Discharged':  'badge-green',
-    'Outpatient':  'badge-amber',
-    'Completed':   'badge-teal',
-    'Scheduled':   'badge-amber',
-    'Cancelled':   'badge-rose',
-    'Paid':        'badge-green',
-    'Pending':     'badge-amber',
-    'Partial':     'badge-blue',
-  };
-  return `<span class="badge ${map[status] || 'badge-muted'}">${status}</span>`;
+/** Read form field values into a plain object */
+export function getFormData(formId) {
+  const form = document.getElementById(formId);
+  const data = {};
+  form.querySelectorAll('[name]').forEach(field => {
+    data[field.name] = field.value.trim() || null;
+  });
+  return data;
+}
+
+/** Clear all fields in a form */
+export function clearForm(formId) {
+  document.getElementById(formId)?.reset();
 }

@@ -1,435 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HMS — Doctors</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/style.css" />
-  <meta name="description" content="MediCore HMS — Manage hospital doctors, specializations and schedules." />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediCore HMS - Doctors</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#003c90","on-primary":"#ffffff","primary-container":"#0f52ba","primary-fixed":"#d9e2ff","secondary":"#006a6a","on-secondary":"#ffffff","secondary-container":"#90efef","on-secondary-container":"#006e6e","error":"#ba1a1a","on-error":"#ffffff","error-container":"#ffdad6","on-error-container":"#93000a","surface":"#f8f9ff","surface-dim":"#cbdbf5","surface-bright":"#f8f9ff","surface-container-lowest":"#ffffff","surface-container-low":"#eff4ff","surface-container":"#e5eeff","surface-container-high":"#dce9ff","on-surface":"#0b1c30","on-surface-variant":"#434653","outline":"#737784","outline-variant":"#c3c6d5","background":"#f8f9ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","md":"1rem"},fontFamily:{"sans":["Public Sans","sans-serif"]},fontSize:{"h1":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"h3":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}]}}}}
+</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}.icon-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}</style>
 </head>
+<body class="bg-background text-on-background font-sans antialiased flex min-h-screen">
 
-<body>
-  <div class="layout">
+<aside class="bg-white fixed left-0 top-0 h-screen w-[280px] border-r border-slate-200 flex flex-col py-6 px-4 z-50">
+  <div class="flex items-center gap-3 px-2 mb-8"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-white text-[20px]">local_hospital</span></div><div><div class="text-[15px] font-bold text-primary">MediCore</div><div class="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Central Admin</div></div></div>
+  <div class="px-2 mb-5"><button onclick="openModal('add-doctor-modal')" class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-lg py-2.5 text-[13px] font-semibold hover:bg-primary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>Add Doctor</button></div>
+  <nav class="flex-1 space-y-0.5">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+    <a href="patient.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">person_search</span>Patients</a>
+    <a href="doctor.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-semibold text-primary bg-blue-50 border-r-4 border-primary"><span class="material-symbols-outlined icon-fill text-[20px]">medical_services</span>Doctors</a>
+    <a href="appointment.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">event_note</span>Appointments</a>
+    <a href="billing.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">payments</span>Billing</a>
+  </nav>
+  <div class="border-t border-slate-200 pt-4 space-y-0.5">
+    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a>
+  </div>
+</aside>
 
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-icon">🏥</div>
-        <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
-      </div>
-      <nav class="sidebar-nav">
-        <div class="nav-section-label">Overview</div>
-        <a class="nav-link" href="index.html"><span class="nav-icon">⊞</span> Dashboard</a>
-        <div class="nav-section-label">Management</div>
-        <a class="nav-link" href="patient.html"><span class="nav-icon">👤</span> Patients</a>
-        <a class="nav-link active" href="doctor.html"><span class="nav-icon">🩺</span> Doctors</a>
-        <a class="nav-link" href="appointment.html"><span class="nav-icon">📅</span> Appointments<span
-            class="nav-badge">3</span></a>
-        <a class="nav-link" href="billing.html"><span class="nav-icon">💳</span> Billing</a>
-        <div class="nav-section-label">System</div>
-        <a class="nav-link" href="#"><span class="nav-icon">📊</span> Reports</a>
-        <a class="nav-link" href="#"><span class="nav-icon">⚙️</span> Settings</a>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="sidebar-user">
-          <div class="user-avatar">A</div>
-          <div class="user-info">
-            <div class="uname">Admin User</div>
-            <div class="urole">Super Admin</div>
-          </div>
-          <span style="color:var(--text-3); font-size:14px;">⋯</span>
+<div class="flex-1 flex flex-col ml-[280px]">
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 flex justify-between items-center px-8 h-16">
+    <div class="relative w-80"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span><input id="search-input" type="text" placeholder="Search by name or specialization..." class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-[13px] placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 outline-none"/></div>
+    <div class="flex items-center gap-3">
+      <span class="text-[12px] font-mono text-outline" id="api-status">Connecting...</span>
+      <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white font-bold text-[13px]">A</div>
+      <span class="text-[13px] font-semibold">Admin User</span>
+    </div>
+  </header>
+
+  <main class="flex-1 p-gutter max-w-[1440px] mx-auto w-full flex flex-col gap-gutter">
+    <div class="flex justify-between items-end">
+      <div><h1 class="text-h1 font-bold text-on-surface mb-1">Doctor Directory</h1><p class="text-[14px] text-outline">Live physician records from the database.</p></div>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center border border-outline-variant rounded-lg bg-white p-0.5" id="dept-filter-bar">
+          <button data-dept="all" onclick="filterByDept('all',this)" class="px-3 py-1.5 rounded bg-surface-container text-primary text-label-md font-semibold">All</button>
         </div>
+        <button onclick="loadDoctors()" class="border border-outline-variant rounded-lg bg-white p-2 hover:bg-surface-container-low text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">refresh</span></button>
+        <button onclick="openModal('add-doctor-modal')" class="bg-primary text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 hover:bg-primary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>Add Doctor</button>
       </div>
-    </aside>
+    </div>
 
-    <div class="main">
-      <header class="topbar">
-        <div class="topbar-left">
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[22px]">medical_services</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-total">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Total Doctors</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[22px]">domain</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-depts">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Departments</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-secondary text-[22px]">payments</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-avg-sal">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Avg. Salary</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-secondary text-[22px]">local_atm</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-max-sal">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Max Salary</div></div></div>
+    </div>
+
+    <!-- Doctor cards grid -->
+    <div id="doctor-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+      <div class="col-span-3 py-16 text-center">
+        <div class="flex flex-col items-center gap-3"><div class="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div><span class="text-[13px] text-outline">Loading doctors from database...</span></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add Doctor Modal -->
+<div id="add-doctor-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 backdrop-blur-sm" onclick="if(event.target===this)closeModal('add-doctor-modal')">
+  <div class="bg-white rounded-xl w-full max-w-lg shadow-xl p-6">
+    <div class="flex justify-between items-center mb-5"><h2 class="text-h3 font-semibold">Add New Doctor</h2><button onclick="closeModal('add-doctor-modal')" class="p-1.5 rounded-full hover:bg-surface-container text-outline"><span class="material-symbols-outlined text-[20px]">close</span></button></div>
+    <form id="add-doctor-form" class="grid grid-cols-2 gap-4">
+      <div class="col-span-2"><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Full Name *</label><input name="name" required type="text" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="Dr. Name"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Specialization *</label><input name="specialization" required type="text" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="e.g. Cardiology"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Department *</label><select name="deptId" required id="dept-select" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"><option value="">Loading departments...</option></select></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Phone</label><input name="phone" type="tel" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="10-digit number"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Salary (₹) * <span class="text-outline normal-case font-normal">min ₹30,000</span></label><input name="salary" required type="number" min="30000" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="e.g. 75000"/></div>
+      <div class="col-span-2"><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Email</label><input name="email" type="email" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="doctor@hms.com"/></div>
+    </form>
+    <div id="doctor-form-error" class="hidden mt-3 p-3 bg-error-container/30 border border-error/20 rounded-lg text-[13px] text-error font-medium"></div>
+    <div class="flex gap-3 mt-6 justify-end">
+      <button onclick="closeModal('add-doctor-modal')" class="px-4 py-2 border border-outline-variant rounded-lg text-[13px] font-semibold text-on-surface-variant hover:bg-surface-container-low">Cancel</button>
+      <button id="add-doctor-btn" onclick="addDoctor()" class="px-5 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container flex items-center gap-2">Add Doctor</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2"></div>
+
+<script type="module">
+import { DoctorAPI, DepartmentAPI, showToast } from './js/api.js';
+
+window.openModal = id => { const m=document.getElementById(id); m.classList.remove('hidden'); m.classList.add('flex'); };
+window.closeModal = id => { const m=document.getElementById(id); m.classList.add('hidden'); m.classList.remove('flex'); };
+window.showToast = showToast;
+
+let allDoctors = [];
+
+// Avatar colour pool
+const avatarColors = [
+  'bg-primary-fixed text-primary','bg-secondary-container text-secondary',
+  'bg-error-container text-error','bg-surface-container-high text-on-surface',
+  'bg-surface-dim text-on-surface-variant'
+];
+
+function doctorCard(d, idx) {
+  const color = avatarColors[idx % avatarColors.length];
+  const initial = d.name.replace('Dr.','').trim()[0] || 'D';
+  return `
+    <div class="bg-white border border-outline-variant rounded-xl p-5 hover:shadow-sm transition-shadow flex flex-col gap-4" data-dept="${d.departmentName||''}">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl ${color} flex items-center justify-center font-bold text-[18px] shrink-0">${initial}</div>
           <div>
-            <div class="page-title">Doctors</div>
-            <div class="page-breadcrumb">Dashboard / Doctors</div>
+            <div class="text-[14px] font-semibold text-on-surface">${d.name}</div>
+            <div class="text-[12px] text-secondary font-medium mt-0.5">${d.specialization}</div>
+            <span class="inline-flex px-2 py-0.5 rounded text-label-md bg-surface-container text-on-surface-variant mt-1">${d.departmentName||'No dept'} · D-${d.doctorId}</span>
           </div>
         </div>
-        <div class="topbar-right">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Search doctors…" />
-          </div>
-          <button class="icon-btn">🔔<span class="notif-dot"></span></button>
-          <button class="btn btn-primary" onclick="openModal('add-doctor-modal')">＋ Add Doctor</button>
-        </div>
-      </header>
-
-      <div class="page-body">
-
-        <!-- Stats -->
-        <div class="stats-grid" style="grid-template-columns: repeat(5,1fr); margin-bottom:24px;">
-          <div class="stat-card blue">
-            <div class="stat-icon">🩺</div>
-            <div class="stat-value" data-count="86">0</div>
-            <div class="stat-label">Total Doctors</div>
-          </div>
-          <div class="stat-card teal">
-            <div class="stat-icon">❤️</div>
-            <div class="stat-value" data-count="18">0</div>
-            <div class="stat-label">Cardiology</div>
-          </div>
-          <div class="stat-card amber">
-            <div class="stat-icon">🧠</div>
-            <div class="stat-value" data-count="14">0</div>
-            <div class="stat-label">Neurology</div>
-          </div>
-          <div class="stat-card rose">
-            <div class="stat-icon">🌸</div>
-            <div class="stat-value" data-count="12">0</div>
-            <div class="stat-label">Gynaecology</div>
-          </div>
-          <div class="stat-card green">
-            <div class="stat-icon">💰</div>
-            <div class="stat-value" data-count="70000">0</div>
-            <div class="stat-label">Avg. Salary (₹)</div>
-          </div>
-        </div>
-
-        <!-- Filter bar -->
-        <div class="filter-bar">
-          <div class="filter-search">
-            <span style="color:var(--text-3)">🔍</span>
-            <input type="text" placeholder="Search by name or specialization…" />
-          </div>
-          <button class="filter-btn active" data-filter="all">All Departments</button>
-          <button class="filter-btn" data-filter="cardiology">❤️ Cardiology</button>
-          <button class="filter-btn" data-filter="neurology">🧠 Neurology</button>
-          <button class="filter-btn" data-filter="orthopaedics">🦴 Orthopaedics</button>
-          <button class="filter-btn" data-filter="gynaecology">🌸 Gynaecology</button>
-          <button class="filter-btn" data-filter="general">💊 General</button>
-          <button class="btn btn-primary btn-sm" style="margin-left:auto" onclick="openModal('add-doctor-modal')">＋ Add
-            Doctor</button>
-        </div>
-
-        <!-- Doctor Cards Grid -->
-        <div
-          style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:16px; margin-bottom:24px;">
-
-          <!-- Doc 1 -->
-          <div class="doctor-card" data-category="cardiology" style="animation-delay:0.05s">
-            <div class="doctor-card-top">
-              <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#00D2BE,#0095FF); font-size:20px;">
-                R</div>
-              <div class="doctor-info">
-                <div class="doctor-name">Dr. Ramesh Kumar</div>
-                <div class="doctor-spec">Cardiology</div>
-                <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block A</span></div>
-              </div>
-              <button class="btn btn-ghost btn-sm btn-icon" title="More options">⋯</button>
-            </div>
-            <div class="doctor-meta">
-              <div class="doctor-meta-item"><span>📞</span> 9876543210</div>
-              <div class="doctor-meta-item"><span>📧</span> ramesh@hms.com</div>
-              <div class="doctor-meta-item"><span>💰</span> ₹85,000 / month</div>
-              <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-101</span></div>
-            </div>
-            <div class="doctor-actions">
-              <button class="btn btn-outline btn-sm" style="flex:1" onclick="openEditModal(this)">✏️ Edit</button>
-              <button class="btn btn-primary btn-sm" style="flex:1"
-                onclick="showToast('Viewing schedule for Dr. Ramesh Kumar','info')">📅 Schedule</button>
-            </div>
-          </div>
-
-          <!-- Doc 2 -->
-          <div class="doctor-card" data-category="neurology" style="animation-delay:0.1s">
-            <div class="doctor-card-top">
-              <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#A78BFA,#7C3AED); font-size:20px;">
-                P</div>
-              <div class="doctor-info">
-                <div class="doctor-name">Dr. Priya Sharma</div>
-                <div class="doctor-spec">Neurology</div>
-                <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block B</span></div>
-              </div>
-              <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
-            </div>
-            <div class="doctor-meta">
-              <div class="doctor-meta-item"><span>📞</span> 9876543211</div>
-              <div class="doctor-meta-item"><span>📧</span> priya@hms.com</div>
-              <div class="doctor-meta-item"><span>💰</span> ₹75,000 / month</div>
-              <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-102</span></div>
-            </div>
-            <div class="doctor-actions">
-              <button class="btn btn-outline btn-sm" style="flex:1" onclick="openEditModal(this)">✏️ Edit</button>
-              <button class="btn btn-primary btn-sm" style="flex:1"
-                onclick="showToast('Viewing schedule for Dr. Priya Sharma','info')">📅 Schedule</button>
-            </div>
-          </div>
-
-          <!-- Doc 3 -->
-          <div class="doctor-card" data-category="orthopaedics" style="animation-delay:0.15s">
-            <div class="doctor-card-top">
-              <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#F59E0B,#D97706); font-size:20px;">
-                A</div>
-              <div class="doctor-info">
-                <div class="doctor-name">Dr. Anand Rajan</div>
-                <div class="doctor-spec">Orthopaedics</div>
-                <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block C</span></div>
-              </div>
-              <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
-            </div>
-            <div class="doctor-meta">
-              <div class="doctor-meta-item"><span>📞</span> 9876543212</div>
-              <div class="doctor-meta-item"><span>📧</span> anand@hms.com</div>
-              <div class="doctor-meta-item"><span>💰</span> ₹70,000 / month</div>
-              <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-103</span></div>
-            </div>
-            <div class="doctor-actions">
-              <button class="btn btn-outline btn-sm" style="flex:1" onclick="openEditModal(this)">✏️ Edit</button>
-              <button class="btn btn-primary btn-sm" style="flex:1"
-                onclick="showToast('Viewing schedule for Dr. Anand Rajan','info')">📅 Schedule</button>
-            </div>
-          </div>
-
-          <!-- Doc 4 -->
-          <div class="doctor-card" data-category="gynaecology" style="animation-delay:0.2s">
-            <div class="doctor-card-top">
-              <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#F43F5E,#DC2626); font-size:20px;">
-                K</div>
-              <div class="doctor-info">
-                <div class="doctor-name">Dr. Kavitha Menon</div>
-                <div class="doctor-spec">Gynaecology</div>
-                <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block E</span></div>
-              </div>
-              <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
-            </div>
-            <div class="doctor-meta">
-              <div class="doctor-meta-item"><span>📞</span> 9876543213</div>
-              <div class="doctor-meta-item"><span>📧</span> kavitha@hms.com</div>
-              <div class="doctor-meta-item"><span>💰</span> ₹65,000 / month</div>
-              <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-104</span></div>
-            </div>
-            <div class="doctor-actions">
-              <button class="btn btn-outline btn-sm" style="flex:1" onclick="openEditModal(this)">✏️ Edit</button>
-              <button class="btn btn-primary btn-sm" style="flex:1"
-                onclick="showToast('Viewing schedule for Dr. Kavitha Menon','info')">📅 Schedule</button>
-            </div>
-          </div>
-
-          <!-- Doc 5 -->
-          <div class="doctor-card" data-category="general" style="animation-delay:0.25s">
-            <div class="doctor-card-top">
-              <div class="avatar avatar-lg" style="background:linear-gradient(135deg,#22C55E,#16A34A); font-size:20px;">
-                S</div>
-              <div class="doctor-info">
-                <div class="doctor-name">Dr. Suresh Pillai</div>
-                <div class="doctor-spec">General Medicine</div>
-                <div style="margin-top:6px"><span class="badge badge-blue">Dept: Block D</span></div>
-              </div>
-              <button class="btn btn-ghost btn-sm btn-icon">⋯</button>
-            </div>
-            <div class="doctor-meta">
-              <div class="doctor-meta-item"><span>📞</span> 9876543214</div>
-              <div class="doctor-meta-item"><span>📧</span> suresh@hms.com</div>
-              <div class="doctor-meta-item"><span>💰</span> ₹60,000 / month</div>
-              <div class="doctor-meta-item"><span>🆔</span> <span class="num-chip">D-105</span></div>
-            </div>
-            <div class="doctor-actions">
-              <button class="btn btn-outline btn-sm" style="flex:1" onclick="openEditModal(this)">✏️ Edit</button>
-              <button class="btn btn-primary btn-sm" style="flex:1"
-                onclick="showToast('Viewing schedule for Dr. Suresh Pillai','info')">📅 Schedule</button>
-            </div>
-          </div>
-
-          <!-- Add card placeholder -->
-          <div class="doctor-card"
-            style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:220px; cursor:pointer; border-style:dashed;"
-            onclick="openModal('add-doctor-modal')">
-            <div style="font-size:36px; margin-bottom:10px; opacity:0.4">＋</div>
-            <div style="font-size:14px; font-weight:600; color:var(--text-3)">Add New Doctor</div>
-            <div style="font-size:12px; color:var(--text-3); margin-top:4px;">Click to register</div>
-          </div>
-
-        </div>
-
+        <button onclick="deleteDoctor(${d.doctorId},'${d.name.replace(/'/g,"\\'")}')" class="text-outline hover:text-error transition-colors p-1 rounded hover:bg-error-container" title="Delete doctor"><span class="material-symbols-outlined text-[20px]">delete</span></button>
       </div>
-    </div>
-  </div>
+      <div class="space-y-2 border-t border-outline-variant pt-4">
+        <div class="flex items-center gap-2 text-[13px] text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-outline">phone</span>${d.phone||'—'}</div>
+        <div class="flex items-center gap-2 text-[13px] text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-outline">mail</span>${d.email||'—'}</div>
+        <div class="flex items-center gap-2 text-[13px] text-on-surface-variant"><span class="material-symbols-outlined text-[16px] text-outline">payments</span>₹${d.salary?.toLocaleString('en-IN')||'—'} / month</div>
+      </div>
+    </div>`;
+}
 
-  <!-- Add Doctor Modal -->
-  <div class="modal-overlay" id="add-doctor-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Add New Doctor</div>
-        <button class="modal-close" onclick="closeModal('add-doctor-modal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Full Name *</label>
-            <input type="text" class="form-control" placeholder="Dr. Name" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Specialization *</label>
-            <input type="text" class="form-control" placeholder="e.g. Cardiology" required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Phone *</label>
-            <input type="tel" class="form-control" placeholder="10-digit" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email *</label>
-            <input type="email" class="form-control" placeholder="doctor@hms.com" required />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Salary (₹) *</label>
-            <input type="number" class="form-control" placeholder="Min. 30,000" min="30000" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Department *</label>
-            <select class="form-control" required>
-              <option value="">Select dept.</option>
-              <option>Cardiology</option>
-              <option>Neurology</option>
-              <option>Orthopaedics</option>
-              <option>General Medicine</option>
-              <option>Gynaecology</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('add-doctor-modal')">Cancel</button>
-        <button class="btn btn-primary"
-          onclick="showToast('Doctor added successfully!','success'); closeModal('add-doctor-modal')">✓ Add
-          Doctor</button>
-      </div>
-    </div>
-  </div>
+window.loadDoctors = async () => {
+  const grid = document.getElementById('doctor-grid');
+  grid.innerHTML = `<div class="col-span-3 py-16 text-center"><div class="flex flex-col items-center gap-3"><div class="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div><span class="text-[13px] text-outline">Loading...</span></div></div>`;
 
-  <!-- Edit Doctor Modal -->
-  <div class="modal-overlay" id="edit-doctor-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Edit Doctor</div>
-        <button class="modal-close" onclick="closeModal('edit-doctor-modal')">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Full Name</label>
-            <input type="text" class="form-control" value="Dr. Ramesh Kumar" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Salary (₹)</label>
-            <input type="number" class="form-control" value="85000" min="30000" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone</label>
-          <input type="tel" class="form-control" value="9876543210" />
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('edit-doctor-modal')">Cancel</button>
-        <button class="btn btn-primary" onclick="saveEditDoctor()">💾 Save</button>
-      </div>
-    </div>
-  </div>
+  try {
+    allDoctors = await DoctorAPI.getAll();
+    document.getElementById('api-status').textContent = '🟢 Connected';
 
-  <script src="js/api.js"></script>
-  <script src="js/script.js"></script>
-  <script>
-    /* ── State ── */
-    let _editDoctorId = null;
+    // Stats
+    document.getElementById('stat-total').textContent = allDoctors.length;
+    const depts = [...new Set(allDoctors.map(d=>d.departmentName).filter(Boolean))];
+    document.getElementById('stat-depts').textContent = depts.length;
+    const avgSal = allDoctors.length ? Math.round(allDoctors.reduce((s,d)=>s+(d.salary||0),0)/allDoctors.length) : 0;
+    document.getElementById('stat-avg-sal').textContent = `₹${(avgSal/1000).toFixed(0)}K`;
+    const maxSal = Math.max(...allDoctors.map(d=>d.salary||0));
+    document.getElementById('stat-max-sal').textContent = `₹${(maxSal/1000).toFixed(0)}K`;
 
-    /* ── Filter cards ── */
-    document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const f = btn.dataset.filter;
-        document.querySelectorAll('.doctor-card[data-category]').forEach(card => {
-          card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
-        });
-      });
+    // Dept filter buttons
+    const bar = document.getElementById('dept-filter-bar');
+    bar.innerHTML = `<button data-dept="all" onclick="filterByDept('all',this)" class="px-3 py-1.5 rounded bg-surface-container text-primary text-label-md font-semibold dept-btn">All</button>`;
+    depts.forEach(d => {
+      bar.innerHTML += `<button data-dept="${d}" onclick="filterByDept('${d}',this)" class="px-3 py-1.5 rounded text-on-surface-variant text-label-md hover:bg-surface-container-low dept-btn transition-colors">${d}</button>`;
     });
 
-    /* ── Search ── */
-    document.querySelector('.filter-search input').addEventListener('input', function () {
-      const q = this.value.toLowerCase();
-      document.querySelectorAll('.doctor-card[data-category]').forEach(card => {
-        card.style.display = card.textContent.toLowerCase().includes(q) ? '' : 'none';
-      });
-    });
+    renderDoctors(allDoctors);
+  } catch (err) {
+    document.getElementById('api-status').textContent = '🔴 Backend offline';
+    grid.innerHTML = `<div class="col-span-3 py-16 text-center"><div class="flex flex-col items-center gap-3"><span class="material-symbols-outlined text-error text-[36px]">wifi_off</span><span class="text-[14px] text-error font-semibold">Cannot connect to backend</span><span class="text-[12px] text-outline">${err.message}</span><span class="text-[12px] text-outline">Run: <code class="bg-surface-container px-2 py-0.5 rounded font-mono">mvn spring-boot:run</code></span></div></div>`;
+  }
+};
 
-    /* ── Open Edit modal — reads from card DOM, stores data-id ── */
-    function openEditModal(btn) {
-      const card = btn.closest('.doctor-card');
-      _editDoctorId = card.dataset.id || null;
-      const name   = card.querySelector('.doctor-name')?.textContent.trim() || '';
-      const salary = card.querySelector('.doctor-meta-item:nth-child(3)')?.textContent.replace(/[^0-9]/g, '') || '';
-      const phone  = card.querySelector('.doctor-meta-item:nth-child(1)')?.textContent.replace(/[^0-9]/g, '') || '';
-      document.querySelector('#edit-doctor-modal input[type="text"]').value   = name;
-      document.querySelector('#edit-doctor-modal input[type="number"]').value = salary;
-      document.querySelector('#edit-doctor-modal input[type="tel"]').value    = phone;
-      openModal('edit-doctor-modal');
-    }
+function renderDoctors(list) {
+  const grid = document.getElementById('doctor-grid');
+  if (!list.length) {
+    grid.innerHTML = `<div class="col-span-3 py-16 text-center flex flex-col items-center gap-2"><span class="material-symbols-outlined text-outline-variant text-[40px]">person_off</span><span class="text-[13px] text-outline">No doctors found.</span></div>`;
+    return;
+  }
+  grid.innerHTML = list.map((d,i) => doctorCard(d,i)).join('') +
+    `<div onclick="openModal('add-doctor-modal')" class="bg-surface-container-low border border-dashed border-outline-variant rounded-xl p-5 flex flex-col items-center justify-center gap-3 cursor-pointer hover:bg-surface-container hover:border-primary transition-all min-h-[220px]">
+      <div class="w-12 h-12 rounded-full bg-white border border-outline-variant flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[24px]">add</span></div>
+      <div class="text-center"><div class="text-[13px] font-semibold text-on-surface">Add New Doctor</div><div class="text-[12px] text-outline mt-0.5">Register a new physician</div></div>
+    </div>`;
+}
 
-    /* ── Save doctor edit via PUT /api/doctors/{id} ── */
-    async function saveEditDoctor() {
-      const name   = document.querySelector('#edit-doctor-modal input[type="text"]').value.trim();
-      const salary = document.querySelector('#edit-doctor-modal input[type="number"]').value;
-      const phone  = document.querySelector('#edit-doctor-modal input[type="tel"]').value.trim();
-      if (!name) { showToast('Name is required.', 'error'); return; }
+window.filterByDept = (dept, btn) => {
+  document.querySelectorAll('.dept-btn').forEach(b=>{b.classList.remove('bg-surface-container','text-primary','font-semibold');b.classList.add('text-on-surface-variant');});
+  btn.classList.add('bg-surface-container','text-primary','font-semibold');
+  btn.classList.remove('text-on-surface-variant');
+  renderDoctors(dept==='all' ? allDoctors : allDoctors.filter(d=>d.departmentName===dept));
+};
 
-      if (_editDoctorId) {
-        /* Backend is online — persist change */
-        try {
-          await Doctors.update(_editDoctorId, { name, salary: Number(salary), phone });
-          showToast('Doctor updated successfully!', 'success');
-        } catch { /* toast already shown */ }
-      } else {
-        /* Static card — just show success (no backend id available) */
-        showToast('Doctor updated (UI only — backend id unknown).', 'info');
-      }
-      closeModal('edit-doctor-modal');
-    }
+// Search
+let st;
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(st);
+  const q = e.target.value.trim().toLowerCase();
+  st = setTimeout(() => {
+    renderDoctors(!q ? allDoctors : allDoctors.filter(d=>
+      d.name.toLowerCase().includes(q) || d.specialization.toLowerCase().includes(q)
+    ));
+  }, 300);
+});
 
-    /* ── Add Doctor via POST /api/doctors ── */
-    async function handleAddDoctor() {
-      const modal = document.getElementById('add-doctor-modal');
-      const inputs = modal.querySelectorAll('input[required], select[required]');
-      let valid = true;
-      inputs.forEach(i => {
-        if (!i.value.trim()) {
-          i.style.borderColor = 'var(--rose)';
-          valid = false;
-          i.addEventListener('input', () => i.style.borderColor = '', { once: true });
-        }
-      });
-      if (!valid) { showToast('Please fill in all required fields.', 'error'); return; }
+// Load departments into select
+async function loadDepts() {
+  try {
+    const depts = await DepartmentAPI.getAll();
+    const sel = document.getElementById('dept-select');
+    sel.innerHTML = `<option value="">Select department</option>` +
+      depts.map(d=>`<option value="${d.deptId}">${d.deptName}</option>`).join('');
+  } catch {
+    document.getElementById('dept-select').innerHTML = `<option value="">Failed to load — check backend</option>`;
+  }
+}
 
-      const allInputs = modal.querySelectorAll('input, select');
-      const data = {
-        name:           allInputs[0]?.value.trim(),
-        specialization: allInputs[1]?.value.trim(),
-        phone:          allInputs[2]?.value.trim(),
-        email:          allInputs[3]?.value.trim(),
-        salary:         Number(allInputs[4]?.value) || 0,
-      };
-      try {
-        await Doctors.create(data);
-        showToast('Doctor added successfully!', 'success');
-        closeModal('add-doctor-modal');
-      } catch { /* toast shown in api.js */ }
-    }
-  </script>
+window.addDoctor = async () => {
+  const btn = document.getElementById('add-doctor-btn');
+  const errDiv = document.getElementById('doctor-form-error');
+  errDiv.classList.add('hidden');
+  const form = document.getElementById('add-doctor-form');
+  const data = {};
+  form.querySelectorAll('[name]').forEach(f => { if (f.value.trim()) data[f.name] = f.type==='number' ? parseInt(f.value) : f.value.trim(); });
+  if (!data.name || !data.specialization || !data.deptId || !data.salary) {
+    errDiv.textContent = 'Name, Specialization, Department, and Salary are required.';
+    errDiv.classList.remove('hidden'); return;
+  }
+  btn.disabled = true;
+  btn.innerHTML = `<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Adding...`;
+  try {
+    await DoctorAPI.create(data);
+    showToast('Doctor added successfully!', 'success');
+    closeModal('add-doctor-modal');
+    form.reset();
+    await window.loadDoctors();
+  } catch (err) { errDiv.textContent = err.message; errDiv.classList.remove('hidden'); }
+  finally { btn.disabled=false; btn.innerHTML='Add Doctor'; }
+};
+
+window.deleteDoctor = async (id, name) => {
+  if (!confirm(`Delete Dr. "${name}"?\n\nThis cannot be undone.`)) return;
+  try { await DoctorAPI.delete(id); showToast(`Dr. "${name}" deleted.`, 'success'); await window.loadDoctors(); }
+  catch (err) { showToast(err.message, 'error'); }
+};
+
+loadDepts();
+window.loadDoctors();
+</script>
 </body>
-
 </html>

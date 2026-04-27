@@ -1,576 +1,203 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HMS â€” Patients</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/style.css" />
-  <meta name="description" content="MediCore HMS â€” Patient registry, admissions and health records management." />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>ðŸ¥</text></svg>">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediCore HMS - Patients</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#003c90","on-primary":"#ffffff","primary-container":"#0f52ba","on-primary-container":"#bcceff","primary-fixed":"#d9e2ff","secondary":"#006a6a","on-secondary":"#ffffff","secondary-container":"#90efef","on-secondary-container":"#006e6e","error":"#ba1a1a","on-error":"#ffffff","error-container":"#ffdad6","on-error-container":"#93000a","surface":"#f8f9ff","surface-dim":"#cbdbf5","surface-bright":"#f8f9ff","surface-container-lowest":"#ffffff","surface-container-low":"#eff4ff","surface-container":"#e5eeff","surface-container-high":"#dce9ff","surface-container-highest":"#d3e4fe","on-surface":"#0b1c30","on-surface-variant":"#434653","outline":"#737784","outline-variant":"#c3c6d5","background":"#f8f9ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","md":"1rem"},fontFamily:{"sans":["Public Sans","sans-serif"]},fontSize:{"h1":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"h3":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}]}}}}
+</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}.icon-fill{font-variation-settings:'FILL' 1}</style>
 </head>
-
-<body>
-  <div class="layout">
-
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-icon">ðŸ¥</div>
-        <div class="logo-text"><strong>MediCore</strong><span>Hospital Suite</span></div>
-      </div>
-      <nav class="sidebar-nav">
-        <div class="nav-section-label">Overview</div>
-        <a class="nav-link" href="index.html"><span class="nav-icon">âŠž</span> Dashboard</a>
-        <div class="nav-section-label">Management</div>
-        <a class="nav-link active" href="patient.html"><span class="nav-icon">ðŸ‘¤</span> Patients</a>
-        <a class="nav-link" href="doctor.html"><span class="nav-icon">ðŸ©º</span> Doctors</a>
-        <a class="nav-link" href="appointment.html"><span class="nav-icon">ðŸ“…</span> Appointments<span
-            class="nav-badge">3</span></a>
-        <a class="nav-link" href="billing.html"><span class="nav-icon">ðŸ’³</span> Billing</a>
-        <div class="nav-section-label">System</div>
-        <a class="nav-link" href="#"><span class="nav-icon">ðŸ“Š</span> Reports</a>
-        <a class="nav-link" href="#"><span class="nav-icon">âš™ï¸</span> Settings</a>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="sidebar-user">
-          <div class="user-avatar">A</div>
-          <div class="user-info">
-            <div class="uname">Admin User</div>
-            <div class="urole">Super Admin</div>
-          </div>
-          <span style="color:var(--text-3); font-size:14px;">â‹¯</span>
-        </div>
-      </div>
-    </aside>
-
-    <div class="main">
-      <header class="topbar">
-        <div class="topbar-left">
-          <div>
-            <div class="page-title">Patients</div>
-            <div class="page-breadcrumb">Dashboard / Patients</div>
-          </div>
-        </div>
-        <div class="topbar-right">
-          <div class="search-box">
-            <span class="search-icon">ðŸ”</span>
-            <input type="text" placeholder="Search patientsâ€¦" />
-          </div>
-          <button class="icon-btn">ðŸ””<span class="notif-dot"></span></button>
-          <button class="btn btn-primary" onclick="openModal('add-patient-modal')">
-            ï¼‹ Add Patient
-          </button>
-        </div>
-      </header>
-
-      <div class="page-body">
-
-        <!-- Stats row -->
-        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:24px;">
-          <div class="stat-card teal">
-            <div class="stat-icon">ðŸ‘¥</div>
-            <div class="stat-value" data-count="1248">0</div>
-            <div class="stat-label">Total Patients</div>
-          </div>
-          <div class="stat-card blue">
-            <div class="stat-icon">ðŸ›ï¸</div>
-            <div class="stat-value" data-count="127">0</div>
-            <div class="stat-label">Currently Admitted</div>
-          </div>
-          <div class="stat-card green">
-            <div class="stat-icon">âœ…</div>
-            <div class="stat-value" data-count="984">0</div>
-            <div class="stat-label">Discharged</div>
-          </div>
-          <div class="stat-card amber">
-            <div class="stat-icon">ðŸš‘</div>
-            <div class="stat-value" data-count="137">0</div>
-            <div class="stat-label">Outpatients</div>
-          </div>
-        </div>
-
-        <!-- Table Card -->
-        <div class="card animate-fade-up">
-          <div class="card-header" style="padding:20px 24px;">
-            <div>
-              <div class="card-title">Patient Registry</div>
-              <div class="card-subtitle">Showing <span data-row-count>5</span> records</div>
-            </div>
-            <div style="display:flex; gap:10px;">
-              <button class="btn btn-ghost btn-sm">â¬‡ Export</button>
-              <button class="btn btn-primary btn-sm" onclick="openModal('add-patient-modal')">ï¼‹ Add Patient</button>
-            </div>
-          </div>
-
-          <!-- Filter bar -->
-          <div
-            style="padding: 14px 24px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <div class="filter-search" style="max-width:280px">
-              <span style="color:var(--text-3)">ðŸ”</span>
-              <input type="text" placeholder="Search by name, ID, phoneâ€¦" />
-            </div>
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="admitted">Admitted</button>
-            <button class="filter-btn" data-filter="discharged">Discharged</button>
-            <button class="filter-btn" data-filter="outpatient">Outpatient</button>
-            <div style="margin-left:auto; display:flex; gap:8px;">
-              <select class="form-control" style="width:auto; padding:6px 12px; font-size:12.5px;">
-                <option>Sort: Name Aâ€“Z</option>
-                <option>Sort: Newest</option>
-                <option>Sort: Bill Amount</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="card-body" style="padding:0;">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Patient</th>
-                    <th>ID</th>
-                    <th>DOB / Age</th>
-                    <th>Blood Group</th>
-                    <th>Phone</th>
-                    <th>City</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-category="admitted">
-                    <td>
-                      <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="avatar" style="background:linear-gradient(135deg,#00D2BE,#0095FF)">A</div>
-                        <div>
-                          <div>Arun Kumar</div>
-                          <div style="font-size:11px; color:var(--text-3)">arun@gmail.com</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="num-chip">P-1001</span></td>
-                    <td>15 Jun 1990<br><span style="font-size:11px; color:var(--text-3)">34 yrs</span></td>
-                    <td><span class="badge badge-rose">B+</span></td>
-                    <td>9845671230</td>
-                    <td>Chennai</td>
-                    <td><span class="badge badge-blue">Admitted</span></td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
-                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
-                          onclick="openEditPatientModal(this)">âœï¸</button>
-                        <button class="btn btn-sm"
-                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
-                          title="Delete"
-                          onclick="confirmDelete('Arun Kumar', () => { this.closest('tr').style.opacity='0.4'; showToast('Arun Kumar deleted','success'); })">ðŸ—‘</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="admitted">
-                    <td>
-                      <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                        <div>
-                          <div>Meena Devi</div>
-                          <div style="font-size:11px; color:var(--text-3)">meena@gmail.com</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="num-chip">P-1002</span></td>
-                    <td>22 Mar 1985<br><span style="font-size:11px; color:var(--text-3)">40 yrs</span></td>
-                    <td><span class="badge badge-teal">O-</span></td>
-                    <td>9756432108</td>
-                    <td>Coimbatore</td>
-                    <td><span class="badge badge-blue">Admitted</span></td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
-                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
-                          onclick="openEditPatientModal(this)">âœï¸</button>
-                        <button class="btn btn-sm"
-                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
-                          title="Delete"
-                          onclick="confirmDelete('Meena Devi', () => { this.closest('tr').style.opacity='0.4'; showToast('Meena Devi deleted','success'); })">ðŸ—‘</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="outpatient">
-                    <td>
-                      <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                        <div>
-                          <div>Vikram Singh</div>
-                          <div style="font-size:11px; color:var(--text-3)">vikram@gmail.com</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="num-chip">P-1003</span></td>
-                    <td>08 Nov 1978<br><span style="font-size:11px; color:var(--text-3)">46 yrs</span></td>
-                    <td><span class="badge badge-amber">A+</span></td>
-                    <td>9812345670</td>
-                    <td>Madurai</td>
-                    <td><span class="badge badge-amber">Outpatient</span></td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
-                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
-                          onclick="openEditPatientModal(this)">âœï¸</button>
-                        <button class="btn btn-sm"
-                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
-                          title="Delete"
-                          onclick="confirmDelete('Vikram Singh', () => { this.closest('tr').style.opacity='0.4'; showToast('Vikram Singh deleted','success'); })">ðŸ—‘</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="discharged">
-                    <td>
-                      <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                        <div>
-                          <div>Divya Nair</div>
-                          <div style="font-size:11px; color:var(--text-3)">divya@gmail.com</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="num-chip">P-1004</span></td>
-                    <td>30 Jul 1995<br><span style="font-size:11px; color:var(--text-3)">29 yrs</span></td>
-                    <td><span class="badge badge-blue">AB+</span></td>
-                    <td>9865432107</td>
-                    <td>Trichy</td>
-                    <td><span class="badge badge-green">Discharged</span></td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
-                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
-                          onclick="openEditPatientModal(this)">âœï¸</button>
-                        <button class="btn btn-sm"
-                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
-                          title="Delete"
-                          onclick="confirmDelete('Divya Nair', () => { this.closest('tr').style.opacity='0.4'; showToast('Divya Nair deleted','success'); })">ðŸ—‘</button>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr data-category="discharged">
-                    <td>
-                      <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                        <div>
-                          <div>Karthik Raj</div>
-                          <div style="font-size:11px; color:var(--text-3)">karthik@gmail.com</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td><span class="num-chip">P-1005</span></td>
-                    <td>14 Feb 1988<br><span style="font-size:11px; color:var(--text-3)">37 yrs</span></td>
-                    <td><span class="badge badge-muted">O+</span></td>
-                    <td>9745321089</td>
-                    <td>Salem</td>
-                    <td><span class="badge badge-green">Discharged</span></td>
-                    <td>
-                      <div style="display:flex; gap:6px;">
-                        <button class="btn btn-ghost btn-sm btn-icon" title="View">ðŸ‘</button>
-                        <button class="btn btn-outline btn-sm btn-icon" title="Edit"
-                          onclick="openEditPatientModal(this)">âœï¸</button>
-                        <button class="btn btn-sm"
-                          style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);"
-                          title="Delete"
-                          onclick="confirmDelete('Karthik Raj', () => { this.closest('tr').style.opacity='0.4'; showToast('Karthik Raj deleted','success'); })">ðŸ—‘</button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Pagination -->
-            <div
-              style="padding:16px 24px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--border);">
-              <span style="font-size:12.5px; color:var(--text-3)">Showing 1â€“5 of 1,248 patients</span>
-              <div style="display:flex; gap:6px;">
-                <button class="btn btn-ghost btn-sm">â† Prev</button>
-                <button class="btn btn-primary btn-sm">1</button>
-                <button class="btn btn-ghost btn-sm">2</button>
-                <button class="btn btn-ghost btn-sm">3</button>
-                <button class="btn btn-ghost btn-sm">Next â†’</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- end page-body -->
+<body class="bg-background text-on-background font-sans antialiased flex min-h-screen">
+<aside class="bg-white fixed left-0 top-0 h-screen w-[280px] border-r border-slate-200 flex flex-col py-6 px-4 z-50">
+  <div class="flex items-center gap-3 px-2 mb-8"><div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-white text-[20px]">local_hospital</span></div><div><div class="text-[15px] font-bold text-primary">MediCore</div><div class="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Central Admin</div></div></div>
+  <div class="px-2 mb-5"><button onclick="openModal('add-patient-modal')" class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-lg py-2.5 text-[13px] font-semibold hover:bg-primary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>Register Patient</button></div>
+  <nav class="flex-1 space-y-0.5">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">dashboard</span>Dashboard</a>
+    <a href="patient.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-semibold text-primary bg-blue-50 border-r-4 border-primary"><span class="material-symbols-outlined icon-fill text-[20px]">person_search</span>Patients</a>
+    <a href="doctor.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">medical_services</span>Doctors</a>
+    <a href="appointment.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">event_note</span>Appointments</a>
+    <a href="billing.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">payments</span>Billing</a>
+  </nav>
+</aside>
+<div class="flex-1 flex flex-col ml-[280px]">
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 flex justify-between items-center px-8 h-16">
+    <div class="relative w-80"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span><input id="search-input" type="text" placeholder="Search by name, phone, email..." class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-[13px] placeholder:text-slate-400 focus:ring-2 focus:ring-primary/20 outline-none"/></div>
+    <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white font-bold text-[13px]">A</div><span class="text-[13px] font-semibold">Admin User</span></div>
+  </header>
+  <main class="flex-1 p-gutter max-w-[1440px] mx-auto w-full flex flex-col gap-gutter">
+    <div class="flex justify-between items-end">
+      <div><h1 class="text-h1 font-bold text-on-surface mb-1">Patient Management</h1><p class="text-body-md text-outline">Live data from database — all changes persist.</p></div>
+      <button onclick="openModal('add-patient-modal')" class="bg-primary text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg flex items-center gap-2 hover:bg-primary-container transition-colors"><span class="material-symbols-outlined text-[18px]">add</span>Register New Patient</button>
     </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[22px]">group</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-total">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Total Registered</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[22px]">bed</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-admitted">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Admitted</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-error text-[22px]">receipt_long</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-pending">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Pending Bills</div></div></div>
+      <div class="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-secondary text-[22px]">checklist</span></div><div><div class="text-[24px] font-bold text-on-surface" id="stat-showing">—</div><div class="text-label-md text-on-surface-variant uppercase mt-1">Showing Now</div></div></div>
+    </div>
+    <div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+      <div class="px-5 py-4 border-b border-outline-variant flex items-center gap-3 bg-surface-bright">
+        <h2 class="text-h3 font-semibold text-on-surface mr-auto">Patient Registry</h2>
+        <span class="text-[12px] text-outline" id="api-status"></span>
+        <button onclick="loadPatients()" class="border border-outline-variant rounded-lg bg-white text-on-surface-variant hover:bg-surface-container-low p-2 transition-colors" title="Refresh data from backend"><span class="material-symbols-outlined text-[20px]">refresh</span></button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead><tr class="bg-surface-container-low border-b border-outline-variant">
+            <th class="py-3 px-5 text-label-md text-on-surface-variant uppercase">Patient</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">ID</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">DOB</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Gender</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Blood</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Phone</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase text-right">Actions</th>
+          </tr></thead>
+          <tbody id="patient-tbody" class="divide-y divide-outline-variant"></tbody>
+        </table>
+      </div>
+      <div class="px-5 py-3.5 border-t border-outline-variant bg-surface-bright flex justify-between items-center">
+        <span class="text-[13px] text-outline" id="table-count">Loading...</span>
+        <button onclick="loadPatients()" class="text-[13px] font-semibold text-primary hover:opacity-75 flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">sync</span>Reload</button>
+      </div>
+    </div>
+  </main>
+</div>
 
-  </div><!-- end layout -->
-
-  <!-- Add Patient Modal -->
-  <div class="modal-overlay" id="add-patient-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Register New Patient</div>
-        <button class="modal-close" onclick="closeModal('add-patient-modal')">âœ•</button>
-      </div>
-      <div class="modal-body">
-        <div id="add-patient-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Full Name *</label>
-              <input type="text" class="form-control" placeholder="e.g. Arun Kumar" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Date of Birth *</label>
-              <input type="date" class="form-control" required />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Gender *</label>
-              <select class="form-control" required>
-                <option value="">Select gender</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Blood Group</label>
-              <select class="form-control">
-                <option value="">Select</option>
-                <option>A+</option>
-                <option>A-</option>
-                <option>B+</option>
-                <option>B-</option>
-                <option>O+</option>
-                <option>O-</option>
-                <option>AB+</option>
-                <option>AB-</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Phone *</label>
-              <input type="tel" class="form-control" placeholder="10-digit number" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <input type="email" class="form-control" placeholder="patient@email.com" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Address</label>
-            <input type="text" class="form-control" placeholder="City, Streetâ€¦" />
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('add-patient-modal')">Cancel</button>
-        <button class="btn btn-primary" onclick="handleAddPatient()">âœ“ Register Patient</button>
-      </div>
+<!-- Add Patient Modal -->
+<div id="add-patient-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 backdrop-blur-sm" onclick="if(event.target===this)closeModal('add-patient-modal')">
+  <div class="bg-white rounded-xl w-full max-w-lg shadow-xl p-6">
+    <div class="flex justify-between items-center mb-5"><h2 class="text-h3 font-semibold">Register New Patient</h2><button onclick="closeModal('add-patient-modal')" class="p-1.5 rounded-full hover:bg-surface-container text-outline"><span class="material-symbols-outlined text-[20px]">close</span></button></div>
+    <form id="add-patient-form" class="grid grid-cols-2 gap-4">
+      <div class="col-span-2"><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Full Name *</label><input name="name" required type="text" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="e.g. Arun Kumar"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Date of Birth *</label><input name="dob" required type="date" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Gender *</label><select name="gender" required class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Phone *</label><input name="phone" required type="tel" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="10-digit mobile"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Blood Group</label><select name="bloodGroup" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Email</label><input name="email" type="email" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="patient@email.com"/></div>
+      <div><label class="block text-label-md text-on-surface-variant uppercase mb-1.5">Address</label><input name="address" type="text" class="w-full border border-outline-variant rounded-lg py-2 px-3 text-[13px] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" placeholder="City, Street..."/></div>
+    </form>
+    <div id="form-error" class="hidden mt-3 p-3 bg-error-container/30 border border-error/20 rounded-lg text-[13px] text-error font-medium"></div>
+    <div class="flex gap-3 mt-6 justify-end">
+      <button onclick="closeModal('add-patient-modal')" class="px-4 py-2 border border-outline-variant rounded-lg text-[13px] font-semibold text-on-surface-variant hover:bg-surface-container-low">Cancel</button>
+      <button id="register-btn" onclick="registerPatient()" class="px-5 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-primary-container transition-colors flex items-center gap-2">Register Patient</button>
     </div>
   </div>
+</div>
 
-  <!-- Edit Patient Modal -->
-  <div class="modal-overlay" id="edit-patient-modal">
-    <div class="modal">
-      <div class="modal-header">
-        <div class="modal-title">Edit Patient</div>
-        <button class="modal-close" onclick="closeModal('edit-patient-modal')">âœ•</button>
-      </div>
-      <div class="modal-body">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Full Name *</label>
-            <input type="text" class="form-control" value="Arun Kumar" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Phone *</label>
-            <input type="tel" class="form-control" value="9845671230" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Blood Group</label>
-            <select class="form-control">
-              <option selected>B+</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Gender</label>
-            <select class="form-control">
-              <option>Male</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Address</label>
-          <input type="text" class="form-control" value="Chennai" />
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost" onclick="closeModal('edit-patient-modal')">Cancel</button>
-        <button class="btn btn-primary" onclick="saveEditPatient()">ðŸ’¾ Save Changes</button>
-      </div>
-    </div>
-  </div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2"></div>
 
-  <script src="js/api.js"></script>
-  <script src="js/script.js"></script>
-  <script>
-    /* â”€â”€ State â”€â”€ */
-    let _editPatientId = null;
+<script type="module">
+import { PatientAPI, AdmissionAPI, showToast } from './js/api.js';
 
-    /* â”€â”€ Load patients from API â”€â”€ */
-    async function loadPatients() {
-      renderLoading('patient-tbody', 8);
-      try {
-        const patients = await Patients.getAll();
-        renderPatientRows(patients);
-      } catch {
-        renderError('patient-tbody', 8);
-      }
+// Expose globals
+window.openModal = id => { const m = document.getElementById(id); m.classList.remove('hidden'); m.classList.add('flex'); };
+window.closeModal = id => { const m = document.getElementById(id); m.classList.add('hidden'); m.classList.remove('flex'); };
+window.showToast = showToast;
+
+const spinner = `<tr><td colspan="7" class="py-12 text-center"><div class="flex flex-col items-center gap-3"><div class="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div><span class="text-[13px] text-outline">Loading from database...</span></div></td></tr>`;
+
+window.loadPatients = async () => {
+  const tbody = document.getElementById('patient-tbody');
+  tbody.innerHTML = spinner;
+  document.getElementById('api-status').textContent = '';
+  try {
+    const patients = await PatientAPI.getAll();
+    document.getElementById('stat-total').textContent   = patients.length.toLocaleString('en-IN');
+    document.getElementById('stat-showing').textContent = patients.length.toLocaleString('en-IN');
+    document.getElementById('table-count').textContent  = `${patients.length} patient(s) loaded from database`;
+    document.getElementById('api-status').textContent   = '🟢 Connected to localhost:8080';
+
+    if (!patients.length) {
+      tbody.innerHTML = `<tr><td colspan="7" class="py-12 text-center"><div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-outline-variant text-[40px]">person_off</span><span class="text-[13px] text-outline">No patients yet. Register the first one!</span></div></td></tr>`;
+      return;
     }
 
-    function renderPatientRows(patients) {
-      const tbody = document.getElementById('patient-tbody');
-      if (!patients || patients.length === 0) {
-        renderEmpty('patient-tbody', 8, 'No patients registered yet');
-        return;
-      }
-      const avatarColors = [
-        'linear-gradient(135deg,#00D2BE,#0095FF)',
-        'linear-gradient(135deg,#F43F5E,#DC2626)',
-        'linear-gradient(135deg,#0EA5E9,#0284C7)',
-        'linear-gradient(135deg,#A78BFA,#7C3AED)',
-        'linear-gradient(135deg,#F59E0B,#D97706)',
-        'linear-gradient(135deg,#22C55E,#16A34A)',
-      ];
-      tbody.innerHTML = patients.map((p, i) => {
-        const initial = (p.name || '?')[0].toUpperCase();
-        const color = avatarColors[i % avatarColors.length];
-        const dob = p.dob ? new Date(p.dob).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' }) : 'â€”';
-        const age = p.dob ? Math.floor((Date.now() - new Date(p.dob)) / 3.156e10) : '?';
-        return `
-          <tr data-category="${(p.admissionStatus || 'Outpatient').toLowerCase().replace(' ','')}" data-id="${p.id}">
-            <td>
-              <div style="display:flex; align-items:center; gap:10px;">
-                <div class="avatar" style="background:${color}">${initial}</div>
-                <div>
-                  <div>${p.name}</div>
-                  <div style="font-size:11px; color:var(--text-3)">${p.email || 'â€”'}</div>
-                </div>
-              </div>
-            </td>
-            <td><span class="num-chip">P-${String(p.id).padStart(4,'0')}</span></td>
-            <td>${dob}<br><span style="font-size:11px; color:var(--text-3)">${age} yrs</span></td>
-            <td>${p.bloodGroup ? `<span class="badge badge-rose">${p.bloodGroup}</span>` : 'â€”'}</td>
-            <td>${p.phone || 'â€”'}</td>
-            <td>${p.address || 'â€”'}</td>
-            <td>${statusBadge(p.admissionStatus || 'Outpatient')}</td>
-            <td>
-              <div style="display:flex; gap:6px;">
-                <button class="btn btn-ghost btn-sm btn-icon" title="View" onclick="viewPatient(${p.id})">ðŸ‘</button>
-                <button class="btn btn-outline btn-sm btn-icon" title="Edit" onclick="openEditPatientModal(this)">âœï¸</button>
-                <button class="btn btn-sm" style="background:rgba(244,63,94,0.1);color:var(--rose);border:1px solid rgba(244,63,94,0.2);" title="Delete"
-                  onclick="deletePatient(${p.id}, '${p.name}', this)">ðŸ—‘</button>
-              </div>
-            </td>
-          </tr>`;
-      }).join('');
-      updateRowCount();
-    }
+    tbody.innerHTML = patients.map(p => `
+      <tr class="hover:bg-surface-container-lowest transition-colors">
+        <td class="py-3.5 px-5"><div class="font-semibold text-[13px] text-on-surface">${p.name}</div><div class="text-[11px] text-outline">${p.email || '—'}</div></td>
+        <td class="py-3.5 px-4 font-mono text-[12px] text-on-surface-variant">P-${p.patientId}</td>
+        <td class="py-3.5 px-4 text-[13px] text-on-surface">${p.dob || '—'}</td>
+        <td class="py-3.5 px-4 text-[13px] text-on-surface">${p.gender || '—'}</td>
+        <td class="py-3.5 px-4"><span class="inline-flex px-2 py-0.5 rounded text-label-md bg-surface-container text-on-surface">${p.bloodGroup || '—'}</span></td>
+        <td class="py-3.5 px-4 font-mono text-[13px] text-on-surface">${p.phone}</td>
+        <td class="py-3.5 px-4 text-right">
+          <button onclick="deletePatient(${p.patientId},'${p.name.replace(/'/g,"\\'")}')
+" class="text-outline hover:text-error transition-colors p-1 rounded hover:bg-error-container" title="Delete patient"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+        </td>
+      </tr>`).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="7" class="py-12 text-center"><div class="flex flex-col items-center gap-3"><span class="material-symbols-outlined text-error text-[36px]">wifi_off</span><span class="text-[14px] text-error font-semibold">Cannot connect to backend</span><span class="text-[12px] text-outline mt-1">${err.message}</span><span class="text-[12px] text-outline">Run: <code class="bg-surface-container px-2 py-0.5 rounded font-mono">mvn spring-boot:run</code> in the hospital-backend folder</span></div></td></tr>`;
+    document.getElementById('api-status').textContent = '🔴 Backend offline';
+  }
+};
 
-    /* â”€â”€ View patient details â”€â”€ */
-    function viewPatient(id) {
-      showToast(`Loading patient #${id}â€¦`, 'info');
-    }
+// Admission stats
+(async () => {
+  try { document.getElementById('stat-admitted').textContent = (await AdmissionAPI.getCurrent()).length; }
+  catch { document.getElementById('stat-admitted').textContent = '—'; }
+})();
 
-    /* â”€â”€ Open edit modal and prefill from row OR from id attr â”€â”€ */
-    function openEditPatientModal(btn) {
-      const row = btn.closest('tr');
-      _editPatientId = row?.dataset?.id || null;
-      const cells = row.querySelectorAll('td');
-      const name  = cells[0]?.querySelector('div > div > div:first-child')?.textContent.trim() || '';
-      const phone = cells[4]?.textContent.trim() || '';
-      const city  = cells[5]?.textContent.trim() || '';
-      document.querySelector('#edit-patient-modal input[type="text"]').value = name;
-      document.querySelector('#edit-patient-modal input[type="tel"]').value = phone;
-      document.querySelector('#edit-patient-modal input[type="text"]:last-of-type').value = city;
-      openModal('edit-patient-modal');
-    }
+// Pending bills stat
+(async () => {
+  try { document.getElementById('stat-pending').textContent = (await PatientAPI.getPendingBills()).length; }
+  catch { document.getElementById('stat-pending').textContent = '—'; }
+})();
 
-    /* â”€â”€ Save edit via PUT /api/patients/{id} â”€â”€ */
-    async function saveEditPatient() {
-      if (!_editPatientId) { showToast('No patient selected.', 'error'); return; }
-      const name  = document.querySelector('#edit-patient-modal input[type="text"]').value.trim();
-      const phone = document.querySelector('#edit-patient-modal input[type="tel"]').value.trim();
-      const city  = document.querySelector('#edit-patient-modal input[type="text"]:last-of-type').value.trim();
-      if (!name || !phone) { showToast('Name and phone are required.', 'error'); return; }
-      try {
-        await Patients.update(_editPatientId, { name, phone, address: city });
-        showToast('Patient updated successfully!', 'success');
-        closeModal('edit-patient-modal');
-        loadPatients();
-      } catch { /* toast already shown */ }
-    }
+// Register new patient
+window.registerPatient = async () => {
+  const btn = document.getElementById('register-btn');
+  const errDiv = document.getElementById('form-error');
+  errDiv.classList.add('hidden');
+  const form = document.getElementById('add-patient-form');
+  const data = {};
+  form.querySelectorAll('[name]').forEach(f => { if (f.value.trim()) data[f.name] = f.value.trim(); });
+  if (!data.name || !data.dob || !data.gender || !data.phone) {
+    errDiv.textContent = 'Name, Date of Birth, Gender, and Phone are required.';
+    errDiv.classList.remove('hidden'); return;
+  }
+  btn.disabled = true;
+  btn.innerHTML = `<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>Registering...`;
+  try {
+    await PatientAPI.create(data);
+    showToast('Patient registered successfully!', 'success');
+    closeModal('add-patient-modal');
+    form.reset();
+    await window.loadPatients();
+  } catch (err) { errDiv.textContent = err.message; errDiv.classList.remove('hidden'); }
+  finally { btn.disabled = false; btn.innerHTML = 'Register Patient'; }
+};
 
-    /* â”€â”€ Add patient via POST /api/patients â”€â”€ */
-    async function handleAddPatient() {
-      const inputs = document.querySelectorAll('#add-patient-form [required]');
-      let valid = true;
-      inputs.forEach(i => {
-        if (!i.value.trim()) {
-          i.style.borderColor = 'var(--rose)';
-          valid = false;
-          i.addEventListener('input', () => i.style.borderColor = '', { once: true });
-        }
-      });
-      if (!valid) { showToast('Please fill in all required fields.', 'error'); return; }
+// Delete
+window.deletePatient = async (id, name) => {
+  if (!confirm(`Delete "${name}"? This cannot be undone.\n\n(Blocked by database if billing records exist.)`)) return;
+  try { await PatientAPI.delete(id); showToast(`"${name}" deleted.`, 'success'); await window.loadPatients(); }
+  catch (err) { showToast(err.message, 'error'); }
+};
 
-      const form = document.getElementById('add-patient-form');
-      const inputs2 = form.querySelectorAll('input, select');
-      const data = {
-        name:       inputs2[0]?.value.trim(),
-        dob:        inputs2[1]?.value,
-        gender:     inputs2[2]?.value,
-        bloodGroup: inputs2[3]?.value,
-        phone:      inputs2[4]?.value.trim(),
-        email:      inputs2[5]?.value.trim(),
-        address:    inputs2[6]?.value.trim(),
-      };
-      try {
-        await Patients.create(data);
-        showToast('Patient registered successfully!', 'success');
-        closeModal('add-patient-modal');
-        form.querySelectorAll('input, select').forEach(i => i.value = '');
-        loadPatients();
-      } catch { /* toast already shown */ }
-    }
+// Search (debounced)
+let st;
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(st);
+  const q = e.target.value.trim();
+  if (!q) { window.loadPatients(); return; }
+  st = setTimeout(async () => {
+    try {
+      const r = await PatientAPI.search(q);
+      document.getElementById('stat-showing').textContent = r.length;
+      document.getElementById('table-count').textContent = `${r.length} result(s) for "${q}"`;
+      document.getElementById('patient-tbody').innerHTML = r.length
+        ? r.map(p => `<tr class="hover:bg-surface-container-lowest transition-colors"><td class="py-3.5 px-5"><div class="font-semibold text-[13px] text-on-surface">${p.name}</div><div class="text-[11px] text-outline">${p.email||'—'}</div></td><td class="py-3.5 px-4 font-mono text-[12px] text-on-surface-variant">P-${p.patientId}</td><td class="py-3.5 px-4 text-[13px]">${p.dob||'—'}</td><td class="py-3.5 px-4 text-[13px]">${p.gender||'—'}</td><td class="py-3.5 px-4"><span class="inline-flex px-2 py-0.5 rounded text-label-md bg-surface-container text-on-surface">${p.bloodGroup||'—'}</span></td><td class="py-3.5 px-4 font-mono text-[13px]">${p.phone}</td><td class="py-3.5 px-4 text-right"><button onclick="deletePatient(${p.patientId},'${p.name}')" class="text-outline hover:text-error p-1 rounded hover:bg-error-container"><span class="material-symbols-outlined text-[18px]">delete</span></button></td></tr>`).join('')
+        : `<tr><td colspan="7" class="py-12 text-center text-[13px] text-outline">No patients match "${q}"</td></tr>`;
+    } catch {}
+  }, 350);
+});
 
-    /* â”€â”€ Delete patient via DELETE /api/patients/{id} â”€â”€ */
-    function deletePatient(id, name, btn) {
-      confirmDelete(name, async () => {
-        try {
-          await Patients.delete(id);
-          showToast(`${name} deleted successfully.`, 'success');
-          btn.closest('tr').remove();
-          updateRowCount();
-        } catch { /* toast already shown */ }
-      });
-    }
-
-    /* â”€â”€ Boot â”€â”€ */
-    document.addEventListener('DOMContentLoaded', loadPatients);
-  </script>rror'); return; }
-      showToast('Patient registered successfully!', 'success');
-      closeModal('add-patient-modal');
-    }
-  </script>
+window.loadPatients();
+</script>
 </body>
-
 </html>

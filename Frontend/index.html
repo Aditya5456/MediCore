@@ -1,427 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HMS — Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/style.css" />
-  <meta name="description" content="MediCore HMS Dashboard — manage patients, doctors, appointments and billing." />
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2300D2BE'/><text y='24' font-size='20' x='6'>🏥</text></svg>">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediCore HMS - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{colors:{"primary":"#003c90","on-primary":"#ffffff","primary-container":"#0f52ba","on-primary-container":"#bcceff","primary-fixed":"#d9e2ff","secondary":"#006a6a","on-secondary":"#ffffff","secondary-container":"#90efef","on-secondary-container":"#006e6e","error":"#ba1a1a","on-error":"#ffffff","error-container":"#ffdad6","on-error-container":"#93000a","surface":"#f8f9ff","surface-dim":"#cbdbf5","surface-bright":"#f8f9ff","surface-container-lowest":"#ffffff","surface-container-low":"#eff4ff","surface-container":"#e5eeff","surface-container-high":"#dce9ff","surface-container-highest":"#d3e4fe","on-surface":"#0b1c30","on-surface-variant":"#434653","outline":"#737784","outline-variant":"#c3c6d5","background":"#f8f9ff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter":"1.5rem","md":"1rem"},fontFamily:{"sans":["Public Sans","sans-serif"]},fontSize:{"h1":["32px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"h3":["20px",{lineHeight:"28px",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"600"}]}}}}
+</script>
+<style>.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}.icon-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}</style>
 </head>
+<body class="bg-background text-on-background font-sans antialiased flex min-h-screen">
 
-<body>
-  <div class="layout">
+<aside class="bg-white fixed left-0 top-0 h-screen w-[280px] border-r border-slate-200 flex flex-col py-6 px-4 z-50">
+  <div class="flex items-center gap-3 px-2 mb-8">
+    <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-white text-[20px]">local_hospital</span></div>
+    <div><div class="text-[15px] font-bold text-primary">MediCore</div><div class="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Central Admin</div></div>
+  </div>
+  <div class="px-2 mb-5">
+    <a href="patient.html" class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-lg py-2.5 text-[13px] font-semibold hover:bg-primary-container transition-colors">
+      <span class="material-symbols-outlined text-[18px]">add</span>Register Patient
+    </a>
+  </div>
+  <nav class="flex-1 space-y-0.5">
+    <a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-semibold text-primary bg-blue-50 border-r-4 border-primary"><span class="material-symbols-outlined icon-fill text-[20px]">dashboard</span>Dashboard</a>
+    <a href="patient.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">person_search</span>Patients</a>
+    <a href="doctor.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">medical_services</span>Doctors</a>
+    <a href="appointment.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">event_note</span>Appointments</a>
+    <a href="billing.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">payments</span>Billing</a>
+  </nav>
+  <div class="border-t border-slate-200 pt-4 space-y-0.5">
+    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a>
+    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] text-slate-500 hover:text-primary hover:bg-slate-50"><span class="material-symbols-outlined text-[20px]">help_outline</span>Help Center</a>
+  </div>
+</aside>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-logo">
-        <div class="logo-icon">🏥</div>
-        <div class="logo-text">
-          <strong>MediCore</strong>
-          <span>Hospital Suite</span>
-        </div>
+<div class="flex-1 flex flex-col ml-[280px]">
+  <header class="bg-white/80 backdrop-blur-md sticky top-0 z-40 border-b border-slate-200 flex justify-between items-center px-8 h-16">
+    <div class="flex items-center gap-3">
+      <div>
+        <div class="text-[17px] font-bold text-on-surface">Dashboard</div>
+        <div class="text-[11px] text-outline">Welcome back — here's your hospital at a glance.</div>
       </div>
-      <nav class="sidebar-nav">
-        <div class="nav-section-label">Overview</div>
-        <a class="nav-link active" href="index.html">
-          <span class="nav-icon">⊞</span> Dashboard
-        </a>
-
-        <div class="nav-section-label">Management</div>
-        <a class="nav-link" href="patient.html">
-          <span class="nav-icon">👤</span> Patients
-        </a>
-        <a class="nav-link" href="doctor.html">
-          <span class="nav-icon">🩺</span> Doctors
-        </a>
-        <a class="nav-link" href="appointment.html">
-          <span class="nav-icon">📅</span> Appointments
-          <span class="nav-badge">3</span>
-        </a>
-        <a class="nav-link" href="billing.html">
-          <span class="nav-icon">💳</span> Billing
-        </a>
-
-        <div class="nav-section-label">System</div>
-        <a class="nav-link" href="#">
-          <span class="nav-icon">📊</span> Reports
-        </a>
-        <a class="nav-link" href="#">
-          <span class="nav-icon">⚙️</span> Settings
-        </a>
-      </nav>
-      <div class="sidebar-footer">
-        <div class="sidebar-user">
-          <div class="user-avatar">A</div>
-          <div class="user-info">
-            <div class="uname">Admin User</div>
-            <div class="urole">Super Admin</div>
-          </div>
-          <span style="color:var(--text-3); font-size:14px;">⋯</span>
-        </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="text-[12px] font-mono text-outline" id="api-status">Connecting...</span>
+      <span class="text-[12px] font-mono text-on-surface" id="live-time"></span>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white font-bold text-[13px]">A</div>
+        <span class="text-[13px] font-semibold text-on-surface">Admin User</span>
       </div>
-    </aside>
+    </div>
+  </header>
 
-    <!-- Main -->
-    <div class="main">
-      <!-- Topbar -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="icon-btn" onclick="toggleSidebar()" style="display:none" id="menu-btn">☰</button>
-          <div>
-            <div class="page-title">Dashboard</div>
-            <div class="page-breadcrumb">Welcome back, Admin 👋</div>
+  <main class="flex-1 p-gutter max-w-[1440px] mx-auto w-full flex flex-col gap-gutter">
+
+    <div class="flex justify-between items-end">
+      <div>
+        <h1 class="text-h1 font-bold text-on-surface mb-1">Dashboard</h1>
+        <p class="text-body-md text-outline">Live statistics pulled from the database.</p>
+      </div>
+      <button onclick="loadAll()" class="border border-outline-variant bg-white rounded-lg px-4 py-2 text-[13px] font-medium text-on-surface hover:bg-surface-container-low flex items-center gap-2 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">refresh</span>Refresh All
+      </button>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+      <div class="bg-white border border-outline-variant rounded-xl p-5 flex flex-col gap-3 hover:shadow-sm transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-label-md text-on-surface-variant uppercase">Total Patients</span>
+          <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[20px]">person_search</span></div>
+        </div>
+        <div class="text-[32px] font-bold text-on-surface leading-none" id="kpi-patients">—</div>
+        <div class="text-[12px] text-outline" id="kpi-patients-sub">Loading...</div>
+      </div>
+      <div class="bg-white border border-outline-variant rounded-xl p-5 flex flex-col gap-3 hover:shadow-sm transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-label-md text-on-surface-variant uppercase">Active Doctors</span>
+          <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[20px]">medical_services</span></div>
+        </div>
+        <div class="text-[32px] font-bold text-on-surface leading-none" id="kpi-doctors">—</div>
+        <div class="text-[12px] text-outline" id="kpi-doctors-sub">Loading...</div>
+      </div>
+      <div class="bg-white border border-outline-variant rounded-xl p-5 flex flex-col gap-3 hover:shadow-sm transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-label-md text-on-surface-variant uppercase">Today's Appts.</span>
+          <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[20px]">event_note</span></div>
+        </div>
+        <div class="text-[32px] font-bold text-on-surface leading-none" id="kpi-appts">—</div>
+        <div class="text-[12px] text-outline" id="kpi-appts-sub">Loading...</div>
+      </div>
+      <div class="bg-white border border-outline-variant rounded-xl p-5 flex flex-col gap-3 hover:shadow-sm transition-shadow">
+        <div class="flex items-center justify-between">
+          <span class="text-label-md text-on-surface-variant uppercase">Admitted Now</span>
+          <div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center"><span class="material-symbols-outlined icon-fill text-primary text-[20px]">bed</span></div>
+        </div>
+        <div class="text-[32px] font-bold text-on-surface leading-none" id="kpi-admitted">—</div>
+        <div class="text-[12px] text-outline" id="kpi-admitted-sub">Loading...</div>
+      </div>
+    </div>
+
+    <!-- Two col grid -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-start">
+
+      <!-- Today's appointments table -->
+      <div class="col-span-1 md:col-span-7 bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-outline-variant flex justify-between items-center">
+          <div><h2 class="text-h3 font-semibold text-on-surface">Today's Appointments</h2><p class="text-[12px] text-outline mt-0.5" id="today-date">—</p></div>
+          <a href="appointment.html" class="text-[13px] font-semibold text-primary flex items-center gap-1">View all<span class="material-symbols-outlined text-[16px]">chevron_right</span></a>
+        </div>
+        <table class="w-full text-left">
+          <thead><tr class="bg-surface-container-low border-b border-outline-variant">
+            <th class="py-3 px-5 text-label-md text-on-surface-variant uppercase">Time</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Patient</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Doctor</th>
+            <th class="py-3 px-4 text-label-md text-on-surface-variant uppercase">Status</th>
+          </tr></thead>
+          <tbody id="today-appts-body" class="divide-y divide-outline-variant">
+            <tr><td colspan="4" class="py-8 text-center"><div class="flex flex-col items-center gap-2"><div class="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div><span class="text-[12px] text-outline">Loading appointments...</span></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right column -->
+      <div class="col-span-1 md:col-span-5 flex flex-col gap-gutter">
+
+        <!-- Pending bills -->
+        <div class="bg-white border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-outline-variant flex justify-between items-center">
+            <h2 class="text-h3 font-semibold text-on-surface">Pending Bills</h2>
+            <a href="billing.html" class="text-[13px] font-semibold text-primary flex items-center gap-1">View all<span class="material-symbols-outlined text-[16px]">chevron_right</span></a>
+          </div>
+          <div id="pending-bills-body" class="p-5">
+            <div class="flex flex-col items-center gap-2 py-4"><div class="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"></div><span class="text-[12px] text-outline">Loading...</span></div>
           </div>
         </div>
-        <div class="topbar-right">
-          <div class="search-box">
-            <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Search records…" />
-          </div>
-          <button class="icon-btn" title="Notifications">
-            🔔<span class="notif-dot"></span>
-          </button>
-          <button class="icon-btn" title="Help">❓</button>
-        </div>
-      </header>
 
-      <!-- Body -->
-      <div class="page-body">
-
-        <!-- Stats -->
-        <div class="stats-grid">
-          <div class="stat-card teal">
-            <div class="stat-icon">👥</div>
-            <div class="stat-value" data-count="1248">0</div>
-            <div class="stat-label">Total Patients</div>
-            <div class="stat-change up">▲ 12% this month</div>
-          </div>
-          <div class="stat-card blue">
-            <div class="stat-icon">🩺</div>
-            <div class="stat-value" data-count="86">0</div>
-            <div class="stat-label">Active Doctors</div>
-            <div class="stat-change up">▲ 3 new this month</div>
-          </div>
-          <div class="stat-card amber">
-            <div class="stat-icon">📅</div>
-            <div class="stat-value" data-count="34">0</div>
-            <div class="stat-label">Today's Appointments</div>
-            <div class="stat-change down">▼ 5 cancelled</div>
-          </div>
-          <div class="stat-card rose">
-            <div class="stat-icon">🛏️</div>
-            <div class="stat-value" data-count="127">0</div>
-            <div class="stat-label">Admitted Patients</div>
-            <div class="stat-change up">▲ 8 new admissions</div>
-          </div>
-          <div class="stat-card green">
-            <div class="stat-icon">💰</div>
-            <div class="stat-value" style="font-size:22px;" data-count="284750">0</div>
-            <div class="stat-label">Revenue This Month (₹)</div>
-            <div class="stat-change up">▲ 18% vs last month</div>
+        <!-- Quick links -->
+        <div class="bg-white border border-outline-variant rounded-xl shadow-sm p-5">
+          <h2 class="text-h3 font-semibold text-on-surface mb-4">Quick Actions</h2>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="patient.html" class="flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:bg-surface-container-low hover:border-primary transition-all cursor-pointer text-center">
+              <span class="material-symbols-outlined text-primary text-[28px]">person_add</span>
+              <span class="text-[12px] font-semibold text-on-surface">Add Patient</span>
+            </a>
+            <a href="appointment.html" class="flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:bg-surface-container-low hover:border-primary transition-all cursor-pointer text-center">
+              <span class="material-symbols-outlined text-primary text-[28px]">event_available</span>
+              <span class="text-[12px] font-semibold text-on-surface">Book Appointment</span>
+            </a>
+            <a href="billing.html" class="flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:bg-surface-container-low hover:border-primary transition-all cursor-pointer text-center">
+              <span class="material-symbols-outlined text-primary text-[28px]">receipt_long</span>
+              <span class="text-[12px] font-semibold text-on-surface">Generate Bill</span>
+            </a>
+            <a href="doctor.html" class="flex flex-col items-center gap-2 p-4 border border-outline-variant rounded-xl hover:bg-surface-container-low hover:border-primary transition-all cursor-pointer text-center">
+              <span class="material-symbols-outlined text-primary text-[28px]">person_add_alt</span>
+              <span class="text-[12px] font-semibold text-on-surface">Add Doctor</span>
+            </a>
           </div>
         </div>
 
-        <!-- Grid Row 1 -->
-        <div class="grid-2" style="margin-bottom:24px;">
+      </div>
+    </div>
+  </main>
+</div>
 
-          <!-- Recent Appointments -->
-          <div class="card animate-fade-up" style="animation-delay:0.1s">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Today's Appointments</div>
-                <div class="card-subtitle">Mar 10, 2025 • 34 scheduled</div>
-              </div>
-              <a href="appointment.html" class="btn btn-ghost btn-sm">View all →</a>
-            </div>
-            <div class="card-body">
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">09:00</div>
-                  <div class="period">AM</div>
-                </div>
-                <div class="appt-line" style="background:var(--teal)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Arun Kumar</div>
-                  <div class="appt-doctor">Dr. Ramesh Kumar · Cardiology</div>
-                </div>
-                <span class="badge badge-teal">Done</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">10:00</div>
-                  <div class="period">AM</div>
-                </div>
-                <div class="appt-line" style="background:var(--teal)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Meena Devi</div>
-                  <div class="appt-doctor">Dr. Priya Sharma · Neurology</div>
-                </div>
-                <span class="badge badge-teal">Done</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">11:00</div>
-                  <div class="period">AM</div>
-                </div>
-                <div class="appt-line" style="background:var(--amber)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Vikram Singh</div>
-                  <div class="appt-doctor">Dr. Anand Rajan · Orthopaedics</div>
-                </div>
-                <span class="badge badge-amber">Scheduled</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">02:00</div>
-                  <div class="period">PM</div>
-                </div>
-                <div class="appt-line" style="background:var(--rose)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Divya Nair</div>
-                  <div class="appt-doctor">Dr. Ramesh Kumar · Cardiology</div>
-                </div>
-                <span class="badge badge-rose">Cancelled</span>
-              </div>
-              <div class="appt-item">
-                <div class="appt-time">
-                  <div class="time">03:00</div>
-                  <div class="period">PM</div>
-                </div>
-                <div class="appt-line" style="background:var(--teal)"></div>
-                <div class="appt-details">
-                  <div class="appt-patient">Karthik Raj</div>
-                  <div class="appt-doctor">Dr. Kavitha Menon · Gynaecology</div>
-                </div>
-                <span class="badge badge-teal">Done</span>
-              </div>
-            </div>
-          </div>
+<div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2"></div>
 
-          <!-- Pending Bills -->
-          <div class="card animate-fade-up" style="animation-delay:0.2s">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Billing Overview</div>
-                <div class="card-subtitle">Outstanding & recent payments</div>
-              </div>
-              <a href="billing.html" class="btn btn-ghost btn-sm">View all →</a>
-            </div>
-            <div class="card-body">
-              <div style="display:flex; flex-direction:column; gap:14px;">
-                <!-- Bill row -->
-                <div style="display:flex; align-items:center; gap:12px;">
-                  <div class="avatar" style="background:linear-gradient(135deg,#22C55E,#16A34A)">A</div>
-                  <div style="flex:1">
-                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Arun Kumar</div>
-                    <div style="font-size:11px; color:var(--text-3)">Bill #7001 · Mar 10</div>
-                  </div>
-                  <div class="billing-amount paid">₹7,300</div>
-                  <span class="badge badge-green">Paid</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:12px;">
-                  <div class="avatar" style="background:linear-gradient(135deg,#F43F5E,#DC2626)">M</div>
-                  <div style="flex:1">
-                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Meena Devi</div>
-                    <div style="font-size:11px; color:var(--text-3)">Bill #7002 · Mar 11</div>
-                  </div>
-                  <div class="billing-amount pending">₹6,300</div>
-                  <span class="badge badge-amber">Pending</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:12px;">
-                  <div class="avatar" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">V</div>
-                  <div style="flex:1">
-                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Vikram Singh</div>
-                    <div style="font-size:11px; color:var(--text-3)">Bill #7003 · Mar 12</div>
-                  </div>
-                  <div class="billing-amount partial">₹5,400</div>
-                  <span class="badge badge-blue">Partial</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:12px;">
-                  <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">D</div>
-                  <div style="flex:1">
-                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Divya Nair</div>
-                    <div style="font-size:11px; color:var(--text-3)">Bill #7004 · Mar 13</div>
-                  </div>
-                  <div class="billing-amount paid">₹7,950</div>
-                  <span class="badge badge-green">Paid</span>
-                </div>
-                <div style="display:flex; align-items:center; gap:12px;">
-                  <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706)">K</div>
-                  <div style="flex:1">
-                    <div style="font-size:13.5px; font-weight:600; color:var(--text-1)">Karthik Raj</div>
-                    <div style="font-size:11px; color:var(--text-3)">Bill #7005 · Mar 01</div>
-                  </div>
-                  <div class="billing-amount partial">₹10,900</div>
-                  <span class="badge badge-blue">Partial</span>
-                </div>
-              </div>
+<script type="module">
+import { PatientAPI, DoctorAPI, AppointmentAPI, AdmissionAPI, BillingAPI, showToast } from './js/api.js';
 
-              <div class="divider"></div>
+window.showToast = showToast;
 
-              <!-- Payment breakdown -->
-              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; text-align:center;">
-                <div>
-                  <div
-                    style="font-size:18px; font-weight:700; color:var(--green); font-family:'Playfair Display',serif">2
-                  </div>
-                  <div style="font-size:11px; color:var(--text-3)">Paid</div>
-                </div>
-                <div>
-                  <div
-                    style="font-size:18px; font-weight:700; color:var(--amber); font-family:'Playfair Display',serif">1
-                  </div>
-                  <div style="font-size:11px; color:var(--text-3)">Pending</div>
-                </div>
-                <div>
-                  <div style="font-size:18px; font-weight:700; color:var(--blue); font-family:'Playfair Display',serif">
-                    2</div>
-                  <div style="font-size:11px; color:var(--text-3)">Partial</div>
-                </div>
-              </div>
-            </div>
-          </div>
+// Clock
+setInterval(() => {
+  document.getElementById('live-time').textContent = new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}, 1000);
 
-        </div>
+// Status badge helper
+function statusBadge(s) {
+  const map = {
+    Completed: 'bg-secondary-container text-on-secondary-container',
+    Scheduled:  'bg-surface-dim text-on-surface',
+    Cancelled:  'bg-error-container text-on-error-container',
+    Paid:       'bg-secondary-container text-on-secondary-container',
+    Pending:    'bg-surface-dim text-on-surface',
+    Partial:    'bg-surface-container-high text-on-surface-variant',
+  };
+  return `<span class="inline-flex px-2 py-0.5 rounded text-label-md ${map[s]||'bg-surface-container text-on-surface'}">${s}</span>`;
+}
 
-        <!-- Grid Row 2 -->
-        <div class="grid-2" style="margin-bottom:24px;">
+window.loadAll = async () => {
+  const status = document.getElementById('api-status');
+  status.textContent = 'Connecting...';
 
-          <!-- Departments -->
-          <div class="card animate-fade-up" style="animation-delay:0.3s">
-            <div class="card-header">
-              <div>
-                <div class="card-title">Departments</div>
-                <div class="card-subtitle">Capacity & occupancy</div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div style="display:flex; flex-direction:column; gap:18px;">
-                <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; color:var(--text-1); font-weight:500">❤️ Cardiology</span>
-                    <span style="font-size:12px; color:var(--teal)">78%</span>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" style="width:78%; background:var(--teal)"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; color:var(--text-1); font-weight:500">🧠 Neurology</span>
-                    <span style="font-size:12px; color:var(--blue)">65%</span>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" style="width:65%; background:var(--blue)"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; color:var(--text-1); font-weight:500">🦴 Orthopaedics</span>
-                    <span style="font-size:12px; color:var(--amber)">52%</span>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" style="width:52%; background:var(--amber)"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; color:var(--text-1); font-weight:500">🌸 Gynaecology</span>
-                    <span style="font-size:12px; color:var(--rose)">90%</span>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" style="width:90%; background:var(--rose)"></div>
-                  </div>
-                </div>
-                <div>
-                  <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-                    <span style="font-size:13px; color:var(--text-1); font-weight:500">💊 General Medicine</span>
-                    <span style="font-size:12px; color:var(--green)">43%</span>
-                  </div>
-                  <div class="progress">
-                    <div class="progress-bar" style="width:43%; background:var(--green)"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  // Today's date label
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('en-IN', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-          <!-- Quick Actions -->
-          <div class="card animate-fade-up" style="animation-delay:0.35s">
-            <div class="card-header">
-              <div class="card-title">Quick Actions</div>
-            </div>
-            <div class="card-body">
-              <div class="quick-grid">
-                <a href="patient.html" class="quick-card">
-                  <span class="qc-icon">➕👤</span>
-                  <div class="qc-label">New Patient</div>
-                  <div class="qc-sub">Register</div>
-                </a>
-                <a href="appointment.html" class="quick-card">
-                  <span class="qc-icon">📆</span>
-                  <div class="qc-label">Book Appt.</div>
-                  <div class="qc-sub">Schedule</div>
-                </a>
-                <a href="billing.html" class="quick-card">
-                  <span class="qc-icon">🧾</span>
-                  <div class="qc-label">Generate Bill</div>
-                  <div class="qc-sub">Billing</div>
-                </a>
-                <a href="doctor.html" class="quick-card">
-                  <span class="qc-icon">🩺</span>
-                  <div class="qc-label">Add Doctor</div>
-                  <div class="qc-sub">Staff</div>
-                </a>
-              </div>
+  try {
+    // All parallel
+    const [patients, doctors, todayAppts, admitted, pendingBills] = await Promise.all([
+      PatientAPI.getAll(),
+      DoctorAPI.getAll(),
+      AppointmentAPI.getToday(),
+      AdmissionAPI.getCurrent(),
+      BillingAPI.getPending(),
+    ]);
 
-              <div class="divider"></div>
+    status.textContent = '🟢 Connected';
 
-              <!-- Recent activity -->
-              <div
-                style="font-size:12px; font-weight:600; color:var(--text-3); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px;">
-                Recent Activity</div>
-              <div style="display:flex; flex-direction:column; gap:12px;">
-                <div style="display:flex; gap:10px; align-items:flex-start;">
-                  <div class="timeline-dot" style="background:var(--teal)"></div>
-                  <div style="flex:1">
-                    <div style="font-size:13px; color:var(--text-1)">Patient <strong>Arun Kumar</strong> discharged
-                    </div>
-                    <div style="font-size:11px; color:var(--text-3)">2 hours ago</div>
-                  </div>
-                </div>
-                <div style="display:flex; gap:10px; align-items:flex-start;">
-                  <div class="timeline-dot" style="background:var(--amber)"></div>
-                  <div style="flex:1">
-                    <div style="font-size:13px; color:var(--text-1)">Bill <strong>#7002</strong> is overdue</div>
-                    <div style="font-size:11px; color:var(--text-3)">4 hours ago</div>
-                  </div>
-                </div>
-                <div style="display:flex; gap:10px; align-items:flex-start;">
-                  <div class="timeline-dot" style="background:var(--blue)"></div>
-                  <div style="flex:1">
-                    <div style="font-size:13px; color:var(--text-1)">New doctor <strong>Dr. Meera Das</strong> added
-                    </div>
-                    <div style="font-size:11px; color:var(--text-3)">Yesterday</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    // KPIs
+    document.getElementById('kpi-patients').textContent    = patients.length.toLocaleString('en-IN');
+    document.getElementById('kpi-patients-sub').textContent = `${patients.length} registered`;
+    document.getElementById('kpi-doctors').textContent     = doctors.length.toLocaleString('en-IN');
+    document.getElementById('kpi-doctors-sub').textContent  = `Across ${[...new Set(doctors.map(d=>d.departmentName))].length} departments`;
+    document.getElementById('kpi-appts').textContent       = todayAppts.length.toLocaleString('en-IN');
+    const done = todayAppts.filter(a=>a.status==='Completed').length;
+    const canc = todayAppts.filter(a=>a.status==='Cancelled').length;
+    document.getElementById('kpi-appts-sub').textContent   = `${done} completed · ${canc} cancelled`;
+    document.getElementById('kpi-admitted').textContent    = admitted.length.toLocaleString('en-IN');
+    document.getElementById('kpi-admitted-sub').textContent = 'Currently in hospital';
 
-        </div>
+    // Today's appointments table
+    const aBody = document.getElementById('today-appts-body');
+    if (!todayAppts.length) {
+      aBody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-[13px] text-outline">No appointments scheduled for today.</td></tr>`;
+    } else {
+      aBody.innerHTML = todayAppts.slice(0,6).map(a => `
+        <tr class="hover:bg-surface-container-lowest transition-colors">
+          <td class="py-3.5 px-5 font-mono text-[13px] font-medium text-on-surface whitespace-nowrap">${a.appointmentTime || '—'}</td>
+          <td class="py-3.5 px-4 text-[13px] font-semibold text-on-surface">${a.patientName}</td>
+          <td class="py-3.5 px-4"><div class="text-[13px] text-on-surface">${a.doctorName}</div><div class="text-[11px] text-outline">${a.doctorSpecialization}</div></td>
+          <td class="py-3.5 px-4">${statusBadge(a.status)}</td>
+        </tr>`).join('');
+    }
 
-      </div><!-- end page-body -->
-    </div><!-- end main -->
-  </div><!-- end layout -->
+    // Pending bills
+    const bBody = document.getElementById('pending-bills-body');
+    if (!pendingBills.length) {
+      bBody.innerHTML = `<div class="flex flex-col items-center gap-2 py-6"><span class="material-symbols-outlined icon-fill text-secondary text-[36px]">check_circle</span><span class="text-[13px] text-outline">All bills are settled!</span></div>`;
+    } else {
+      bBody.innerHTML = `<div class="space-y-3">${pendingBills.slice(0,4).map(b => `
+        <div class="flex items-center justify-between py-2 border-b border-outline-variant last:border-none">
+          <div><div class="text-[13px] font-semibold text-on-surface">${b.patientName}</div><div class="text-[11px] text-outline">Bill #${b.billId} · ${b.billDate}</div></div>
+          <div class="text-right"><div class="font-mono text-[13px] font-semibold text-on-surface">₹${b.totalAmount?.toLocaleString('en-IN')}</div>${statusBadge(b.paymentStatus)}</div>
+        </div>`).join('')}
+        ${pendingBills.length > 4 ? `<div class="text-center pt-1"><a href="billing.html" class="text-[12px] font-semibold text-primary hover:underline">+${pendingBills.length-4} more pending bills</a></div>` : ''}
+      </div>`;
+    }
 
-  <script src="js/script.js"></script>
+  } catch (err) {
+    status.textContent = '🔴 Backend offline';
+    const errHtml = (cols) => `<tr><td colspan="${cols}" class="py-10 text-center"><div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-error text-[32px]">wifi_off</span><span class="text-[13px] text-error font-semibold">Backend not reachable</span><span class="text-[12px] text-outline">Run: <code class="bg-surface-container px-2 py-0.5 rounded font-mono">mvn spring-boot:run</code></span></div></td></tr>`;
+    document.getElementById('today-appts-body').innerHTML = errHtml(4);
+    document.getElementById('pending-bills-body').innerHTML = errHtml(1).replace('<tr>','<table><tr>').replace('</tr>','</tr></table>');
+    ['kpi-patients','kpi-doctors','kpi-appts','kpi-admitted'].forEach(id => document.getElementById(id).textContent = 'Err');
+    ['kpi-patients-sub','kpi-doctors-sub','kpi-appts-sub','kpi-admitted-sub'].forEach(id => document.getElementById(id).textContent = 'Backend offline');
+  }
+};
+
+window.loadAll();
+</script>
 </body>
-
 </html>
