@@ -21,6 +21,11 @@ CREATE DATABASE IF NOT EXISTS HospitalDB
 
 USE HospitalDB;
 
+-- Fix: explicitly set connection encoding to utf8mb4
+-- This prevents encoding errors for special characters inside procedures
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+
 -- Drop tables in reverse FK order so re-runs don't fail
 DROP TABLE IF EXISTS BILLING;
 DROP TABLE IF EXISTS MEDICAL_RECORD;
@@ -325,7 +330,7 @@ CREATE OR REPLACE VIEW BILLING_SUMMARY AS
 DELIMITER $$
 
 -- Trigger 1: BEFORE INSERT on DOCTOR
--- Enforces minimum salary of ₹30,000 at DB level
+-- Enforces minimum salary of Rs. 30,000 at DB level
 -- (application layer also enforces this via @Min(30000))
 DROP TRIGGER IF EXISTS before_insert_doctor$$
 CREATE TRIGGER before_insert_doctor
@@ -381,26 +386,9 @@ BEGIN
     END IF;
 END$$
 
--- Trigger 5: BEFORE INSERT on APPOINTMENT
--- Prevents booking the same doctor for two patients at the same time slot
-DROP TRIGGER IF EXISTS before_insert_appointment$$
-CREATE TRIGGER before_insert_appointment
-BEFORE INSERT ON APPOINTMENT
-FOR EACH ROW
-BEGIN
-    DECLARE conflict_count INT DEFAULT 0;
-    SELECT COUNT(*) INTO conflict_count
-    FROM APPOINTMENT
-    WHERE doctor_id        = NEW.doctor_id
-      AND appointment_date = NEW.appointment_date
-      AND appointment_time = NEW.appointment_time
-      AND status          != 'Cancelled';
-
-    IF conflict_count > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Doctor already has an appointment at this date and time.';
-    END IF;
-END$$
+-- NOTE: Trigger 5 (before_insert_appointment) was intentionally removed.
+-- MySQL ERROR 1442 prevents a trigger from SELECT-ing the same table it fires on.
+-- The appointment slot-conflict check is handled in AppointmentService.java instead.
 
 DELIMITER ;
 
@@ -522,8 +510,8 @@ BEGIN
         SELECT 'Error: Payment amount must be positive.' AS result;
     ELSEIF (v_paid + p_payment_amount) > v_total THEN
         ROLLBACK;
-        SELECT CONCAT('Error: Payment ₹', p_payment_amount,
-                      ' exceeds outstanding balance ₹', (v_total - v_paid)) AS result;
+        SELECT CONCAT('Error: Payment Rs.', p_payment_amount,
+                      ' exceeds outstanding balance Rs.', (v_total - v_paid)) AS result;
     ELSE
         SET v_new_paid = v_paid + p_payment_amount;
 
@@ -539,7 +527,7 @@ BEGIN
         WHERE bill_id = p_bill_id;
 
         COMMIT;
-        SELECT CONCAT('Payment ₹', p_payment_amount,
+        SELECT CONCAT('Payment Rs.', p_payment_amount,
                       ' recorded. New status: ', v_status) AS result;
     END IF;
 END$$
@@ -571,7 +559,7 @@ BEGIN
     ELSE
         COMMIT;
         SELECT CONCAT('Patient discharged. Admission #', p_admission_id,
-                      ' closed with charges ₹', p_total_charges) AS result;
+                      ' closed with charges Rs.', p_total_charges) AS result;
     END IF;
 END$$
 
@@ -579,7 +567,13 @@ DELIMITER ;
 
 -- ─────────────────────────────────────────────────────────────────────────────
 --  7.  SAMPLE QUERIES  (Chapter 3 — for reference and testing)
+--
+--  NOTE: These are commented out so they don't auto-execute when importing
+--  the file. To test them, copy-paste individual queries into MySQL Workbench
+--  or the MySQL CLI after the database has been set up.
 -- ─────────────────────────────────────────────────────────────────────────────
+
+/*
 
 -- ── Aggregate functions ──────────────────────────────────────────────────────
 
@@ -600,7 +594,7 @@ INNER JOIN DEPARTMENT DEP ON D.dept_id = DEP.dept_id
 GROUP BY D.dept_id, DEP.dept_name
 ORDER BY number_of_doctors DESC;
 
--- Q3: Patients whose total bill > ₹7000
+-- Q3: Patients whose total bill > 7000
 SELECT
     P.name,
     SUM(B.total_amount) AS total_billed
@@ -689,6 +683,8 @@ INNER JOIN DOCTOR    D  ON AD.doctor_id   = D.doctor_id;
 -- LOCK TABLE MEDICINE WRITE;
 -- UPDATE MEDICINE SET stock_qty = stock_qty + 100 WHERE medicine_id = 4;
 -- UNLOCK TABLES;
+
+*/
 
 -- ─────────────────────────────────────────────────────────────────────────────
 --  8.  VERIFY DATA
